@@ -6,19 +6,39 @@
 //
 
 import SwiftUI
+import Apollo
+import PromoninjaSchema
+
+
+
+
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            TabView {
+                VStack {
+                    Text("Home Screen")
+                }
+                .tabItem {
+                    Text("Home")
+                }
+                .tag(0)
+                
+                SponsorView(name: "Athletic Greens")
+                    .tabItem {
+                        Text("Sponsor")
+                    }
+                    .tag(1)
+            }
         }
-        .padding()
+       
+        
     }
+
 }
 
 #Preview {
     ContentView()
+        .preferredColorScheme(.dark)
 }

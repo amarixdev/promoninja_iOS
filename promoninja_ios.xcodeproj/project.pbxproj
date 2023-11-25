@@ -3,22 +3,44 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A32010BA2B0FC59D00F22357 /* PodcastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32010B92B0FC59D00F22357 /* PodcastView.swift */; };
+		A32010BC2B0FC5AD00F22357 /* PodcastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32010BB2B0FC5AD00F22357 /* PodcastViewModel.swift */; };
+		A32010C02B0FD64600F22357 /* SponsorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32010BF2B0FD64600F22357 /* SponsorViewModel.swift */; };
+		A32010C22B0FD65300F22357 /* SponsorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32010C12B0FD65300F22357 /* SponsorView.swift */; };
+		A32010C42B0FEB6F00F22357 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32010C32B0FEB6F00F22357 /* File.swift */; };
+		A32010C82B116BDB00F22357 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32010C72B116BDB00F22357 /* Router.swift */; };
 		A3A6527C2B0BAF9E00AEE068 /* promoninja_iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A6527B2B0BAF9E00AEE068 /* promoninja_iosApp.swift */; };
 		A3A6527E2B0BAF9E00AEE068 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A6527D2B0BAF9E00AEE068 /* ContentView.swift */; };
 		A3A652802B0BAF9F00AEE068 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3A6527F2B0BAF9F00AEE068 /* Assets.xcassets */; };
 		A3A652832B0BAF9F00AEE068 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3A652822B0BAF9F00AEE068 /* Preview Assets.xcassets */; };
+		A3A6528B2B0BB00D00AEE068 /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = A3A6528A2B0BB00D00AEE068 /* Apollo */; };
+		A3A652922B0BB73F00AEE068 /* operations.graphql in Resources */ = {isa = PBXBuildFile; fileRef = A3A652912B0BB73F00AEE068 /* operations.graphql */; };
+		A3A652942B0BBF7500AEE068 /* schema.graphqls in Resources */ = {isa = PBXBuildFile; fileRef = A3A652932B0BBF7500AEE068 /* schema.graphqls */; };
+		A3A652972B0BC06900AEE068 /* PromoninjaSchema in Frameworks */ = {isa = PBXBuildFile; productRef = A3A652962B0BC06900AEE068 /* PromoninjaSchema */; };
+		A3A652992B0BC0FF00AEE068 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A652982B0BC0FF00AEE068 /* Network.swift */; };
+		A3A6529F2B0C3CBC00AEE068 /* HexColorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A6529E2B0C3CBC00AEE068 /* HexColorConverter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A32010B92B0FC59D00F22357 /* PodcastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastView.swift; sourceTree = "<group>"; };
+		A32010BB2B0FC5AD00F22357 /* PodcastViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastViewModel.swift; sourceTree = "<group>"; };
+		A32010BF2B0FD64600F22357 /* SponsorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorViewModel.swift; sourceTree = "<group>"; };
+		A32010C12B0FD65300F22357 /* SponsorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorView.swift; sourceTree = "<group>"; };
+		A32010C32B0FEB6F00F22357 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		A32010C72B116BDB00F22357 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		A3A652782B0BAF9E00AEE068 /* promoninja_ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = promoninja_ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3A6527B2B0BAF9E00AEE068 /* promoninja_iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = promoninja_iosApp.swift; sourceTree = "<group>"; };
 		A3A6527D2B0BAF9E00AEE068 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A3A6527F2B0BAF9F00AEE068 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A3A652822B0BAF9F00AEE068 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A3A652912B0BB73F00AEE068 /* operations.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = operations.graphql; sourceTree = "<group>"; };
+		A3A652932B0BBF7500AEE068 /* schema.graphqls */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = schema.graphqls; sourceTree = "<group>"; };
+		A3A652982B0BC0FF00AEE068 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		A3A6529E2B0C3CBC00AEE068 /* HexColorConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColorConverter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,12 +48,49 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3A652972B0BC06900AEE068 /* PromoninjaSchema in Frameworks */,
+				A3A6528B2B0BB00D00AEE068 /* Apollo in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A32010B82B0FC58B00F22357 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A32010BE2B0FD43C00F22357 /* Sponsor */,
+				A32010BD2B0FD42E00F22357 /* Podcast */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A32010BD2B0FD42E00F22357 /* Podcast */ = {
+			isa = PBXGroup;
+			children = (
+				A32010BB2B0FC5AD00F22357 /* PodcastViewModel.swift */,
+				A32010B92B0FC59D00F22357 /* PodcastView.swift */,
+			);
+			path = Podcast;
+			sourceTree = "<group>";
+		};
+		A32010BE2B0FD43C00F22357 /* Sponsor */ = {
+			isa = PBXGroup;
+			children = (
+				A32010BF2B0FD64600F22357 /* SponsorViewModel.swift */,
+				A32010C12B0FD65300F22357 /* SponsorView.swift */,
+			);
+			path = Sponsor;
+			sourceTree = "<group>";
+		};
+		A32010C52B116BC300F22357 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				A32010C72B116BDB00F22357 /* Router.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
 		A3A6526F2B0BAF9E00AEE068 = {
 			isa = PBXGroup;
 			children = (
@@ -51,6 +110,11 @@
 		A3A6527A2B0BAF9E00AEE068 /* promoninja_ios */ = {
 			isa = PBXGroup;
 			children = (
+				A32010C52B116BC300F22357 /* Router */,
+				A32010B82B0FC58B00F22357 /* Views */,
+				A3A6529D2B0C3C9900AEE068 /* Util */,
+				A3A6529A2B0C163400AEE068 /* Model */,
+				A3A6528C2B0BB38800AEE068 /* Graphql */,
 				A3A6527B2B0BAF9E00AEE068 /* promoninja_iosApp.swift */,
 				A3A6527D2B0BAF9E00AEE068 /* ContentView.swift */,
 				A3A6527F2B0BAF9F00AEE068 /* Assets.xcassets */,
@@ -65,6 +129,32 @@
 				A3A652822B0BAF9F00AEE068 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A3A6528C2B0BB38800AEE068 /* Graphql */ = {
+			isa = PBXGroup;
+			children = (
+				A3A652982B0BC0FF00AEE068 /* Network.swift */,
+				A3A652932B0BBF7500AEE068 /* schema.graphqls */,
+				A3A652912B0BB73F00AEE068 /* operations.graphql */,
+			);
+			path = Graphql;
+			sourceTree = "<group>";
+		};
+		A3A6529A2B0C163400AEE068 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A32010C32B0FEB6F00F22357 /* File.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A3A6529D2B0C3C9900AEE068 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				A3A6529E2B0C3CBC00AEE068 /* HexColorConverter.swift */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +173,10 @@
 			dependencies = (
 			);
 			name = promoninja_ios;
+			packageProductDependencies = (
+				A3A6528A2B0BB00D00AEE068 /* Apollo */,
+				A3A652962B0BC06900AEE068 /* PromoninjaSchema */,
+			);
 			productName = promoninja_ios;
 			productReference = A3A652782B0BAF9E00AEE068 /* promoninja_ios.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +205,10 @@
 				Base,
 			);
 			mainGroup = A3A6526F2B0BAF9E00AEE068;
+			packageReferences = (
+				A3A652892B0BB00D00AEE068 /* XCRemoteSwiftPackageReference "apollo-ios" */,
+				A3A652952B0BC06900AEE068 /* XCLocalSwiftPackageReference "promoninjaSchema" */,
+			);
 			productRefGroup = A3A652792B0BAF9E00AEE068 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -126,7 +224,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3A652832B0BAF9F00AEE068 /* Preview Assets.xcassets in Resources */,
+				A3A652942B0BBF7500AEE068 /* schema.graphqls in Resources */,
 				A3A652802B0BAF9F00AEE068 /* Assets.xcassets in Resources */,
+				A3A652922B0BB73F00AEE068 /* operations.graphql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,7 +238,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3A6527E2B0BAF9E00AEE068 /* ContentView.swift in Sources */,
+				A32010C02B0FD64600F22357 /* SponsorViewModel.swift in Sources */,
+				A32010C82B116BDB00F22357 /* Router.swift in Sources */,
+				A3A6529F2B0C3CBC00AEE068 /* HexColorConverter.swift in Sources */,
+				A32010C22B0FD65300F22357 /* SponsorView.swift in Sources */,
+				A32010BA2B0FC59D00F22357 /* PodcastView.swift in Sources */,
 				A3A6527C2B0BAF9E00AEE068 /* promoninja_iosApp.swift in Sources */,
+				A32010BC2B0FC5AD00F22357 /* PodcastViewModel.swift in Sources */,
+				A32010C42B0FEB6F00F22357 /* File.swift in Sources */,
+				A3A652992B0BC0FF00AEE068 /* Network.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +380,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"promoninja_ios/Preview Content\"";
+				DEVELOPMENT_TEAM = 2SP84636VM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -300,6 +409,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"promoninja_ios/Preview Content\"";
+				DEVELOPMENT_TEAM = 2SP84636VM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -342,6 +452,36 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		A3A652952B0BC06900AEE068 /* XCLocalSwiftPackageReference "promoninjaSchema" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = promoninjaSchema;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A3A652892B0BB00D00AEE068 /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apollographql/apollo-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A3A6528A2B0BB00D00AEE068 /* Apollo */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A3A652892B0BB00D00AEE068 /* XCRemoteSwiftPackageReference "apollo-ios" */;
+			productName = Apollo;
+		};
+		A3A652962B0BC06900AEE068 /* PromoninjaSchema */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PromoninjaSchema;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A3A652702B0BAF9E00AEE068 /* Project object */;
 }

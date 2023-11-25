@@ -6,12 +6,20 @@
 //
 
 import SwiftUI
+import Apollo
+
 
 @main
 struct promoninja_iosApp: App {
+
+    @StateObject var router = Router()
+    
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(router)
+                
         }
     }
 }

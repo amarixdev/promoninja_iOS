@@ -1,0 +1,183 @@
+
+query GetPodcasts {
+    getPodcasts {
+    backgroundColor
+    category {
+      name
+    }
+    description
+    imageUrl
+    offer {
+      url
+      sponsor
+      promoCode
+    }
+    publisher
+    sponsors {
+      name
+    }
+    title
+  }
+      }
+
+
+ query GetPodcast ($input: PodcastInput!) {
+        getPodcast(input: $input) {
+          title
+          imageUrl
+          publisher
+          description
+          backgroundColor
+          externalUrl
+          offer {
+            sponsor
+            promoCode
+            url
+          }
+          category {
+            name
+          }
+          sponsors {
+            name
+            imageUrl
+            url
+            summary
+            offer
+          }
+        }
+      }
+
+      query GetSponsors  ($input: Pagination) {
+        getSponsors(input: $input) {
+          sponsorCategory {
+            name
+          }
+          name
+          imageUrl
+          summary
+          offer
+        }
+      }
+
+    query GetSponsor ($input: SponsorInput!) {
+        getSponsor(input: $input) {
+          name
+          imageUrl
+          url
+          summary
+          offer
+          sponsorCategory {
+            name
+          }
+          podcast {
+            offer {
+              sponsor
+              promoCode
+              url
+            }
+            category {
+              name
+            }
+            title
+            imageUrl
+            publisher
+            description
+            backgroundColor
+          }
+        }
+      }
+
+     query GetSponsorPodcasts ($input: SponsorInput!) {
+        getSponsorPodcasts(input: $input) {
+          title
+          imageUrl
+          publisher
+          description
+          backgroundColor
+          offer {
+            sponsor
+            promoCode
+            url
+          }
+          category {
+            name
+          }
+        }
+      }
+
+ query GetSponsorCategories {
+        getSponsorCategories {
+          name
+        }
+      }
+
+query GetSponsorCategory ($input: SponsorCategoryInput!) {
+        getSponsorCategory(input: $input) {
+          name
+          sponsor {
+            name
+            imageUrl
+            offer
+            summary
+            url
+            podcast {
+              offer {
+                sponsor
+                promoCode
+                url
+              }
+              title
+              imageUrl
+              publisher
+              description
+              backgroundColor
+              category {
+                name
+              }
+            }
+          }
+        }
+      }
+
+     query GetPodcastCategories {
+        getPodcastCategories {
+          name
+          podcastId
+        }
+      }
+
+
+  query GetTopPicks ($input: TopPicksInput!) {
+        getTopPicks(input: $input) {
+          title
+          imageUrl
+          publisher
+          sponsors {
+            name
+            imageUrl
+          }
+          category {
+            name
+          }
+        }
+      }
+      
+   query TrendingOffersInput ($input: TrendingOffersInput!) {
+        getTrendingOffers(input: $input) {
+          imageUrl
+          summary
+          offer
+          name
+        }
+      }
+      
+    query GetCategorySponsors ($input: SponsorCategoryInput!) {
+        getCategorySponsors(input: $input) {
+          name
+          imageUrl
+          url
+          summary
+          offer
+        }
+      }
+
