@@ -23,19 +23,22 @@ struct SponsorView: View {
     var sponsor: GetSponsorQuery.Data.GetSponsor? {
         viewModel.sponsorData
     }
-
     
-//    @State private var path = NavigationPath()
+    @State var dataLoaded = false
 
     
         var body: some View {
-            if sponsor?.name == nil {
+            if !dataLoaded {
                 ZStack {
                     Rectangle().frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                         .foregroundColor(.black)
                         .ignoresSafeArea()
                     Text("Loading...")
                 }
+                .onChange(of: sponsor) {
+                    dataLoaded = true
+                }
+                
                    
             } else {
            
@@ -46,24 +49,38 @@ struct SponsorView: View {
                             
                        ScrollView {
                             VStack {
-                                AsyncImage(
-                                    url: URL(string: sponsor?.imageUrl ?? "")
-                                ) { image in
-                                    image.image?.resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 180, height: 180)
-                                        .cornerRadius(20)
-                                      
-                                }
+                       
+                                    AsyncImage(
+                                        url: URL(string: sponsor?.imageUrl ?? "")
+                                    ) { phase in
+                                        
+                                        if let image = phase.image {
+                                            image.resizable()
+                                                 .aspectRatio(contentMode: .fit)
+                                                 .frame(width: 180, height: 180)
+                                                 .cornerRadius(20)
+                                        } else {
+                                            Rectangle()
+                                                .frame(width: 180, height: 180)
+                                                .cornerRadius(20)
+                                                .foregroundStyle(Color(.systemGray5).gradient)
+                                        }
+                                       
+                                          
+                                    }
+                                        }
+                                    
+                              
                                 .padding(.bottom, 15)
-                          
-                                Text((sponsor?.url)!)
+                           
+                           if let url = sponsor?.url {
+                               Text((url).truncated(maxLength: 35))
                                         .font(.subheadline)
-                                        .fontWeight(.bold)
-                                        .foregroundStyle(.gray)
-                                
-                                
-                                //Buttons
+                                            .fontWeight(.semibold)
+                                            .foregroundStyle(.gray)
+                           }
+                           
+                               //Buttons
                                 HStack {
                                     Button {
                                       
@@ -87,48 +104,9 @@ struct SponsorView: View {
                                 }
                                 .padding()
                                
-                                //Sponsors
-                      
-                                VStack(spacing: 10) {
-                                    ForEach(sponsor?.podcast ?? [], id: \.self) {
-                                        podcast in
-                                        
-                                        NavigationLink(value: podcast) {
-                                                    HStack(spacing: 30) {
-                                                        AsyncImage(url: URL(string: podcast?.imageUrl ?? "")) {
-                                                            image in
-                                                            image.image?.resizable()
-                                                                .frame(width: 50, height: 50)
-                                                                .cornerRadius(10)
+                                //Podcasts
+                                PodcastListView(sponsor: sponsor)
                                                         
-                                                        }
-                                                        
-                                                        VStack(alignment:.leading) {
-                                                            if let podcast = podcast {
-                                                                Text(podcast.title)
-                                                                    .font(.caption.bold())
-                                                                    .foregroundStyle(.white)
-                                                                
-                                                                Text(podcast.publisher ?? "")
-                                                                    .font(.caption.bold())
-                                                                    .foregroundStyle(.gray)
-                                                            }
-                                                        }
-                                                          
-                                                        Spacer()
-                                                    }
-                                                }
-//                                        .onTapGesture {
-//                                            path.append(podcast)
-//                                        }
-//                                               
-                                                Divider()
-                                            
-                                             
-                                        }
-                                    }
-                                    .padding()
-                             
                                 Spacer()
                             }
                         }
@@ -136,6 +114,7 @@ struct SponsorView: View {
                         .padding()
                         .navigationTitle(sponsor?.name ?? "")
                         .toolbarColorScheme(.dark, for: .navigationBar)
+                        .tint(.white)
                         .toolbarTitleDisplayMode(.inline)
                         .navigationDestination(for: GetSponsorQuery.Data.GetSponsor.Podcast.self) { podcast in
                             PodcastView(title: GraphQLNullable(stringLiteral:podcast.title ) )
@@ -154,7 +133,6 @@ struct SponsorView: View {
             }
      
         }
-}
 
 #Preview {
     SponsorView(name: "Tushy")

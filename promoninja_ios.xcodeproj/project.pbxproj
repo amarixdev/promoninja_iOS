@@ -12,7 +12,9 @@
 		A32010C02B0FD64600F22357 /* SponsorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32010BF2B0FD64600F22357 /* SponsorViewModel.swift */; };
 		A32010C22B0FD65300F22357 /* SponsorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32010C12B0FD65300F22357 /* SponsorView.swift */; };
 		A32010C42B0FEB6F00F22357 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32010C32B0FEB6F00F22357 /* File.swift */; };
-		A32010C82B116BDB00F22357 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32010C72B116BDB00F22357 /* Router.swift */; };
+		A32010CA2B12583300F22357 /* TruncateString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32010C92B12583300F22357 /* TruncateString.swift */; };
+		A32010CC2B12665600F22357 /* SponsorListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32010CB2B12665500F22357 /* SponsorListView.swift */; };
+		A32010CF2B12672A00F22357 /* PodcastListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32010CE2B12672A00F22357 /* PodcastListView.swift */; };
 		A3A6527C2B0BAF9E00AEE068 /* promoninja_iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A6527B2B0BAF9E00AEE068 /* promoninja_iosApp.swift */; };
 		A3A6527E2B0BAF9E00AEE068 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A6527D2B0BAF9E00AEE068 /* ContentView.swift */; };
 		A3A652802B0BAF9F00AEE068 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3A6527F2B0BAF9F00AEE068 /* Assets.xcassets */; };
@@ -31,7 +33,9 @@
 		A32010BF2B0FD64600F22357 /* SponsorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorViewModel.swift; sourceTree = "<group>"; };
 		A32010C12B0FD65300F22357 /* SponsorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorView.swift; sourceTree = "<group>"; };
 		A32010C32B0FEB6F00F22357 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		A32010C72B116BDB00F22357 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		A32010C92B12583300F22357 /* TruncateString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruncateString.swift; sourceTree = "<group>"; };
+		A32010CB2B12665500F22357 /* SponsorListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorListView.swift; sourceTree = "<group>"; };
+		A32010CE2B12672A00F22357 /* PodcastListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastListView.swift; sourceTree = "<group>"; };
 		A3A652782B0BAF9E00AEE068 /* promoninja_ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = promoninja_ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3A6527B2B0BAF9E00AEE068 /* promoninja_iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = promoninja_iosApp.swift; sourceTree = "<group>"; };
 		A3A6527D2B0BAF9E00AEE068 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -70,6 +74,7 @@
 			children = (
 				A32010BB2B0FC5AD00F22357 /* PodcastViewModel.swift */,
 				A32010B92B0FC59D00F22357 /* PodcastView.swift */,
+				A32010CB2B12665500F22357 /* SponsorListView.swift */,
 			);
 			path = Podcast;
 			sourceTree = "<group>";
@@ -79,16 +84,9 @@
 			children = (
 				A32010BF2B0FD64600F22357 /* SponsorViewModel.swift */,
 				A32010C12B0FD65300F22357 /* SponsorView.swift */,
+				A32010CE2B12672A00F22357 /* PodcastListView.swift */,
 			);
 			path = Sponsor;
-			sourceTree = "<group>";
-		};
-		A32010C52B116BC300F22357 /* Router */ = {
-			isa = PBXGroup;
-			children = (
-				A32010C72B116BDB00F22357 /* Router.swift */,
-			);
-			path = Router;
 			sourceTree = "<group>";
 		};
 		A3A6526F2B0BAF9E00AEE068 = {
@@ -110,7 +108,6 @@
 		A3A6527A2B0BAF9E00AEE068 /* promoninja_ios */ = {
 			isa = PBXGroup;
 			children = (
-				A32010C52B116BC300F22357 /* Router */,
 				A32010B82B0FC58B00F22357 /* Views */,
 				A3A6529D2B0C3C9900AEE068 /* Util */,
 				A3A6529A2B0C163400AEE068 /* Model */,
@@ -153,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				A3A6529E2B0C3CBC00AEE068 /* HexColorConverter.swift */,
+				A32010C92B12583300F22357 /* TruncateString.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -237,15 +235,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A32010CC2B12665600F22357 /* SponsorListView.swift in Sources */,
 				A3A6527E2B0BAF9E00AEE068 /* ContentView.swift in Sources */,
 				A32010C02B0FD64600F22357 /* SponsorViewModel.swift in Sources */,
-				A32010C82B116BDB00F22357 /* Router.swift in Sources */,
 				A3A6529F2B0C3CBC00AEE068 /* HexColorConverter.swift in Sources */,
 				A32010C22B0FD65300F22357 /* SponsorView.swift in Sources */,
 				A32010BA2B0FC59D00F22357 /* PodcastView.swift in Sources */,
 				A3A6527C2B0BAF9E00AEE068 /* promoninja_iosApp.swift in Sources */,
 				A32010BC2B0FC5AD00F22357 /* PodcastViewModel.swift in Sources */,
 				A32010C42B0FEB6F00F22357 /* File.swift in Sources */,
+				A32010CF2B12672A00F22357 /* PodcastListView.swift in Sources */,
+				A32010CA2B12583300F22357 /* TruncateString.swift in Sources */,
 				A3A652992B0BC0FF00AEE068 /* Network.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,6 +393,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.amarixdev.promoninja-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -422,6 +423,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.amarixdev.promoninja-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

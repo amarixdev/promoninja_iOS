@@ -31,14 +31,21 @@ struct PodcastView: View {
         return Color(rgbString: podcast?.backgroundColor ?? "rgb(0,0,0)")
     }
     
+    
+   @State var dataLoaded = false
+    
     var body: some View {
-        if podcast?.title == nil {
+        if  podcast?.sponsors?.count == nil {
             ZStack {
-                Rectangle().frame(width: .infinity, height: .infinity)
+                Rectangle().frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                     .foregroundColor(.black)
                     .ignoresSafeArea()
                 Text("Loading...")
             }
+            .onChange(of: podcast) {
+                dataLoaded = true
+            }
+          
         } else {
           
                 ZStack {
@@ -47,22 +54,37 @@ struct PodcastView: View {
                         .ignoresSafeArea()
                         
                    ScrollView {
+                       
                         VStack {
-                            AsyncImage(
-                                url: URL(string: podcast?.imageUrl ?? "")
-                            ) { image in
-                                image.image?.resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 225, height: 225)
-                                    .cornerRadius(20)
+                            Group {
+                                AsyncImage(
+                                    url: URL(string: podcast?.imageUrl ?? "")
+                                ) { phase in
+                                    if let image = phase.image {
+                                        image.resizable()
+                                             .aspectRatio(contentMode: .fit)
+                                             .frame(width: 180, height: 180)
+                                             .cornerRadius(20)
+                                             .shadow(radius: 10)
+                                    } else {
+                                        Rectangle()
+                                            .frame(width: 180, height: 180)
+                                            .cornerRadius(20)
+                                            .foregroundStyle(Color(.systemGray5).gradient)
+                                    }
                                   
-                            }
-                            .padding(.bottom, 15)
-                            VStack {
-                                Text((podcast?.publisher!)!)
-                                    .font(.subheadline)
-                                    .fontWeight(.bold)
-                                    .foregroundStyle(.gray)
+                                      
+                                }
+                                .padding(.bottom, 15)
+                                VStack {
+                                    if let publisher = podcast?.publisher {
+                                        Text((publisher.truncated(maxLength: 35)))
+                                            .font(.subheadline)
+                                            .fontWeight(.semibold)
+                                            .foregroundStyle(.gray)
+                                    }
+                                   
+                                }
                             }
                             
                             //Buttons
@@ -70,7 +92,7 @@ struct PodcastView: View {
                                 Button {
                                   
                                 } label: {
-                                    Text(podcast?.category?[0]?.name ?? "")
+                                    Text( podcast?.category?[0]?.name ?? "")
                                         .foregroundStyle(.white)
                                         .font(.subheadline.bold())
                                       
@@ -91,46 +113,7 @@ struct PodcastView: View {
                            
                             //Sponsors
                   
-                            VStack(spacing: 10) {
-                                    ForEach(podcast?.sponsors ?? [], id:\.self) {
-                                        sponsor in
-                                        
-                                        NavigationLink(value: sponsor)  {
-                                                HStack(spacing: 30) {
-                                                    AsyncImage(url: URL(string: sponsor?.imageUrl ?? "")) {
-                                                        image in
-                                                        image.image?.resizable()
-                                                            .frame(width: 50, height: 50)
-                                                            .cornerRadius(10)
-                                                    
-                                                    }
-                                                    
-                                                    
-                                                    
-                                                    VStack(alignment:.leading) {
-                                                        if let sponsor = sponsor {
-                                                            Text(sponsor.name ?? "")
-                                                                .font(.caption.bold())
-                                                                .foregroundStyle(.white)
-                                                        }
-                                                        if let url = sponsor?.url {
-                                                            Text(url)
-                                                                .font(.caption.bold())
-                                                                .foregroundStyle(.gray)
-                                                        }
-                                                    }
-                                                    Spacer()
-                                                }
-//                                                .onTapGesture {
-//                                                    path.append(sponsor)
-//                                                }
-                                            }
-                                        
-                                            Divider()
-                                         
-                                    }
-                                }
-                                .padding()
+                            SponsorListView(podcast: podcast)
                         
                             Spacer()
                         }
@@ -144,6 +127,7 @@ struct PodcastView: View {
                 .navigationTitle(podcast?.title ?? "")
                 .toolbarColorScheme(.dark, for: .navigationBar)
                 .toolbarTitleDisplayMode(.inline)
+                .tint(.white)
            
              
         }
@@ -154,7 +138,7 @@ struct PodcastView: View {
     }
 }
 
-//#Preview {
-//    PodcastView( title: "kill tony")
-//        .preferredColorScheme(.dark)
-//}
+#Preview {
+    PodcastView( title: "Aubrey Marcus Podcast")
+        .preferredColorScheme(.dark)
+}
