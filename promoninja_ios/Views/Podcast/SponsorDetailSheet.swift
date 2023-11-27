@@ -8,10 +8,39 @@
 import SwiftUI
 import PromoninjaSchema
 
+
+
+
+
 struct SponsorDetailSheet: View {
+    let podcast: GetPodcastQuery.Data.GetPodcast?
    @Binding var sponsor: GetPodcastQuery.Data.GetPodcast.Sponsor?
    @StateObject var router = Router.router
    @Environment(\.dismiss) var dismiss
+       
+    @State private var copied = false
+    
+    var matchingOffer: GetPodcastQuery.Data.GetPodcast.Offer? {
+         guard let podcast = podcast,
+               let offers = podcast.offer
+          else { return nil }
+          
+        let matchingOffer = offers.filter {$0?.sponsor == sponsor?.name}
+         return matchingOffer[0]
+      }
+      
+      
+      var affiliateLink: String {
+          return matchingOffer?.url ?? ""
+      }
+      
+      var promoCode: String {
+          return matchingOffer?.promoCode ?? ""
+      }
+  
+    
+
+ 
     
     var body: some View {
                 VStack {
@@ -25,6 +54,12 @@ struct SponsorDetailSheet: View {
                                             .resizable()
                                             .frame(width: 100, height: 100)
                                             .cornerRadius(10)
+                                    } else {
+                                        ZStack {
+                                          ProgressView()
+                                                .progressViewStyle(.circular)
+                                        }
+                                        .frame(width: 100, height: 100)
                                     }
                                    
                                 }
@@ -66,20 +101,21 @@ struct SponsorDetailSheet: View {
                                 .padding(.horizontal, 20)
                                
                         }
-                       
+                      
                         
                         VStack {
                             Text("Affiliate Link")
                                 .fontWeight(.semibold)
                                 .font(.caption)
-                            Button {
-                             
-                            } label: {
-                                Text(sponsor?.url ?? "")
-                                    
-                            }
-                            .buttonStyle(.bordered)
-                            .opacity(0.8)
+                            
+                            Link(destination: URL(string: "https://"+affiliateLink)!, label: {
+                                Text(affiliateLink)
+                                    .font(.subheadline)
+                                    .opacity(0.8)
+                            })
+                            .padding(10)
+                            .background()
+                            .cornerRadius(10)
                         }
                        
                         Divider()
@@ -89,12 +125,39 @@ struct SponsorDetailSheet: View {
                    //promoCode Button
                   
                    Spacer()
-                    
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("Dismiss")
+                    if !promoCode.isEmpty {
+                        VStack(spacing: 10) {
+                            Text("Use code at checkout")
+                                .font(.subheadline)
+                                .opacity(0.8)
+                            Button {
+                                let pasteboard = UIPasteboard.general
+                                pasteboard.string = promoCode
+                                copied = true
+                            } label: {
+                                HStack {
+                                    ZStack {
+                                        Text(promoCode)
+                                            .font(.title2)
+                                            .fontWeight(.heavy)
+                                            .tracking(5)
+                                            .opacity(copied ? 0 : 1)
+                                        Text("Copied")
+                                            .font(.title2)
+                                            .fontWeight(.heavy)
+                                            .tracking(5)
+                                            .opacity(copied ? 1 : 0)
+                                    }
+                                    .animation(.none, value: copied)
+                                    Image(systemName: "doc.on.doc")
+                                        .imageScale(.small)
+                                }
+                               
+                               
+                            }
+                        }
                     }
+             
                     
                     Spacer()
                 }

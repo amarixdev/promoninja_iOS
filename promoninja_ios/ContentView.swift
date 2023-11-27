@@ -23,7 +23,7 @@ struct ContentView: View {
                 }
                 .tag(0)
                 
-                SponsorView(name: "Athletic Greens")
+                SponsorView(name: "SquareSpace")
                     .tabItem {
                         Text("Sponsor")
                     }

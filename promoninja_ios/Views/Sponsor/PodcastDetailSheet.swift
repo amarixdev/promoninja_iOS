@@ -15,10 +15,32 @@ struct PodcastDetailSheet: View {
    @StateObject var router = Router.router
    @Environment(\.dismiss) var dismiss
     
+    @State private var copied = false
+    
     var podcastTheme: Color {
         return Color(rgbString: podcast?.backgroundColor ?? "rgb(0,0,0)")
     }
+    
+    
+    var matchingOffer: GetSponsorQuery.Data.GetSponsor.Podcast.Offer? {
+         guard let podcast = podcast,
+               let offers = podcast.offer
+          else { return nil }
+          
+        let matchingOffer = offers.filter {$0?.sponsor == sponsor?.name}
+        return matchingOffer[0]
+      }
+      
         
+    var affiliateLink: String {
+        return matchingOffer?.url ?? ""
+    }
+    
+    var promoCode: String {
+        return matchingOffer?.promoCode ?? ""
+    }
+
+    
     var body: some View {
     
             
@@ -35,6 +57,14 @@ struct PodcastDetailSheet: View {
                                         .frame(width: 100, height: 100)
                                         .cornerRadius(10)
                                 }
+                                else {
+                                    ZStack {
+                                      ProgressView()
+                                            .progressViewStyle(.circular)
+                                    }
+                                    .frame(width: 100, height: 100)
+                                }
+                     
                                
                             }
                            
@@ -81,21 +111,54 @@ struct PodcastDetailSheet: View {
                         Text("Affiliate Link")
                             .fontWeight(.semibold)
                             .font(.caption)
-                        Button {
-                         
-                        } label: {
-                            Text( sponsor?.url ?? "")
-                                
-                        }
-                        .buttonStyle(.bordered)
-                        .opacity(0.8)
+                        
+                        Link(destination: URL(string: "https://"+affiliateLink)!, label: {
+                            Text(affiliateLink)
+                                .font(.subheadline)
+                                .opacity(0.8)
+                        })
+                        .padding(10)
+                        .background()
+                        .cornerRadius(10)
                     }
                    
                     Divider()
                 }
                 
                //promoCode Button
-              
+               Spacer()
+                
+                if !promoCode.isEmpty {
+                    VStack(spacing: 10) {
+                        Text("Use code at checkout")
+                            .font(.subheadline)
+                            .opacity(0.8)
+                        Button {
+                            let pasteboard = UIPasteboard.general
+                            pasteboard.string = promoCode
+                            copied = true
+                        } label: {
+                            HStack {
+                                ZStack {
+                                    Text(promoCode)
+                                        .font(.title2)
+                                        .fontWeight(.heavy)
+                                        .tracking(5)
+                                        .opacity(copied ? 0 : 1)
+                                    Text("Copied")
+                                        .font(.title2)
+                                        .fontWeight(.heavy)
+                                        .tracking(5)
+                                        .opacity(copied ? 1 : 0)
+                                }
+                                .animation(.none, value: copied)
+                                Image(systemName: "doc.on.doc")
+                                    .imageScale(.small)
+                            }
+                        }
+                    }
+                }
+                
                Spacer()
                 
             }

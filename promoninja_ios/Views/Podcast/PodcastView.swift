@@ -70,10 +70,18 @@ struct PodcastView: View {
                                              .cornerRadius(20)
                                              .shadow(radius: 10)
                                     } else {
-                                        Rectangle()
-                                            .frame(width: 180, height: 180)
-                                            .cornerRadius(20)
-                                            .foregroundStyle(Color(.systemGray5).gradient)
+                                        ZStack {
+                                            ProgressView()
+                                                .progressViewStyle(.circular)
+                                            Rectangle()
+                                                .foregroundStyle(.white.opacity(0.2))
+                                                
+                                                
+                                        }
+                                        .frame(width: 180, height: 180)
+                                        .cornerRadius(20)
+                                      
+                                            
                                             
                                     }
                                   

@@ -15,7 +15,6 @@ struct SponsorListView: View {
     
     @State private var amount = 0.0
     
-    
     init (podcast: GetPodcastQuery.Data.GetPodcast? ) {
         self.podcast = podcast
         self._selectedSponsor = State(wrappedValue: podcast?.sponsors?[0])
@@ -25,7 +24,7 @@ struct SponsorListView: View {
         VStack(spacing:0) {
                 ForEach(podcast?.sponsors ?? [], id:\.self) {
                     sponsor in
-                        Divider()
+                            Divider()
                                 ZStack {
                                     Color(.clear )
                                
@@ -85,9 +84,9 @@ struct SponsorListView: View {
                                 }
                                 .sheet(isPresented: $displaySheet) {
                                     ZStack {
-                                        LinearGradient(colors: [Color(.sponsorTheme).opacity(0.8), Color(.black).opacity(0.8), .black.opacity(0.95), .black], startPoint: .top, endPoint: .bottom)
+                                        LinearGradient(colors: [Color(.sponsorTheme).opacity(0.85), .black.opacity(0.95), .black], startPoint: .top, endPoint: .bottom)
                                             .ignoresSafeArea(.all)
-                                        SponsorDetailSheet(sponsor: $selectedSponsor)
+                                        SponsorDetailSheet(podcast: podcast , sponsor: $selectedSponsor)
                                             .presentationDetents([.medium, .large])
                                             .presentationBackground(.clear)
 
@@ -104,10 +103,6 @@ struct SponsorListView: View {
           
             }
         .padding(.vertical)
-    
-           
-       
-          
     }
 }
 
