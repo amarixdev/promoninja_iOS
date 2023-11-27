@@ -10,12 +10,10 @@ import Apollo
 import PromoninjaSchema
 
 
-
-
-
 struct ContentView: View {
+    @StateObject var router = Router.router
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $router.path) {
             TabView {
                 VStack {
                     Text("Home Screen")
@@ -32,6 +30,7 @@ struct ContentView: View {
                     .tag(1)
             }
         }
+        .tint(.clear)
        
         
     }

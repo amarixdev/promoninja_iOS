@@ -1,5 +1,5 @@
 //
-//  PodcastListView.swift
+//  Podcasts.swift
 //  promoninja_ios
 //
 //  Created by Amari DeVaughn on 11/25/23.
@@ -11,61 +11,137 @@ import PromoninjaSchema
 struct PodcastListView: View {
     
     let sponsor: GetSponsorQuery.Data.GetSponsor?
+    @State private var displaySheet = false
+    @State private var selectedPodcast: GetSponsorQuery.Data.GetSponsor.Podcast?
+    @State private var podcastTheme: Color = Color(.black)
+
+    init (sponsor: GetSponsorQuery.Data.GetSponsor? ) {
+        self.sponsor = sponsor
+        self._selectedPodcast = State(wrappedValue: (sponsor?.podcast?[0])!)
+    }
+    
+
     
     var body: some View {
-        VStack(spacing: 10) {
-            ForEach(sponsor?.podcast ?? [], id: \.self) {
-                podcast in
-             
-                NavigationLink(value: podcast) {
-                            HStack(spacing: 30) {
-                                if let index = sponsor?.podcast?.firstIndex(of: podcast) {
-                                    Text(String (index))
-                                        .font(.caption)
-                                        .foregroundStyle(.gray)
-                                }
-                                AsyncImage(url: URL(string: podcast?.imageUrl ?? "")) {
-                                    phase in
-                                    if let image = phase.image {
-                                        image.resizable()
-                                            .frame(width: 50, height: 50)
-                                            .cornerRadius(10)
-                                    } else {
-                                        Rectangle()
-                                            .frame(width: 50, height: 50)
-                                            .cornerRadius(10)
-                                            .foregroundStyle(Color(.systemGray5).gradient)
-                                    }
-                                }
+        VStack(spacing:0) {
+                ForEach(sponsor?.podcast ?? [], id:\.self) {
+                    podcast in
+                    Divider()
+                                ZStack {
                                 
-                                VStack(alignment:.leading) {
-                                    if let podcast = podcast {
-                                        Text(podcast.title.truncated(maxLength: 20))
-                                            .font(.caption.bold())
-                                            .foregroundStyle(.white)
-                                        
-                                        Text(podcast.publisher?.truncated(maxLength: 20) ?? "")
-                                            .font(.caption)
-                                            .fontWeight(.semibold)
-                                            .foregroundStyle(.gray)
-                                    }
-                                }
-                                  
-                                Spacer()
-                            }
-                            
-                        }
+                                    Color(.clear)
+                                        .opacity(0.2)
+                                        .frame(height: 80)
+                                        .ignoresSafeArea(.all)
+                                        .contentShape(Rectangle())
+                                        .onTapGesture {
+                                            selectedPodcast = podcast
+                                
+                                            
+                                            if let backgroundColor = podcast?.backgroundColor {
+                                                podcastTheme = Color(rgbString: backgroundColor)                  
+                                            }
+                                            
+                                            displaySheet = true
+                                           
+                                        }
+                                        .onChange(of: podcastTheme) {
+                                            if selectedPodcast == sponsor?.podcast?[0] {
+                                                displaySheet = true
+                                            }
 
+                                        }
+                                  
+                                    
+                                      
+                                    HStack(spacing: 15) {
+                                        if let index = sponsor?.podcast?.firstIndex(of: podcast) {
+                                            Text(String (index + 1))
+                                                .font(.caption)
+                                                .foregroundStyle(.gray)
+                                                .padding(.leading)
+                                        }
+                                        AsyncImage(url: URL(string: podcast?.imageUrl ?? "")) {
+                                            phase in
+                                            if let image = phase.image {
+                                                image.resizable()
+                                                    .frame(width: 50, height: 50)
+                                                    .cornerRadius(10)
+                                            } else {
+                                                Rectangle()
+                                                    .frame(width: 50, height: 50)
+                                                    .cornerRadius(10)
+                                                    .foregroundStyle(Color(.systemGray5).gradient)
+                                            }
+                                           
+                                        
+                                        }
+                                        VStack(alignment:.leading) {
+                                            if let title = podcast?.title {
+                                                Text(title.truncated(maxLength: 25) )
+                                                    .font(.caption)
+                                                    
+                                                    .foregroundStyle(.white)
+                                            }
+                                            if let publisher = podcast?.publisher {
+                                                Text(publisher.truncated(maxLength: 25))
+                                                    .font(.caption)
+                                                    
+                                                    .foregroundStyle(.gray)
+                                            }
+                                        }
+                                        Spacer()
+//                                        Image(systemName: "ellipsis")
+//                                            .padding(.trailing)
+                                    }
+                               
+                                   
+                                }
+                  
+                                .sheet(isPresented: $displaySheet) {
+                                    
+                                     ZStack {
+                                         LinearGradient(gradient: Gradient(colors: [podcastTheme.opacity(0.8), .black.opacity(0.95), .black]), startPoint: .top, endPoint: .bottom)
+                                             .ignoresSafeArea(.all)
+                                        
+                                        PodcastDetailSheet(podcast: $selectedPodcast, sponsor: sponsor)
+                                             .presentationDetents([.medium])
+                                             .presentationBackground {
+                                                 Color.clear
+                                             }
+                                          
+                                             
+                                             
+                                             
+                                             
+                                         
+
+                                    }
+                             
+                                }
+                              
+                               
+                                
+                               
                         Divider()
-                    
                      
                 }
             }
-            .padding()
+    
+           
+       
+        .padding(.vertical)
     }
 }
 
-//
 //#Preview {
-//    PodcastListView()
+//    SponsorListView(po)
+//}
+
+
+
+
+
+//#Preview {
+//    Podcasts()
 //}

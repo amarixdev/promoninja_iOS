@@ -8,9 +8,10 @@
 import SwiftUI
 import PromoninjaSchema
 
+
 struct PodcastView: View {
     @StateObject var viewModel: PodcastViewModel
-    
+    @Environment(\.dismiss) var dismiss
     var title: GraphQLNullable<String>
     
     init(title: GraphQLNullable<String>) {
@@ -33,6 +34,7 @@ struct PodcastView: View {
     
     
    @State var dataLoaded = false
+    @State var showMore = false
     
     var body: some View {
         if  podcast?.sponsors?.count == nil {
@@ -40,7 +42,8 @@ struct PodcastView: View {
                 Rectangle().frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                     .foregroundColor(.black)
                     .ignoresSafeArea()
-                Text("Loading...")
+                ProgressView()
+                    .progressViewStyle(.circular)
             }
             .onChange(of: podcast) {
                 dataLoaded = true
@@ -56,7 +59,7 @@ struct PodcastView: View {
                    ScrollView {
                        
                         VStack {
-                            Group {
+                        
                                 AsyncImage(
                                     url: URL(string: podcast?.imageUrl ?? "")
                                 ) { phase in
@@ -71,63 +74,141 @@ struct PodcastView: View {
                                             .frame(width: 180, height: 180)
                                             .cornerRadius(20)
                                             .foregroundStyle(Color(.systemGray5).gradient)
+                                            
                                     }
                                   
                                       
                                 }
                                 .padding(.bottom, 15)
-                                VStack {
-                                    if let publisher = podcast?.publisher {
-                                        Text((publisher.truncated(maxLength: 35)))
-                                            .font(.subheadline)
-                                            .fontWeight(.semibold)
-                                            .foregroundStyle(.gray)
-                                    }
-                                   
-                                }
+              
+                            if let publisher = podcast?.publisher {
+                                Text(publisher.truncated(maxLength: 35))
+                                    .font(.subheadline)
+                                    .padding(.vertical)
+                                    
                             }
                             
-                            //Buttons
-                            HStack {
-                                Button {
+                            if let description = podcast?.description {
+                                VStack(spacing: 15) {
+                                    DisclosureGroup(isExpanded: $showMore) {
+                                        Text(description)
+                                    } label: {
+                                        Button {
+                                            withAnimation {
+                                                showMore.toggle()
+                                            }
+                                           
+                                        } label: {
+                                           Text("See details")
+                                               
+                                               
+                                            
+                                        }
+                                        .buttonStyle(.bordered)
+                                        .padding(.bottom)
+                                    }
+
                                   
-                                } label: {
-                                    Text( podcast?.category?[0]?.name ?? "")
-                                        .foregroundStyle(.white)
-                                        .font(.subheadline.bold())
-                                      
+                               
+                                        .font(.subheadline)
+//                                        .multilineTextAlignment(.center)
+                      
+
                                 }
-                                .buttonStyle(.bordered)
-                                Button {
+                                
+                                .transition(.move(edge: .bottom))
+                                .padding(20)
+                                .opacity(0.8)
+                                
+                                
+                                                              
                                   
-                                } label: {
-                                    Text("Share")
-                                        .foregroundStyle(.white)
-                                        .font(.subheadline.bold())
-                                      
-                                }
-                                .buttonStyle(.bordered)
-                          
+                                
+                                
+                                    
+                                
+                              
                             }
-                            .padding(.top)
+                            
+                                
+                               
+                            
+                            ZStack {
+                                Rectangle()
+                                    .frame(width: .none, height: 90)
+                                    .foregroundStyle(.ultraThinMaterial)
+                                    .shadow(color: .black, radius: 20)
+                                
+                                VStack(spacing: 12) {
+                                    Text("Thanks for supporting the show.")
+                                        .opacity(0.8)
+                                   
+                                }
+                           
+                            }
+                            .padding(.vertical, 40)
+
+                            
+                            
+                            VStack {
+                                Image(.logo)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 100, height: 100)
+                                
+                                Text("""
+                                           "Empower your favorite podcaster by making your purchase through their affiliate link."
+                                           
+                                           """)
+                                    .multilineTextAlignment(.center)
+                                   
+                                    .italic()
+                                    .font(.subheadline)
+                                    .opacity(0.8)
+                            }
+                            .frame(width: 300)
+                            
+                            //Buttons
+                   
                            
                             //Sponsors
-                  
-                            SponsorListView(podcast: podcast)
+                            HStack {
+                              
+                                
+                            }
+                            .padding(.leading)
+                               
+                                SponsorListView(podcast: podcast)
+                          
                         
                             Spacer()
                         }
                     }
               
-                    .padding()
+                   .padding(.vertical)
+                   .padding(.horizontal, 0)
+                   
+                   
                    
                     
                     
                 }
-                .navigationTitle(podcast?.title ?? "")
+                .navigationTitle(podcast?.title.truncated(maxLength: 25) ?? "")
                 .toolbarColorScheme(.dark, for: .navigationBar)
                 .toolbarTitleDisplayMode(.inline)
                 .tint(.white)
+                .navigationBarBackButtonHidden(true)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "chevron.left")
+                                .foregroundStyle(.white)
+                        }
+                    }
+                }
+        
            
              
         }
