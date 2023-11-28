@@ -105,17 +105,12 @@ struct PodcastListView: View {
                                              .ignoresSafeArea(.all)
                                         
                                         PodcastDetailSheet(podcast: $selectedPodcast, sponsor: sponsor)
-                                             .presentationDetents([.medium])
+                                             .presentationDetents([.medium, .large])
                                              .presentationBackground {
                                                  Color.clear
                                              }
-                                          
                                              
-                                             
-                                             
-                                             
-                                         
-
+    
                                     }
                              
                                 }

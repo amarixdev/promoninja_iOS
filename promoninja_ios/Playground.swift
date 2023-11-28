@@ -21,7 +21,7 @@ struct Playground: View {
         ZStack {
           
             TextCustom {
-                Text("test")
+                Text("tester")
             }
             Rectangle()
                   .frame(width: 100, height: 100)

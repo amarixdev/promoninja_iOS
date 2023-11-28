@@ -16,6 +16,7 @@ struct PodcastDetailSheet: View {
    @Environment(\.dismiss) var dismiss
     
     @State private var copied = false
+    @State private var degrees:Double = 0
     
     var podcastTheme: Color {
         return Color(rgbString: podcast?.backgroundColor ?? "rgb(0,0,0)")
@@ -67,6 +68,10 @@ struct PodcastDetailSheet: View {
                      
                                
                             }
+                            .rotation3DEffect(
+                                .degrees(degrees),
+                                                      axis: (x: 0.0, y: 1.0, z: 0.0)
+                            )
                            
                         
                             .onTapGesture {
@@ -137,6 +142,9 @@ struct PodcastDetailSheet: View {
                             let pasteboard = UIPasteboard.general
                             pasteboard.string = promoCode
                             copied = true
+                            withAnimation {
+                                degrees += 360
+                            }
                         } label: {
                             HStack {
                                 ZStack {
@@ -162,6 +170,7 @@ struct PodcastDetailSheet: View {
                Spacer()
                 
             }
+            .sensoryFeedback(.success, trigger: copied)
             
                    
             .padding()

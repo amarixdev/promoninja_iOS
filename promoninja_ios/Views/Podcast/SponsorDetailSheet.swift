@@ -19,6 +19,8 @@ struct SponsorDetailSheet: View {
    @Environment(\.dismiss) var dismiss
        
     @State private var copied = false
+    @State private var degrees:Double = 0
+
     
     var matchingOffer: GetPodcastQuery.Data.GetPodcast.Offer? {
          guard let podcast = podcast,
@@ -63,6 +65,10 @@ struct SponsorDetailSheet: View {
                                     }
                                    
                                 }
+                                .rotation3DEffect(
+                                    .degrees(degrees),
+                                                          axis: (x: 0.0, y: 1.0, z: 0.0)
+                                )
                                 .onTapGesture {
                                     if let sponsor = sponsor {
                                         router.path.append(sponsor)
@@ -134,6 +140,10 @@ struct SponsorDetailSheet: View {
                                 let pasteboard = UIPasteboard.general
                                 pasteboard.string = promoCode
                                 copied = true
+                                withAnimation {
+                                    degrees += 360
+                                }
+                              
                             } label: {
                                 HStack {
                                     ZStack {
@@ -161,6 +171,8 @@ struct SponsorDetailSheet: View {
                     
                     Spacer()
                 }
+                .sensoryFeedback(.success, trigger: copied)
+
               
             
             .padding()

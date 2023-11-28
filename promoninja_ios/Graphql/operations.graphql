@@ -105,11 +105,16 @@ query GetPodcasts {
         }
       }
 
- query GetSponsorCategories {
-        getSponsorCategories {
-          name
-        }
-      }
+query GetSponsorCategories {
+  getSponsorCategories {
+    name
+    sponsor {
+      name
+      imageUrl
+      offer
+    }
+  }
+}
 
 query GetSponsorCategory ($input: SponsorCategoryInput!) {
         getSponsorCategory(input: $input) {

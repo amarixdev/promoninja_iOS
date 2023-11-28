@@ -16,7 +16,19 @@ struct ContentView: View {
         NavigationStack(path: $router.path) {
             TabView {
                 VStack {
-                    Text("Home Screen")
+                    HomeScreenView()
+                        .navigationDestination(for: GetSponsorCategoriesQuery.Data.GetSponsorCategory.Sponsor.self) { sponsor in
+                            if let name = sponsor.name {
+                                SponsorView(name: name )
+                            }
+                        }
+                        .navigationDestination(for: GetSponsorCategoriesQuery.Data.GetSponsorCategory.self) { category in
+                          
+                            CategoryView(category: category)
+                           
+                           
+                        }
+                    
                 }
                 .tabItem {
                     Text("Home")

@@ -59,7 +59,7 @@ struct SponsorView: View {
                                         
                                         if let image = phase.image {
                                             image.resizable()
-                                                 .aspectRatio(contentMode: .fit)
+                                                .scaledToFill()
                                                  .frame(width: 180, height: 180)
                                                  .cornerRadius(20)
                                         } else {
@@ -204,6 +204,6 @@ struct SponsorView: View {
         }
 
 #Preview {
-    SponsorView(name: "Tushy")
+    SponsorView(name: "squarespace")
         .preferredColorScheme(.dark)
 }

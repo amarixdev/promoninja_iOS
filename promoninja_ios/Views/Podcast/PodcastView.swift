@@ -107,13 +107,15 @@ struct PodcastView: View {
                                             }
                                            
                                         } label: {
-                                           Text("See details")
+                                            Text(showMore ? "Hide details" : "See details")
+                                                
                                                
                                                
                                             
                                         }
                                         .buttonStyle(.bordered)
                                         .padding(.bottom)
+                                        .animation(.none, value: showMore)
                                     }
 
                                   

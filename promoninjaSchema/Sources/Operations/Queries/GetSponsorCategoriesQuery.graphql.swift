@@ -7,7 +7,7 @@ public class GetSponsorCategoriesQuery: GraphQLQuery {
   public static let operationName: String = "GetSponsorCategories"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query GetSponsorCategories { getSponsorCategories { __typename name } }"#
+      #"query GetSponsorCategories { getSponsorCategories { __typename name sponsor { __typename name imageUrl offer } } }"#
     ))
 
   public init() {}
@@ -34,9 +34,31 @@ public class GetSponsorCategoriesQuery: GraphQLQuery {
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("name", String.self),
+        .field("sponsor", [Sponsor?]?.self),
       ] }
 
       public var name: String { __data["name"] }
+      public var sponsor: [Sponsor?]? { __data["sponsor"] }
+
+      /// GetSponsorCategory.Sponsor
+      ///
+      /// Parent Type: `Sponsor`
+      public struct Sponsor: PromoninjaSchema.SelectionSet {
+        public let __data: DataDict
+        public init(_dataDict: DataDict) { __data = _dataDict }
+
+        public static var __parentType: ApolloAPI.ParentType { PromoninjaSchema.Objects.Sponsor }
+        public static var __selections: [ApolloAPI.Selection] { [
+          .field("__typename", String.self),
+          .field("name", String?.self),
+          .field("imageUrl", String?.self),
+          .field("offer", String?.self),
+        ] }
+
+        public var name: String? { __data["name"] }
+        public var imageUrl: String? { __data["imageUrl"] }
+        public var offer: String? { __data["offer"] }
+      }
     }
   }
 }
