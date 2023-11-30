@@ -66,13 +66,13 @@ struct SponsorListView: View {
                                         }
                                         VStack(alignment:.leading) {
                                             if let name = sponsor?.name {
-                                                Text(name.truncated(maxLength: 25) )
+                                                Text(name.truncated(25) )
                                                     .font(.caption)
                                                     
                                                     .foregroundStyle(.white)
                                             }
                                             if let url = sponsor?.url {
-                                                Text(url.truncated(maxLength: 25))
+                                                Text(url.truncated(25))
                                                     .font(.caption)
                                                     
                                                     .foregroundStyle(.gray)

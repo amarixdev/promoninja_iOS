@@ -90,7 +90,7 @@ struct PodcastView: View {
                                 .padding(.bottom, 15)
               
                             if let publisher = podcast?.publisher {
-                                Text(publisher.truncated(maxLength: 35))
+                                Text(publisher.truncated(35))
                                     .font(.subheadline)
                                     .padding(.vertical)
                                     
@@ -121,7 +121,6 @@ struct PodcastView: View {
                                   
                                
                                         .font(.subheadline)
-//                                        .multilineTextAlignment(.center)
                       
 
                                 }
@@ -129,14 +128,6 @@ struct PodcastView: View {
                                 .transition(.move(edge: .bottom))
                                 .padding(20)
                                 .opacity(0.8)
-                                
-                                
-                                                              
-                                  
-                                
-                                
-                                    
-                                
                               
                             }
                             
@@ -203,7 +194,7 @@ struct PodcastView: View {
                     
                     
                 }
-                .navigationTitle(podcast?.title.truncated(maxLength: 25) ?? "")
+                .navigationTitle(podcast?.title.truncated(25) ?? "")
                 .toolbarColorScheme(.dark, for: .navigationBar)
                 .toolbarTitleDisplayMode(.inline)
                 .tint(.white)

@@ -17,30 +17,44 @@ struct ContentView: View {
             TabView {
                 VStack {
                     HomeScreenView()
-                        .navigationDestination(for: GetSponsorCategoriesQuery.Data.GetSponsorCategory.Sponsor.self) { sponsor in
-                            if let name = sponsor.name {
-                                SponsorView(name: name )
-                            }
-                        }
-                        .navigationDestination(for: GetSponsorCategoriesQuery.Data.GetSponsorCategory.self) { category in
-                          
-                            CategoryView(category: category)
-                           
-                           
-                        }
-                    
+                        
                 }
                 .tabItem {
                     Text("Home")
                 }
                 .tag(0)
                 
-                SponsorView(name: "SquareSpace")
+                CreatorsView()
                     .tabItem {
-                        Text("Sponsor")
+                        Text("Creator")
                     }
                     .tag(1)
             }
+            .navigationDestination(for: GetSponsorCategoriesQuery.Data.GetSponsorCategory.Sponsor.self) { sponsor in
+                if let name = sponsor.name {
+                    SponsorView(name: name )
+                }
+            }
+            .navigationDestination(for: GetSponsorCategoriesQuery.Data.GetSponsorCategory.self) { category in
+              
+                CategoryView(category: category)
+            
+            }
+            .navigationDestination(for: GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast.self) { podcast in
+                PodcastView(title: GraphQLNullable(stringLiteral: podcast.title))
+            }
+            
+            .navigationDestination(for: GetSponsorQuery.Data.GetSponsor.Podcast.self) { podcast in
+                        PodcastView(title: GraphQLNullable(stringLiteral:podcast.title ) )
+                    }
+            .navigationDestination(for: GetPodcastQuery.Data.GetPodcast.Sponsor.self) { sponsor in
+                        SponsorView(name: sponsor.name!)
+
+                    }
+            .navigationDestination(for: GetPodcastQuery.Data.GetPodcast.self) { podcast in
+                PodcastView(title: GraphQLNullable(stringLiteral: podcast.title))
+
+                    }
         }
         .tint(.clear)
        

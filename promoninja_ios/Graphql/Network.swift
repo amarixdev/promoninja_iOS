@@ -11,7 +11,7 @@ import SwiftUI
 class Network {
   static let shared = Network()
     
-  private(set) lazy var apollo = ApolloClient(url: URL(string: "http://localhost:4000/")!)
+  private(set) lazy var apollo = ApolloClient(url: URL(string: "https://promoninja-apollogql.herokuapp.com")!)
 }
 
 //  "https://promoninja-apollogql.herokuapp.com" || "http://localhost:4000/"

@@ -70,9 +70,11 @@ struct SponsorDetailSheet: View {
                                                           axis: (x: 0.0, y: 1.0, z: 0.0)
                                 )
                                 .onTapGesture {
+                                    
                                     if let sponsor = sponsor {
                                         router.path.append(sponsor)
-                                        }
+                                        router.printPath()
+                                    }
                                     
                                         dismiss()
                                     }

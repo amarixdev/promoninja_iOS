@@ -148,6 +148,14 @@ query GetSponsorCategory ($input: SponsorCategoryInput!) {
         getPodcastCategories {
           name
           podcastId
+          podcast {
+              imageUrl
+              title
+              publisher
+              sponsors {
+                name
+                    }
+            }
         }
       }
 

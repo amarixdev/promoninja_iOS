@@ -9,10 +9,16 @@ import SwiftUI
 
 struct GreetingView: View {
     var body: some View {
-        Text(greetingMessage())
-            .font(.largeTitle)
-            .fontWeight(.bold)
-            .opacity(0.9)
+        VStack(alignment:.leading) {
+            Text(greetingMessage())
+                .font(.largeTitle)
+                .fontWeight(.semibold)
+            Text("Let's find some deals!")
+                .font(.title2)
+                .fontWeight(.semibold)
+                .opacity(0.8)
+        }
+       
     }
 
     private func greetingMessage() -> String {
@@ -21,15 +27,16 @@ struct GreetingView: View {
         let hour = calendar.component(.hour, from: currentDate)
 
         if hour < 12 {
-            return "Good Morning"
+            return "Good Morning,"
         } else if hour < 18 {
-            return "Good Afternoon"
+            return "Good Afternoon,"
         } else {
-            return "Good Night"
+            return "Good Evening,"
         }
     }
 }
 
 #Preview {
     GreetingView()
+        .preferredColorScheme(.dark)
 }

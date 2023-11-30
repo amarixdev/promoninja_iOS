@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension String {
-    func truncated ( maxLength: Int) -> String {
+    func truncated (_ maxLength: Int) -> String {
         if self.count <= maxLength {
             return self
         } else {

@@ -54,12 +54,12 @@ struct CategoryView: View {
                                             }
                                         }
                                         VStack(alignment:.leading) {
-                                            Text(sponsor.name!)
+                                            Text(sponsor.name ?? "")
                                                 .font(.title2)
                                                 .multilineTextAlignment(.leading)
                                                 .foregroundStyle(.white)
                                                 .fontWeight(.semibold)
-                                            Text(sponsor.offer!)
+                                            Text(sponsor.offer?.truncated(60) ?? "")
                                                 .font(.caption)
                                                 .multilineTextAlignment(.leading)
                                                 .foregroundStyle(.white)

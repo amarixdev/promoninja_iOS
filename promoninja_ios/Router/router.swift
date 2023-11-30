@@ -12,5 +12,9 @@ class Router: ObservableObject {
     
     static var router = Router()
     @Published var path = NavigationPath()
+    
+    func printPath () {
+        print(path)
+    }
 }
 

@@ -26,9 +26,9 @@ struct HomeScreenView: View {
             VStack {
                 HStack {
                      Text("Discover")
-                            .font(.largeTitle)
+                            .font(.title)
                             .fontWeight(.heavy)
-                            .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
+//                            .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
                             .padding(.leading)
                             
                         Spacer()
@@ -42,8 +42,7 @@ struct HomeScreenView: View {
                     .padding()
                   
                 }
-                .background(.clear.opacity(0))
-                .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+ 
                 Spacer()
             }
          
@@ -60,7 +59,7 @@ struct HomeScreenView: View {
                                 HStack {
                                     VStack(alignment: .leading, spacing: 20) {
                                         HStack {
-                                            Text(category.name)
+                                            Text(category.name == "Outdoors" ? "Misc." : category.name)
                                                 .font(.title3)
                                                 .fontWeight(.semibold)
                                             Spacer()

@@ -78,13 +78,13 @@ struct PodcastListView: View {
                                         }
                                         VStack(alignment:.leading) {
                                             if let title = podcast?.title {
-                                                Text(title.truncated(maxLength: 25) )
+                                                Text(title.truncated(25) )
                                                     .font(.caption)
                                                     
                                                     .foregroundStyle(.white)
                                             }
                                             if let publisher = podcast?.publisher {
-                                                Text(publisher.truncated(maxLength: 25))
+                                                Text(publisher.truncated(25))
                                                     .font(.caption)
                                                     
                                                     .foregroundStyle(.gray)

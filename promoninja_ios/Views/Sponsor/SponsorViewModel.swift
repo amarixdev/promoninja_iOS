@@ -28,8 +28,6 @@ class SponsorViewModel:ObservableObject {
                 
                 
                 DispatchQueue.main.async {
-//                    self.sponsorData = Sponsor(name: sponsorData.name!, imageUrl: sponsorData.imageUrl!, url: sponsorData.url!, summary: sponsorData.summary!, offer: sponsorData.offer!, podcast: sponsorData.podcast! , sponsorCategory: sponsorData.sponsorCategory!)
-                   
                     self.sponsorData = sponsorData
                     
                 }

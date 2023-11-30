@@ -78,7 +78,7 @@ struct SponsorView: View {
                                     }
                                 
                                 if let url = sponsor?.url {
-                                    Text(url.truncated(maxLength: 35))
+                                    Text(url.truncated(35))
                                         .font(.subheadline)
                                         .padding(.vertical)
                                 }
@@ -166,7 +166,7 @@ struct SponsorView: View {
                                 .padding(.vertical)
                                 .padding(.horizontal, 0)
                         }
-                    .navigationTitle(sponsor?.name?.truncated(maxLength: 25) ?? "")
+                    .navigationTitle(sponsor?.name?.truncated(25) ?? "")
                         .toolbarColorScheme(.dark, for: .navigationBar)
                         .tint(.white)
                         .toolbarTitleDisplayMode(.inline)
@@ -185,13 +185,6 @@ struct SponsorView: View {
                 
                 
                 
-                        .navigationDestination(for: GetSponsorQuery.Data.GetSponsor.Podcast.self) { podcast in
-                            PodcastView(title: GraphQLNullable(stringLiteral:podcast.title ) )
-                        }
-                        .navigationDestination(for: GetPodcastQuery.Data.GetPodcast.Sponsor.self) { sponsor in
-                            SponsorView(name: sponsor.name!)
-//                            Text("Clicked")
-                        }
 
                         
                     }
