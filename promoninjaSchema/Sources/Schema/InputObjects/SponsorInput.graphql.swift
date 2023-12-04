@@ -20,7 +20,8 @@ public struct SponsorInput: InputObject {
     summary: GraphQLNullable<String> = nil,
     promoCode: GraphQLNullable<String> = nil,
     offer: GraphQLNullable<String> = nil,
-    isCategoryPage: GraphQLNullable<Bool> = nil
+    isCategoryPage: GraphQLNullable<Bool> = nil,
+    isTrendingPage: GraphQLNullable<Bool> = nil
   ) {
     __data = InputDict([
       "name": name,
@@ -32,7 +33,8 @@ public struct SponsorInput: InputObject {
       "summary": summary,
       "promoCode": promoCode,
       "offer": offer,
-      "isCategoryPage": isCategoryPage
+      "isCategoryPage": isCategoryPage,
+      "isTrendingPage": isTrendingPage
     ])
   }
 
@@ -84,5 +86,10 @@ public struct SponsorInput: InputObject {
   public var isCategoryPage: GraphQLNullable<Bool> {
     get { __data["isCategoryPage"] }
     set { __data["isCategoryPage"] = newValue }
+  }
+
+  public var isTrendingPage: GraphQLNullable<Bool> {
+    get { __data["isTrendingPage"] }
+    set { __data["isTrendingPage"] = newValue }
   }
 }

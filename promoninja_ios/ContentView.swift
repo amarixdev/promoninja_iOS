@@ -12,54 +12,25 @@ import PromoninjaSchema
 
 struct ContentView: View {
     @StateObject var router = Router.router
+
     var body: some View {
-        NavigationStack(path: $router.path) {
+
             TabView {
-                VStack {
-                    HomeScreenView()
-                        
-                }
-                .tabItem {
-                    Text("Home")
-                }
-                .tag(0)
+                NavigationStack(path: $router.path) {
+                    HomeScreen()
+                        .tabItem {
+                            Text("Home")
+                                .foregroundStyle(.white)
+                        }
+               }
                 
-                CreatorsView()
-                    .tabItem {
-                        Text("Creator")
-                    }
-                    .tag(1)
-            }
-            .navigationDestination(for: GetSponsorCategoriesQuery.Data.GetSponsorCategory.Sponsor.self) { sponsor in
-                if let name = sponsor.name {
-                    SponsorView(name: name )
-                }
-            }
-            .navigationDestination(for: GetSponsorCategoriesQuery.Data.GetSponsorCategory.self) { category in
-              
-                CategoryView(category: category)
-            
-            }
-            .navigationDestination(for: GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast.self) { podcast in
-                PodcastView(title: GraphQLNullable(stringLiteral: podcast.title))
+             
             }
             
-            .navigationDestination(for: GetSponsorQuery.Data.GetSponsor.Podcast.self) { podcast in
-                        PodcastView(title: GraphQLNullable(stringLiteral:podcast.title ) )
-                    }
-            .navigationDestination(for: GetPodcastQuery.Data.GetPodcast.Sponsor.self) { sponsor in
-                        SponsorView(name: sponsor.name!)
-
-                    }
-            .navigationDestination(for: GetPodcastQuery.Data.GetPodcast.self) { podcast in
-                PodcastView(title: GraphQLNullable(stringLiteral: podcast.title))
-
-                    }
+           
         }
-        .tint(.clear)
-       
-        
-    }
+
+    
 
 }
 

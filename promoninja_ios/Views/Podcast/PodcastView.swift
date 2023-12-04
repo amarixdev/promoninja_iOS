@@ -19,9 +19,7 @@ struct PodcastView: View {
         self._viewModel = StateObject(wrappedValue: PodcastViewModel(title: title))
         
     }
-  
-   
-    
+
     var podcast: GetPodcastQuery.Data.GetPodcast? {
             viewModel.podcastData
     }
@@ -48,6 +46,7 @@ struct PodcastView: View {
             .onChange(of: podcast) {
                 dataLoaded = true
             }
+            .toolbarStyle()
           
         } else {
           
@@ -95,6 +94,7 @@ struct PodcastView: View {
                                     .padding(.vertical)
                                     
                             }
+              
                             
                             if let description = podcast?.description {
                                 VStack(spacing: 15) {
@@ -128,6 +128,7 @@ struct PodcastView: View {
                                 .transition(.move(edge: .bottom))
                                 .padding(20)
                                 .opacity(0.8)
+                          
                               
                             }
                             
@@ -142,6 +143,7 @@ struct PodcastView: View {
                                 
                                 VStack(spacing: 12) {
                                     Text("Thanks for supporting the show.")
+                                        .font(.subheadline)
                                         .opacity(0.8)
                                    
                                 }
@@ -195,20 +197,7 @@ struct PodcastView: View {
                     
                 }
                 .navigationTitle(podcast?.title.truncated(25) ?? "")
-                .toolbarColorScheme(.dark, for: .navigationBar)
-                .toolbarTitleDisplayMode(.inline)
-                .tint(.white)
-                .navigationBarBackButtonHidden(true)
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Image(systemName: "chevron.left")
-                                .foregroundStyle(.white)
-                        }
-                    }
-                }
+                .toolbarStyle()
         
            
              

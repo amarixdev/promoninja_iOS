@@ -14,10 +14,10 @@
             filePath = "promoninja_ios/Views/Creators/CreatorsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
-            landmarkName = "body"
-            landmarkType = "24">
+            startingLineNumber = "330"
+            endingLineNumber = "330"
+            landmarkName = "CreatorsView"
+            landmarkType = "14">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

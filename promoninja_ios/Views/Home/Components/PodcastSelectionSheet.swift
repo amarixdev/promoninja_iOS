@@ -15,7 +15,7 @@ struct PodcastSelectionSheet: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack {
             
             VStack {
                 Image(creator.image)
@@ -24,58 +24,112 @@ struct PodcastSelectionSheet: View {
                     .frame(width: 120, height: 120)
                     .clipShape(Circle())
                 Text(creator.fullName)
-                    .font(.title)
+                    .font(.title2)
                     .fontWeight(.semibold)
-                
-                Text("Which of my podcasts are you searching for")
+                    .padding(.bottom, 10)
+                Text(creator.summary)
+                    .font(.caption)
+                    .multilineTextAlignment(.center)
                     .opacity(0.8)
-                    .font(.footnote)
-                    .onTapGesture {
-                       print (podcasts)
-                    }
-                
-                Divider()
+            
             }
+            
+            .padding(.top)
+            .padding(.bottom, 40)
            
             
 
-            
-            if !podcasts.isEmpty  {
-                VStack(alignment: .leading) {
-                    ForEach(podcasts, id: \.self) {podcast in
-                        HStack(spacing: 10) {
-                            AsyncImage(url: URL(string: podcast.imageUrl ?? "")) { phase in
-                                if let image = phase.image {
-                                    image.resizable()
-                                        .frame(width: 60, height: 60)
+            let multiplePodcasts = creator.multiplePodcasts
+            VStack {
+                Text(multiplePodcasts ? "Check out my podcasts" : "Check out my podcast")
+                    .font(.headline)
+                    .onTapGesture {
+                       print (multiplePodcasts)
+                    }
+                
+                Text("Listeners can enjoy various discounts.")
+                    .font(.caption)
+                    .opacity(0.8)
+            }
+            .padding(.bottom, 10)
+      
+                VStack() {
+        
+                    if !podcasts.isEmpty
+                    {
+        
+                        Divider()
+                        HStack {
+                            ForEach(podcasts, id: \.self) {podcast in
+                                ZStack {
+                                    Color.clear
+                                        .contentShape(Rectangle())
+                                        .frame(width: .none, height: 80)
                                         .cornerRadius(10)
+                                     
+                               
+                                        HStack(spacing: 10) {
+                                            AsyncImage(url: URL(string: podcast.imageUrl ?? "")) { phase in
+                                                if let image = phase.image {
+                                                    image.resizable()
+                                                        .frame(width: 60, height: 60)
+                                                        .cornerRadius(10)
+                                                } else {
+                                                    ZStack {
+                                                        ProgressView()
+                                                            .progressViewStyle(.circular)
+                                                        Rectangle()
+                                                            .foregroundStyle(.clear)
+                                                        
+                                                        
+                                                    }
+                                                    .frame(width: 60, height: 60)
+                                                    .cornerRadius(10)
+                                                    
+                                                }
+                                            }
+                                            
+                                            Text(multiplePodcasts ? podcast.title.truncated(15) : podcast.title)
+                                                .font(.caption)
+                                                .fontWeight(.semibold)
+                                           
+                                            Spacer()
+                                            
+                                        }
+                                       
+                                        .padding(.vertical, 10)
+                                   
+                                   
                                 }
+                                .onTapGesture {
+                                    print("l")
+                                    withAnimation {
+                                        tapped = podcast.title
+                                    }
+                                  
+                                    Router.router.path.append(podcast)
+                                    dismiss()
+                                }
+                               
+                              
+                              
                                 
+                             
+                               
+                              
                             }
-                            
-                            Text(podcast.title)
-                                .font(.caption)
-                                .fontWeight(.semibold)
-                                
-                           Spacer()
                         }
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 15)
-                        .onTapGesture {
-                            withAnimation {
-                                tapped = podcast.title
-                            }
-                          
-                            Router.router.path.append(podcast)
-                            dismiss()
-                        }
-                        .background( tapped == podcast.title ? .gray.opacity(0.35) : .clear)
-                        .cornerRadius(10)
-                      
+                    
+                    }
+                    else {
+                        Color.clear
+                            .contentShape(Rectangle())
+                            .frame(width: .none, height: 88)
+                            .cornerRadius(10)
                     }
                 }
               
-            }
+            Spacer()
         }
         .padding()
         .onAppear {
@@ -83,7 +137,8 @@ struct PodcastSelectionSheet: View {
                 getPodcastData(title: GraphQLNullable(stringLiteral: podcastTitle))
             }
         }
-        .padding(.horizontal)
+ 
+        
        
         
     }
@@ -105,7 +160,7 @@ struct PodcastSelectionSheet: View {
 }
 
 #Preview {
-    PodcastSelectionSheet(creator:.constant( Creator(fullName: "Bobby Lee", image: .bobby, podcasts: ["Bad Friends", "TigerBelly"])))
+    PodcastSelectionSheet(creator:.constant( Creator(fullName: "Bobby Lee", image: .bobby, podcasts: ["Bad Friends", "TigerBelly"],  summary: "Joseph James Rogan is an American UFC color commentator, podcaster, comedian, actor, and former television host. He hosts The Joe Rogan Experience, a podcast in which he discusses current events, comedy, politics, philosophy, science, martial arts, and hobbies with a variety of guests.")))
         .preferredColorScheme(.dark)
 }
 

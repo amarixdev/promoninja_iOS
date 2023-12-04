@@ -11,10 +11,15 @@ import SwiftUI
 class Router: ObservableObject {
     
     static var router = Router()
-    @Published var path = NavigationPath()
-    
-    func printPath () {
-        print(path)
+    @Published var path = NavigationPath() {  
+        didSet {
+            print("navigationModel.path.count: \(path.count)")
+            print (Router.router.path.isEmpty)
+        }
     }
+
 }
 
+enum Navigation: String, Hashable {
+    case discoverPage
+}

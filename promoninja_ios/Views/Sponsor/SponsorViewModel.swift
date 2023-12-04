@@ -15,9 +15,12 @@ import PromoninjaSchema
 class SponsorViewModel:ObservableObject {
     
     @Published var sponsorData: GetSponsorQuery.Data.GetSponsor?
-     
+    @Published var trendingSponsors = [[GetSponsorQuery.Data.GetSponsor?]()]
+    
+   
     init (name: String) {
         getSponsorData(name: name)
+        getTrendingSponsors()
     }
     
     func getSponsorData (name: String) {
@@ -36,35 +39,46 @@ class SponsorViewModel:ObservableObject {
         
     }
     
-//   private func populatePodcasts (podcasts: [GetSponsorQuery.Data.GetSponsor.Podcast?]) -> [Podcast] {
-//     
-//     return  podcasts.compactMap { podcast in
-//         Podcast(title: podcast?.title ?? "", imageUrl: podcast?.imageUrl ?? "", category: podcast?.category ?? [], sponsors: [], offers: podcast?.offer ?? "", publisher: podcast?.publisher ?? "", description: podcast?.description ?? "", backgroundColor: podcast?.backgroundColor ?? "")
-//       }
-//       
-//   }
-//    
-//    private func populateSponsors (sponsors: [GetPodcastQuery.Data.GetPodcast.Sponsor]) -> [Sponsor] {
-//        return sponsors.map { sponsor in
-//            Sponsor(name: sponsor.name ?? "", imageUrl: sponsor.imageUrl ?? "", url: sponsor.url ?? "", summary: sponsor.summary ?? "", offer: sponsor.offer ?? "", podcast: <#T##[Podcast?]#>, sponsorCategory: <#T##[GetSponsorQuery.Data.GetSponsor.SponsorCategory?]#>)
-//        }
-//    }
-//    
-//    
-//    private func populateCategory (category: [GetPodcastQuery.Data.GetPodcast.Category]) -> [Category] {
-//        return category.map { category in
-//            Category(id: <#T##String#>, name: <#T##String#>, podcast: <#T##[Podcast]#>)
-//        }
-//    }
-//    
-//    
-//    private func populateSponsorCategory( sponsorCategory: [GetSponsorQuery.Data.GetSponsor.SponsorCategory?] ) -> [SponsorCategory] {
-//        return sponsorCategory.map { sponsorCategory in
-//            SponsorCategory(name: <#T##String?#>, sponsor: <#T##[Sponsor]#>)
-//            
-//        }
-//    }
-    
+    private func getTrendingSponsors() {
+        var previousGroup = SponsorGroup(title: "", sponsorNames: [""])
+        var result = [[GetSponsorQuery.Data.GetSponsor?]]()
+        let dispatchGroup = DispatchGroup()
+
+        for sponsorGroup in sponsorGroups {
+            var groupData = [GetSponsorQuery.Data.GetSponsor?]()
+            let currentGroup = sponsorGroup
+            
+            
+            for sponsorName in sponsorGroup.sponsorNames {
+                dispatchGroup.enter()
+
+                Network.shared.apollo.fetch(query: GetSponsorQuery(input: SponsorInput(name: sponsorName))) { result in
+                    defer {
+                        dispatchGroup.leave()
+                    }
+
+                    guard let data = try? result.get().data else { return }
+                    if let sponsorData = data.getSponsor {
+                        if currentGroup.title != previousGroup.title {
+                            groupData.append(sponsorData)
+                        }
+                    }
+                }
+            }
+
+            dispatchGroup.notify(queue: .main) {
+                // This block will be executed when all asynchronous operations are complete
+                result.append(groupData)
+                groupData.removeAll()
+                previousGroup = currentGroup
+                
+                // Perform any actions that depend on the result, e.g., update UI
+                self.trendingSponsors = result
+            }
+        }
+    }
+
+
 }
 
 

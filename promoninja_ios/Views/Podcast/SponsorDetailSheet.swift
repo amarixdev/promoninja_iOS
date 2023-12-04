@@ -73,7 +73,6 @@ struct SponsorDetailSheet: View {
                                     
                                     if let sponsor = sponsor {
                                         router.path.append(sponsor)
-                                        router.printPath()
                                     }
                                     
                                         dismiss()

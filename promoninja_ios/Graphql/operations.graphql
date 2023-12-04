@@ -158,31 +158,6 @@ query GetSponsorCategory ($input: SponsorCategoryInput!) {
             }
         }
       }
-
-
-  query GetTopPicks ($input: TopPicksInput!) {
-        getTopPicks(input: $input) {
-          title
-          imageUrl
-          publisher
-          sponsors {
-            name
-            imageUrl
-          }
-          category {
-            name
-          }
-        }
-      }
-      
-   query TrendingOffersInput ($input: TrendingOffersInput!) {
-        getTrendingOffers(input: $input) {
-          imageUrl
-          summary
-          offer
-          name
-        }
-      }
       
     query GetCategorySponsors ($input: SponsorCategoryInput!) {
         getCategorySponsors(input: $input) {

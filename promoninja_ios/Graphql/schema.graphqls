@@ -80,6 +80,7 @@ input SponsorInput {
   promoCode: String
   offer: String
   isCategoryPage: Boolean
+  isTrendingPage: Boolean
 }
 
 input TopPicksInput {

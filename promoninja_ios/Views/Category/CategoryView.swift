@@ -85,7 +85,7 @@ struct CategoryView: View {
         }
       
         .navigationTitle(category.name)
-        .toolbarTitleDisplayMode(.inline)
+        .toolbarStyle()
     }
 }
 

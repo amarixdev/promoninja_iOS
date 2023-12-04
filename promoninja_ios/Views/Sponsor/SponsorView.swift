@@ -41,6 +41,7 @@ struct SponsorView: View {
                 .onChange(of: sponsor) {
                     dataLoaded = true
                 }
+                .toolbarStyle()
                 
                    
             } else {
