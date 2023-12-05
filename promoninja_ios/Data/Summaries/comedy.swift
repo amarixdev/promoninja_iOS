@@ -18,9 +18,12 @@ let comedySummary: [String: String] = [
     
     "Duncan Trussel": "Charles Duncan Trussell is an American actor and stand-up comic, known for his podcast The Duncan Trussell Family Hour. He appeared on and co-created the 2020 Netflix series The Midnight Gospel, and starred alongside Joe Rogan in the SYFY series Joe Rogan Questions Everything.",
     
-    "Charlamagne Da God": "Lenard Larry McKelvey (born June 29, 1978), known professionally as Charlamagne tha God or simply Charlamagne, is an American radio host, television personality and comedian. He is a co-host of the nationally syndicated radio show The Breakfast Club along with DJ Envy, with whom he was inducted into the Radio Hall of Fame in 2020 for their work on the show.",
+    "Charlamagne Da God": "Lenard Larry McKelvey, known professionally as Charlamagne tha God or simply Charlamagne, is an American radio host, television personality and comedian. He is a co-host of the nationally syndicated radio show The Breakfast Club along with DJ Envy, with whom he was inducted into the Radio Hall of Fame in 2020 for their work on the show.",
     
-    "Tom Segura" : "Thomas Weston Segura is a Peruvian-American stand-up comedian, writer, author, actor, and podcaster. Segura co-hosts the Your Mom's House podcast with his wife, fellow comedian Christina Pazsitzky. Segura also co-hosts the podcast Two Bears One Cave with friend and fellow comedian Bert Kreischer."
+    "Tom Segura" : "Thomas Weston Segura is a Peruvian-American stand-up comedian, writer, author, actor, and podcaster. Segura co-hosts the Your Mom's House podcast with his wife, fellow comedian Christina Pazsitzky. Segura also co-hosts the podcast Two Bears One Cave with friend and fellow comedian Bert Kreischer.",
+    
+    "Andrew Santino" : "Andrew James Santino is an American stand-up comedian, actor, and podcaster known for television series and films such as Sin City Saints, The Disaster Artist, Mixology, I'm Dying Up Here, Beef, and Dave.",
+    "Bobbi Althoff": "Known and beloved for her deadpan humor and for intentionally making her interviewees uncomfortable, Althoff has amassed over 5 million TikTok followers and 500,000 subscribers on her YouTube channel, where she posts her podcast episodes. The 26-year-old influencer began posting videos on TikTok in 2021, mainly focusing on content surrounding her children and her pregnancy experiences. However, she skyrocketed to fame in 2023 when she began her podcast, The Really Good Podcast."
 ]
 
 

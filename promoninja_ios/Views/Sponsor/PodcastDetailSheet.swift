@@ -14,9 +14,12 @@ struct PodcastDetailSheet: View {
     
    @StateObject var router = Router.router
    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var currentTab: CurrentTab
     
     @State private var copied = false
     @State private var degrees:Double = 0
+    
+    
     
     var podcastTheme: Color {
         return Color(rgbString: podcast?.backgroundColor ?? "rgb(0,0,0)")
@@ -51,7 +54,7 @@ struct PodcastDetailSheet: View {
                 HStack(spacing: 15) {
                     if let imageUrl = podcast?.imageUrl {
                   
-                            AsyncImage(url: URL (string: imageUrl)) { phase in
+                            AsyncImage(url: URL (string: imageUrl), transaction: Transaction(animation: .bouncy)) { phase in
                                 if let image = phase.image {
                                     image
                                         .resizable()
@@ -76,10 +79,15 @@ struct PodcastDetailSheet: View {
                         
                             .onTapGesture {
                                 if let podcast = podcast {
-                                    router.path.append(podcast)
+                                    if currentTab.name == "home" {
+                                        router.homePath.append(podcast)
+                                    } else if currentTab.name == "discover" {
+                                        router.discoverPath.append(podcast)
                                     }
-                                
+                                    
                                     dismiss()
+                                    
+                                    }
                                 }
                                 
                     
@@ -169,6 +177,9 @@ struct PodcastDetailSheet: View {
                 
                Spacer()
                 
+            }
+            .onAppear {
+                print(currentTab.name)
             }
             .sensoryFeedback(.success, trigger: copied)
             

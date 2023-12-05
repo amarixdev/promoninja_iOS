@@ -17,6 +17,7 @@ struct SponsorDetailSheet: View {
    @Binding var sponsor: GetPodcastQuery.Data.GetPodcast.Sponsor?
    @StateObject var router = Router.router
    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var currentTab: CurrentTab
        
     @State private var copied = false
     @State private var degrees:Double = 0
@@ -50,7 +51,7 @@ struct SponsorDetailSheet: View {
                     HStack(spacing: 15) {
                         if let imageUrl = sponsor?.imageUrl {
                       
-                                AsyncImage(url: URL (string: imageUrl)) { phase in
+                                AsyncImage(url: URL (string: imageUrl), transaction: Transaction(animation: .bouncy)) { phase in
                                     if let image = phase.image {
                                         image
                                             .resizable()
@@ -72,7 +73,14 @@ struct SponsorDetailSheet: View {
                                 .onTapGesture {
                                     
                                     if let sponsor = sponsor {
-                                        router.path.append(sponsor)
+                                        if currentTab.name == "home" {
+                                            router.homePath.append(sponsor)
+                                        } else if currentTab.name == "discover" {
+                                            router.discoverPath.append(sponsor)
+                                        }
+                                        
+                                        
+                                       
                                     }
                                     
                                         dismiss()
@@ -172,6 +180,9 @@ struct SponsorDetailSheet: View {
                     
                     Spacer()
                 }
+                .onAppear {
+                    print(currentTab.name)
+                }
                 .sensoryFeedback(.success, trigger: copied)
 
               
@@ -180,6 +191,7 @@ struct SponsorDetailSheet: View {
    
    
     }
+    
     
 }
 

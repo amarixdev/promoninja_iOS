@@ -61,17 +61,14 @@ struct PodcastListView: View {
                                                 .foregroundStyle(.gray)
                                                 .padding(.leading)
                                         }
-                                        AsyncImage(url: URL(string: podcast?.imageUrl ?? "")) {
+                                        AsyncImage(url: URL(string: podcast?.imageUrl ?? ""), transaction: Transaction(animation: .bouncy)) {
                                             phase in
                                             if let image = phase.image {
                                                 image.resizable()
                                                     .frame(width: 50, height: 50)
                                                     .cornerRadius(10)
                                             } else {
-                                                Rectangle()
-                                                    .frame(width: 50, height: 50)
-                                                    .cornerRadius(10)
-                                                    .foregroundStyle(Color(.systemGray5).gradient)
+                                                Placeholder(frameSize: 50, imgSize: 20, icon: .podcast)
                                             }
                                            
                                         

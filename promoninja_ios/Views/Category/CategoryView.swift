@@ -30,7 +30,7 @@ struct CategoryView: View {
                                 NavigationLink(value:sponsor){
                                     HStack(spacing: 25) {
                                         if let imageUrl = sponsor.imageUrl {
-                                            AsyncImage(url: URL(string: imageUrl)) { phase in
+                                            AsyncImage(url: URL(string: imageUrl), transaction: Transaction(animation: .bouncy)) { phase in
                                                 if let image = phase.image {
                                                     image
                                                         .resizable()
@@ -40,15 +40,7 @@ struct CategoryView: View {
                                                         .shadow(radius: 10)
                                                 }
                                                 else {
-                                                    ZStack {
-                                                        ProgressView()
-                                                            .progressViewStyle(.circular)
-                                                        Rectangle()
-                                                            .foregroundStyle(.white.opacity(0.2))
-                                                        
-                                                    }
-                                                    .frame(width: 70, height: 70)
-                                                    .cornerRadius(10)
+                                                    Placeholder(frameSize: 70, imgSize: 35, icon: .sponsor)
                                                 }
                                                 
                                             }

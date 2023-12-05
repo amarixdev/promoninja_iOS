@@ -16,9 +16,11 @@ let trendingCreators: [String: [String: (ImageResource, [String], String)]] = [
         "Theo Von": (.theo, ["This Past Weekend"], comedySummary["Theo Von"]!),
         "Bobby Lee": (.bobby, ["TigerBelly", "Bad Friends"],  comedySummary["Bobby Lee"]!),
         "Andrew Schulz": (.schulz, ["Andrew Schulz's Flagrant with Akaash Singh", "The Brilliant Idiots"], comedySummary["Andrew Schulz"]! ),
-        "Duncan Trussel": (.duncan, ["Duncan Trussell Family Hour"], comedySummary["Duncan Trussel"]!),
+//        "Duncan Trussel": (.duncan, ["Duncan Trussell Family Hour"], comedySummary["Duncan Trussel"]!),
         "Charlamagne Da God": (.charla, ["The Brilliant Idiots"], comedySummary["Charlamagne Da God"]! ),
-        "Tom Segura": (.tom, ["Your Mom's House with Christina P. and Tom Segura", "2 Bears, 1 Cave with Tom Segura & Bert Kreischer"], comedySummary["Tom Segura"]!)
+        "Tom Segura": (.tom, ["Your Mom's House with Christina P. and Tom Segura", "2 Bears, 1 Cave with Tom Segura & Bert Kreischer"], comedySummary["Tom Segura"]!),
+        "Andrew Santino": (.santino, ["Whiskey Ginger with Andrew Santino", "Bad Friends"], comedySummary["Andrew Santino"]!),
+        "Bobbi Althoff": (.bobbi, ["The Really Good Podcast"], comedySummary["Bobbi Althoff"]!)
     ],
     
     "society & culture": [

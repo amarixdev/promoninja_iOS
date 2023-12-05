@@ -37,11 +37,9 @@ struct PodcastView: View {
     var body: some View {
         if  podcast?.sponsors?.count == nil {
             ZStack {
-                Rectangle().frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-                    .foregroundColor(.black)
+                LinearGradient(gradient: Gradient(colors: [.sponsorTheme, .sponsorTheme.opacity(0.25), .black]), startPoint: .top, endPoint: .bottom)
                     .ignoresSafeArea()
-                ProgressView()
-                    .progressViewStyle(.circular)
+                LoadingAnimation()
             }
             .onChange(of: podcast) {
                 dataLoaded = true
@@ -60,25 +58,16 @@ struct PodcastView: View {
                         VStack {
                         
                                 AsyncImage(
-                                    url: URL(string: podcast?.imageUrl ?? "")
+                                    url: URL(string: podcast?.imageUrl ?? ""), transaction: Transaction(animation: .bouncy)
                                 ) { phase in
                                     if let image = phase.image {
                                         image.resizable()
                                              .aspectRatio(contentMode: .fit)
                                              .frame(width: 180, height: 180)
-                                             .cornerRadius(20)
+                                             .cornerRadius(10)
                                              .shadow(radius: 10)
                                     } else {
-                                        ZStack {
-                                            ProgressView()
-                                                .progressViewStyle(.circular)
-                                            Rectangle()
-                                                .foregroundStyle(.white.opacity(0.2))
-                                                
-                                                
-                                        }
-                                        .frame(width: 180, height: 180)
-                                        .cornerRadius(20)
+                                        Placeholder(frameSize: 180, imgSize: 55, icon: .podcast)
                                       
                                             
                                             

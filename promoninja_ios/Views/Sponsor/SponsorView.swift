@@ -8,17 +8,17 @@
 import SwiftUI
 import PromoninjaSchema
 
- 
 
 
 struct SponsorView: View {
     @StateObject var viewModel: SponsorViewModel
     @Environment(\.dismiss) var dismiss
+
     var name: String
     
     init(name: String ) {
         self.name = name
-        self._viewModel = StateObject(wrappedValue: SponsorViewModel(name: name))
+        self._viewModel = StateObject(wrappedValue: SponsorViewModel(name: name, homePage: false))
     }
     
     var sponsor: GetSponsorQuery.Data.GetSponsor? {
@@ -31,11 +31,9 @@ struct SponsorView: View {
         var body: some View {
             if !dataLoaded {
                 ZStack {
-                    Rectangle().frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-                        .foregroundColor(.black)
+                    LinearGradient(gradient: Gradient(colors: [.sponsorTheme, .sponsorTheme.opacity(0.25), .black]), startPoint: .top, endPoint: .bottom)
                         .ignoresSafeArea()
-                    ProgressView()
-                        .progressViewStyle(.circular)
+                    LoadingAnimation()
                         
                 }
                 .onChange(of: sponsor) {
@@ -55,25 +53,16 @@ struct SponsorView: View {
                             VStack {
                        
                                     AsyncImage(
-                                        url: URL(string: sponsor?.imageUrl ?? "")
+                                        url: URL(string: sponsor?.imageUrl ?? ""), transaction: Transaction(animation: .bouncy)
                                     ) { phase in
                                         
                                         if let image = phase.image {
                                             image.resizable()
                                                 .scaledToFill()
                                                  .frame(width: 180, height: 180)
-                                                 .cornerRadius(20)
+                                                 .cornerRadius(10)
                                         } else {
-                                            ZStack {
-                                                ProgressView()
-                                                    .progressViewStyle(.circular)
-                                                Rectangle()
-                                                    .foregroundStyle(.white.opacity(0.2))
-                                                    
-                                                    
-                                            }
-                                            .frame(width: 180, height: 180)
-                                            .cornerRadius(20)
+                                            Placeholder(frameSize: 180, imgSize: 55, icon: .sponsor)
                                         }
                                           
                                     }
@@ -167,6 +156,7 @@ struct SponsorView: View {
                                 .padding(.vertical)
                                 .padding(.horizontal, 0)
                         }
+                   
                     .navigationTitle(sponsor?.name?.truncated(25) ?? "")
                         .toolbarColorScheme(.dark, for: .navigationBar)
                         .tint(.white)

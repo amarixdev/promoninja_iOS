@@ -13,14 +13,19 @@ import PromoninjaSchema
 
 
 class SponsorViewModel:ObservableObject {
-    
+    let homePage: Bool
     @Published var sponsorData: GetSponsorQuery.Data.GetSponsor?
     @Published var trendingSponsors = [[GetSponsorQuery.Data.GetSponsor?]()]
     
    
-    init (name: String) {
+    init (name: String, homePage: Bool) {
+        self.homePage = homePage
         getSponsorData(name: name)
-        getTrendingSponsors()
+        
+        if homePage {
+            getTrendingSponsors()
+        }
+       
     }
     
     func getSponsorData (name: String) {
@@ -52,7 +57,7 @@ class SponsorViewModel:ObservableObject {
             for sponsorName in sponsorGroup.sponsorNames {
                 dispatchGroup.enter()
 
-                Network.shared.apollo.fetch(query: GetSponsorQuery(input: SponsorInput(name: sponsorName))) { result in
+                Network.shared.apollo.fetch(query: GetSponsorQuery(input: SponsorInput(name: sponsorName, isTrendingPage: true))) { result in
                     defer {
                         dispatchGroup.leave()
                     }

@@ -13,6 +13,9 @@ struct PodcastSelectionSheet: View {
     @State private var podcasts = [ GetPodcastQuery.Data.GetPodcast]()
     @State private var tapped = ""
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var currentTab: CurrentTab
+    
+    let router = Router.router
     
     var body: some View {
         VStack {
@@ -69,22 +72,13 @@ struct PodcastSelectionSheet: View {
                                      
                                
                                         HStack(spacing: 10) {
-                                            AsyncImage(url: URL(string: podcast.imageUrl ?? "")) { phase in
+                                            AsyncImage(url: URL(string: podcast.imageUrl ?? ""), transaction: Transaction(animation: .bouncy)) { phase in
                                                 if let image = phase.image {
                                                     image.resizable()
                                                         .frame(width: 60, height: 60)
                                                         .cornerRadius(10)
                                                 } else {
-                                                    ZStack {
-                                                        ProgressView()
-                                                            .progressViewStyle(.circular)
-                                                        Rectangle()
-                                                            .foregroundStyle(.clear)
-                                                        
-                                                        
-                                                    }
-                                                    .frame(width: 60, height: 60)
-                                                    .cornerRadius(10)
+                                                    Placeholder(frameSize: 60, imgSize: 30, icon: .podcast)
                                                     
                                                 }
                                             }
@@ -107,7 +101,7 @@ struct PodcastSelectionSheet: View {
                                         tapped = podcast.title
                                     }
                                   
-                                    Router.router.path.append(podcast)
+                                    router.homePath.append(podcast)
                                     dismiss()
                                 }
                                

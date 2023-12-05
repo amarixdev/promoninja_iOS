@@ -9,16 +9,28 @@ import Foundation
 import SwiftUI
 
 class Router: ObservableObject {
-    
     static var router = Router()
-    @Published var path = NavigationPath() {  
+    
+    @Published var activePath = NavigationPath()
+    @Published var homePath = NavigationPath() {
         didSet {
-            print("navigationModel.path.count: \(path.count)")
-            print (Router.router.path.isEmpty)
+            activePath = homePath
         }
     }
+    
+    @Published var discoverPath = NavigationPath() {
+        didSet {
+            activePath = discoverPath
 
+        }
+    }
 }
+
+class CurrentTab: ObservableObject {
+    @Published var name: String = "home"
+}
+
+
 
 enum Navigation: String, Hashable {
     case discoverPage

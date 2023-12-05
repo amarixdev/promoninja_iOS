@@ -19,12 +19,17 @@ struct ToolBar: ViewModifier {
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    dismiss()
-                } label: {
+                HStack {
                     Image(systemName: "chevron.left")
                         .foregroundStyle(.white)
+                   Spacer()
                 }
+                .frame(width: 50, height: 50)
+                .onTapGesture {
+                    dismiss()
+                }
+             
+   
             }
         }
     

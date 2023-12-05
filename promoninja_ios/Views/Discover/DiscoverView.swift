@@ -11,7 +11,8 @@ import PromoninjaSchema
 struct DiscoverView: View {
     @StateObject var viewModel = SponsorCategoryViewModel()
     @Environment(\.dismiss) var dismiss
-
+    
+    
     
     var categories: [GetSponsorCategoriesQuery.Data.GetSponsorCategory?] {
         viewModel.categoryData ?? []
@@ -41,15 +42,14 @@ struct DiscoverView: View {
                                                     .blur(radius: !userIsLegal && (category.name == "Alcohol" || category.name == "Smoke & Vape") ? 10 : 0 )
                                                 Spacer()
                                                 
-                                            
-                                                
-                                                
+        
                                                 //Temp hard-code for limited sponsors
                                                 if category.name != "Outdoors" && category.name != "Alcohol" {
                                                     
                                                     if !userIsLegal && category.name == "Smoke & Vape" {
                                                         HStack {
                                                                 Text("View all")
+                                                                .fontWeight(.semibold)
                                                                 Image(systemName: "arrow.right")
                                                         }
                                                         .foregroundStyle(.white)
@@ -84,22 +84,25 @@ struct DiscoverView: View {
                                                         .cornerRadius(10)
                                                     VStack {
                                                         Text("Are you 21 or older?")
-                                                            .font(.headline.bold())
+                                                            .font(.title2.bold())
                                                         
                                                         Text("By tapping below, you confirm you are at least 21")
-                                                            .font(.caption)
+                                                            .multilineTextAlignment(.center)
+                                                            .font(.subheadline)
                                                             .opacity(0.8)
                                                         
                                                         Button("I'm over 21") {
                                                             withAnimation {
                                                                 userIsLegal = true
                                                             }
+                                                            
                                                           
                                                         }
                                                         .buttonStyle(.bordered)
                                                         .padding()
                                             
                                                     }
+                                       
                                                    
                                                 }
                                               
@@ -118,27 +121,17 @@ struct DiscoverView: View {
                                                                     if let imageUrl = sponsor?.imageUrl {
                                                                         NavigationLink(value: sponsor ) {
                                                                             
-                                                                            AsyncImage(url: URL (string: imageUrl)) { phase in
+                                                                            AsyncImage(url: URL (string: imageUrl), transaction: Transaction(animation: .bouncy)) { phase in
                                                                                 if let image = phase.image {
                                                                                     image.resizable()
                                                                                         .scaledToFill()
                                                                                         .frame(width: 100, height: 100)
-                                                                                      
                                                                                         .cornerRadius(10)
                                                                                    
                                                                                 }
                                                                                              
                                                                                 else {
-                                                                                    ZStack {
-                                                                                        ProgressView()
-                                                                                            .progressViewStyle(.circular)
-                                                                                        Rectangle()
-                                                                                            .foregroundStyle(.white.opacity(0.2))
-                                                                                            
-                                                                                            
-                                                                                    }
-                                                                                    .frame(width: 100, height: 100)
-                                                                                    .cornerRadius(20)
+                                                                                    Placeholder(frameSize: 100, imgSize: 40, icon: .sponsor)
                                                                                 }
                                                                             }
                                                                         }
@@ -153,7 +146,7 @@ struct DiscoverView: View {
                                                                 NavigationLink(value: category) {
                                                                     Image(systemName: "arrow.right")
                                                                         .imageScale(.large)
-                                                                        .padding(.leading)
+                                                                        .padding(.horizontal, 20)
                                                                         .foregroundStyle(.white)
                                                                         
                                                                     
@@ -166,6 +159,7 @@ struct DiscoverView: View {
                                                         }
                                                      
                                                     }
+                                                    .padding(.bottom)
                                                 }
                                             }
                                         
@@ -190,9 +184,46 @@ struct DiscoverView: View {
               .padding(.vertical)
              
             }
+            .sensoryFeedback(.selection, trigger: userIsLegal)
+           .navigationTitle("Discover")
+           .navigationDestination(for: GetSponsorCategoriesQuery.Data.GetSponsorCategory.self) { category in
+               CategoryView(category: category)
+           
+           }
+       
+           .navigationDestination(for: GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast.self) { podcast in
+               PodcastView(title: GraphQLNullable(stringLiteral: podcast.title))
+           }
+           
+           
+           .navigationDestination(for: GetSponsorQuery.Data.GetSponsor.Podcast.self) { podcast in
+                       PodcastView(title: GraphQLNullable(stringLiteral:podcast.title ) )
+                   }
+       
+           .navigationDestination(for: GetPodcastQuery.Data.GetPodcast.self) { podcast in
+               PodcastView(title: GraphQLNullable(stringLiteral: podcast.title))
+                   }
+           
+           .navigationDestination(for: GetSponsorCategoriesQuery.Data.GetSponsorCategory.Sponsor.self) { sponsor in
+               if let name = sponsor.name {
+                   SponsorView(name: name )
+               }
+           }
+        
+           .navigationDestination(for: GetPodcastQuery.Data.GetPodcast.Sponsor.self) { sponsor in
+               if let name = sponsor.name {
+                   SponsorView(name: name)
+               }
+                      
+                   }
+       
+           .navigationDestination(for: GetSponsorQuery.Data.GetSponsor.self) { sponsor in
+               if let name = sponsor.name {
+                   SponsorView(name: name)
+               }
+                      
+                   }
 
-            .navigationTitle("Discover")
-            .toolbarStyle()
         
          
    
@@ -203,6 +234,9 @@ struct DiscoverView: View {
 }
 
 #Preview {
-    DiscoverView()
-        .preferredColorScheme(.dark)
+    NavigationStack {
+        DiscoverView()
+            .preferredColorScheme(.dark)
+    }
+  
 }
