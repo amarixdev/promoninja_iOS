@@ -20,6 +20,7 @@ struct LoadingAnimation: View {
             CircleView(offset: 240)
                 .rotationEffect(Angle(degrees: rotation + 240))
         }
+        .transition(.opacity)
         .onAppear {
             withAnimation(Animation.linear(duration: 1.5).repeatForever(autoreverses: false)) {
                 rotation = 360
@@ -47,4 +48,5 @@ struct LoadingAnimation_Previews: PreviewProvider {
 
 #Preview {
     LoadingAnimation()
+        .preferredColorScheme(.dark)
 }

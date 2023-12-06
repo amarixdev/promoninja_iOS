@@ -33,7 +33,7 @@ struct SponsorView: View {
                 ZStack {
                     LinearGradient(gradient: Gradient(colors: [.sponsorTheme, .sponsorTheme.opacity(0.25), .black]), startPoint: .top, endPoint: .bottom)
                         .ignoresSafeArea()
-                    LoadingAnimation()
+                    PulsatingLoadingView()
                         
                 }
                 .onChange(of: sponsor) {

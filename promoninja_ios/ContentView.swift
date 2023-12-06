@@ -21,17 +21,62 @@ extension UINavigationController: UIGestureRecognizerDelegate {
 }
 
 
+extension Binding {
+    
+    func onUpdate(_ closure: @escaping (_ oldValue: Value, _ newValue: Value) -> Void) -> Binding<Value> {
+        Binding {
+            wrappedValue
+        } set: { newValue in
+            let oldValue = wrappedValue
+            wrappedValue = newValue
+            closure(oldValue, newValue)
+        }
+    }
+}
+
 struct ContentView: View {
     @StateObject var router = Router.router
-    
     @StateObject var selectedTab = CurrentTab()
+    @State private var previousTab = ""
+    @State var shouldScrollToTop_home = false
+    @State var shouldScrollToTop_discover = false
+
     
 
     var body: some View {
 
-        TabView(selection: $selectedTab.name) {
+        TabView(selection: $selectedTab.name.onUpdate { oldValue, newValue in
+            //handle tabIcon navigation functionality
+           
+            if oldValue == newValue {
+              
+                if newValue == "home" {
+                    if router.homePath.count == 0  {
+                        shouldScrollToTop_home = true
+                    } else {
+                        router.homePath.removeLast(router.homePath.count)
+                    }
+                
+                } else if
+                    newValue == "discover" {
+                    if router.discoverPath.count == 0 {
+                        shouldScrollToTop_discover = true
+                    } else {
+                        router.discoverPath.removeLast(router.discoverPath.count)
+
+                    }
+                }
+                
+               
+            }
+            
+           
+            
+            
+                    
+        }) {
             NavigationStack(path: $router.homePath) {
-                HomeScreen()
+                HomeScreen(shouldScrollToTop: $shouldScrollToTop_home)
                         .onTapGesture {
                             selectedTab.name = "home"
                         }
@@ -50,7 +95,7 @@ struct ContentView: View {
                 
                 
             NavigationStack(path: $router.discoverPath) {
-                    DiscoverView()
+                    DiscoverView(shouldScrollToTop: $shouldScrollToTop_discover)
                 
                 }
                 .tabItem {
@@ -62,13 +107,13 @@ struct ContentView: View {
                     selectedTab.name = "discover"
                 }
                
-                
+                //1.TODO clear path when icon is clicked; 2. Search page
+
              
             }
+    
         .environmentObject(selectedTab)
         .tint(.white)
-            
-           
         }
 
     
