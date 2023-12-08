@@ -37,11 +37,14 @@ class PodcastCategoryViewModel:ObservableObject {
     }
     
     func getCategoryPodcasts (for categoryName: String)  {
+        print("running..")
         let category = self.categoryData?.first(where: { category in
               category?.name == categoryName
           })
-          
-        podcasts = category??.podcast ?? []
+        DispatchQueue.main.async {
+            self.podcasts = category??.podcast ?? []
+        }
+    
     }
     
     

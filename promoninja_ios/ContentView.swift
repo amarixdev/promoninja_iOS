@@ -49,10 +49,14 @@ struct ContentView: View {
             //handle tabIcon navigation functionality
            
             if oldValue == newValue {
+                
               
                 if newValue == "home" {
                     if router.homePath.count == 0  {
-                        shouldScrollToTop_home = true
+                       
+                            shouldScrollToTop_home = true
+                        
+                       
                     } else {
                         router.homePath.removeLast(router.homePath.count)
                     }
@@ -60,9 +64,24 @@ struct ContentView: View {
                 } else if
                     newValue == "discover" {
                     if router.discoverPath.count == 0 {
-                        shouldScrollToTop_discover = true
+                       
+                            shouldScrollToTop_discover = true
+                        
+                        
                     } else {
                         router.discoverPath.removeLast(router.discoverPath.count)
+
+                    }
+                }
+                else if
+                    newValue == "search" {
+                    if router.searchPath.count == 0 {
+                       
+                            shouldScrollToTop_discover = true
+                        
+                        
+                    } else {
+                        router.searchPath.removeLast(router.searchPath.count)
 
                     }
                 }
@@ -75,45 +94,59 @@ struct ContentView: View {
             
                     
         }) {
-            NavigationStack(path: $router.homePath) {
-                HomeScreen(shouldScrollToTop: $shouldScrollToTop_home)
-                        .onTapGesture {
-                            selectedTab.name = "home"
-                        }
+            Group {
+                NavigationStack(path: $router.homePath) {
+                    HomeScreen(shouldScrollToTop: $shouldScrollToTop_home)
+                     
+                        
+                           
+                   }
+                    .tabItem {
+                        Image(systemName: "house")
+                           
+                    }
+                    .tag("home")
+                    .onAppear {
+                        selectedTab.name = "home"
+                    }
+                  
                     
-                       
-               }
-                .tabItem {
-                    Image(systemName: "house")
-                       
-                }
-                .tag("home")
-                .onTapGesture {
-                    selectedTab.name = "home"
-                }
-              
+                    
+                NavigationStack(path: $router.discoverPath) {
+                        DiscoverView(shouldScrollToTop: $shouldScrollToTop_discover)
+                    
+                    }
+                    .tabItem {
+                        Image(systemName: "circle.grid.2x2")
+                     
+                    }
+                    .tag("discover")
+                    .onAppear {
+                        selectedTab.name = "discover"
+                    }
                 
                 
-            NavigationStack(path: $router.discoverPath) {
-                    DiscoverView(shouldScrollToTop: $shouldScrollToTop_discover)
+                NavigationStack(path: $router.searchPath) {
+                    SearchView()
+                    
+                    }
+                    .tabItem {
+                        Image(systemName: "magnifyingglass")
+                     
+                    }
+                    .tag("search")
+                    .onAppear {
+                        selectedTab.name = "search"
+                    }
                 
-                }
-                .tabItem {
-                    Image(systemName: "circle.grid.2x2")
-                 
-                }
-                .tag("discover")
-                .onTapGesture {
-                    selectedTab.name = "discover"
-                }
-               
-                //1.TODO clear path when icon is clicked; 2. Search page
-
+                
+                
+            }
+            .toolbarBackground(.black, for: .tabBar)
              
             }
-    
-        .environmentObject(selectedTab)
-        .tint(.white)
+                .environmentObject(selectedTab)
+                .tint(.white)
         }
 
     

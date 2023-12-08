@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PromoninjaSchema
+import NukeUI
 
 
 
@@ -52,8 +53,8 @@ struct SponsorView: View {
                        ScrollView {
                             VStack {
                        
-                                    AsyncImage(
-                                        url: URL(string: sponsor?.imageUrl ?? ""), transaction: Transaction(animation: .bouncy)
+                                    LazyImage(
+                                        url: URL(string: sponsor?.imageUrl ?? "")!, transaction: Transaction(animation: .bouncy)
                                     ) { phase in
                                         
                                         if let image = phase.image {

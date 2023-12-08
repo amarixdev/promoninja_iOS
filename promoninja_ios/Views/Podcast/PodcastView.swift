@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PromoninjaSchema
+import NukeUI
 
 
 struct PodcastView: View {
@@ -31,20 +32,13 @@ struct PodcastView: View {
     }
     
     
-   @State var dataLoaded = false
     @State var showMore = false
+    @State var imgLoaded = false
     
     var body: some View {
-        if  podcast?.sponsors?.count == nil {
-            ZStack {
-                LinearGradient(gradient: Gradient(colors: [.sponsorTheme, .sponsorTheme.opacity(0.25), .black]), startPoint: .top, endPoint: .bottom)
-                    .ignoresSafeArea()
+        if podcast?.imageUrl == nil  {
                 PulsatingLoadingView()
-            }
-            .onChange(of: podcast) {
-                dataLoaded = true
-            }
-            .toolbarStyle()
+         .toolbarStyle()
           
         } else {
           
@@ -57,20 +51,28 @@ struct PodcastView: View {
                        
                         VStack {
                         
-                                AsyncImage(
-                                    url: URL(string: podcast?.imageUrl ?? ""), transaction: Transaction(animation: .bouncy)
+                                LazyImage(
+                                    url: URL(string: podcast?.imageUrl ?? "")!, transaction: Transaction(animation: .bouncy)
                                 ) { phase in
                                     if let image = phase.image {
+                                      
                                         image.resizable()
                                              .aspectRatio(contentMode: .fit)
                                              .frame(width: 180, height: 180)
                                              .cornerRadius(10)
                                              .shadow(radius: 10)
-                                    } else {
+                                             
+                                             
+                                    }
+                                    
+                                    else if phase.error != nil {
                                         Placeholder(frameSize: 180, imgSize: 55, icon: .podcast)
-                                      
-                                            
-                                            
+                                          
+                                    } else {
+                                        Rectangle()
+                                            .frame(width: 180, height: 180)
+                                            .cornerRadius(10)
+                                            .foregroundStyle(.white.opacity(0))
                                     }
                                   
                                       

@@ -10,20 +10,13 @@ import SwiftUI
 
 class Router: ObservableObject {
     static var router = Router()
+        
+    @Published var homePath = NavigationPath()
     
-    @Published var activePath = NavigationPath()
-    @Published var homePath = NavigationPath() {
-        didSet {
-            activePath = homePath
-        }
-    }
+    @Published var discoverPath = NavigationPath()
     
-    @Published var discoverPath = NavigationPath() {
-        didSet {
-            activePath = discoverPath
-
-        }
-    }
+    
+    @Published var searchPath = NavigationPath() 
 }
 
 class CurrentTab: ObservableObject {

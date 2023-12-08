@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PromoninjaSchema
+import NukeUI
 
 struct PodcastListView: View {
     
@@ -61,7 +62,7 @@ struct PodcastListView: View {
                                                 .foregroundStyle(.gray)
                                                 .padding(.leading)
                                         }
-                                        AsyncImage(url: URL(string: podcast?.imageUrl ?? ""), transaction: Transaction(animation: .bouncy)) {
+                                        LazyImage(url: URL(string: podcast?.imageUrl ?? "")!, transaction: Transaction(animation: .bouncy)) {
                                             phase in
                                             if let image = phase.image {
                                                 image.resizable()

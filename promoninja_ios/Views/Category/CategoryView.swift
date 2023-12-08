@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PromoninjaSchema
+import NukeUI
 
 struct CategoryView: View {
     let category: GetSponsorCategoriesQuery.Data.GetSponsorCategory
@@ -30,7 +31,7 @@ struct CategoryView: View {
                                 NavigationLink(value:sponsor){
                                     HStack(spacing: 25) {
                                         if let imageUrl = sponsor.imageUrl {
-                                            AsyncImage(url: URL(string: imageUrl), transaction: Transaction(animation: .bouncy)) { phase in
+                                            LazyImage(url: URL(string: imageUrl)!, transaction: Transaction(animation: .bouncy)) { phase in
                                                 if let image = phase.image {
                                                     image
                                                         .resizable()

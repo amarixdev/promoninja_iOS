@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PromoninjaSchema
+import NukeUI
 
 struct SponsorListView: View {
     let podcast: GetPodcastQuery.Data.GetPodcast?
@@ -49,7 +50,7 @@ struct SponsorListView: View {
                                                 .foregroundStyle(.gray)
                                                 .padding(.leading)
                                         }
-                                        AsyncImage(url: URL(string: sponsor?.imageUrl ?? ""), transaction: Transaction(animation: .bouncy)) {
+                                        LazyImage(url: URL(string: sponsor?.imageUrl ?? "")!, transaction: Transaction(animation: .bouncy)) {
                                             phase in
                                             if let image = phase.image {
                                                 image.resizable()

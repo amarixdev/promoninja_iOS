@@ -51,7 +51,7 @@ struct SponsorDetailSheet: View {
                     HStack(spacing: 15) {
                         if let imageUrl = sponsor?.imageUrl {
                       
-                                AsyncImage(url: URL (string: imageUrl), transaction: Transaction(animation: .bouncy)) { phase in
+                                AsyncImage(url: URL (string: imageUrl)!, transaction: Transaction(animation: .bouncy)) { phase in
                                     if let image = phase.image {
                                         image
                                             .resizable()

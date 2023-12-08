@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PromoninjaSchema
+import NukeUI
 
 struct PodcastDetailSheet: View {
    @Binding var podcast: GetSponsorQuery.Data.GetSponsor.Podcast?
@@ -54,7 +55,7 @@ struct PodcastDetailSheet: View {
                 HStack(spacing: 15) {
                     if let imageUrl = podcast?.imageUrl {
                   
-                            AsyncImage(url: URL (string: imageUrl), transaction: Transaction(animation: .bouncy)) { phase in
+                            LazyImage(url: URL (string: imageUrl)!, transaction: Transaction(animation: .bouncy)) { phase in
                                 if let image = phase.image {
                                     image
                                         .resizable()
