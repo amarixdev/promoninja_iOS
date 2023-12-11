@@ -33,7 +33,17 @@ class SearchViewModel: ObservableObject {
     
    
     
-    @Published var currentCategory:Category = .Podcast
+    @Published var currentCategory:Category = .Podcast {
+        didSet {
+            if currentCategory == .Podcast {
+          
+                podcast_filterSearch()
+            } else if currentCategory == .Sponsor {
+             
+                sponsor_filterSearch()
+            }
+        }
+    }
     
     @Published var podcasts = [GetPodcastsQuery.Data.GetPodcast?]()
     @Published var sponsors = [GetSponsorsQuery.Data.GetSponsor?]()
@@ -86,17 +96,16 @@ class SearchViewModel: ObservableObject {
              var bool = Bool()
              let result = fuse.search(self.searchText, in: sponsor?.name ?? "")
              if let score = result?.score {
-                 bool = score < 0.15
+                 bool = score < 0.5
              }
                  return bool
            }
         
         let sortedResults = filteredResults.sorted { (sponsor1, sponsor2) in
-                
-            
-             let score1 = fuse.search(self.searchText, in: sponsor1?.name ?? "")?.score ?? 0
-             let score2 = fuse.search(self.searchText, in: sponsor2?.name ?? "")?.score ?? 0
-             return score1 < score2
+                      
+             let score1 = fuse.search(self.searchText, in: sponsor1?.name ?? "")?.score
+             let score2 = fuse.search(self.searchText, in: sponsor2?.name ?? "")?.score
+             return score1 ?? 1 < score2 ?? 1
          }
         
         print(sortedResults)
@@ -111,22 +120,19 @@ class SearchViewModel: ObservableObject {
     
    private func podcast_filterSearch () {
         let fuse = Fuse()
-       var array = [Double]()
        
        var filteredResults =  podcasts.filter { podcast in
-            var bool = Bool()
             let titleScore = fuse.search(self.searchText, in: podcast?.title ?? "")
             let publisherScore = fuse.search(self.searchText, in: podcast?.publisher ?? "")
             var isTitleMatch = Bool()
             var isPublisherMatch = Bool()
             
             if let titleScore = titleScore?.score {
-                isTitleMatch = titleScore < 0.05
+                isTitleMatch = titleScore < 0.5
             }
             
             if let publisherScore = publisherScore?.score {
-                isPublisherMatch = publisherScore < 0.05
-                array.append(publisherScore)
+                isPublisherMatch = publisherScore < 0.5
             }
             
        
@@ -144,9 +150,6 @@ class SearchViewModel: ObservableObject {
            return  score1 ?? 1 < score2 ?? 1
            
        }
-       
-       
-       print(array)
        
         
         self.filteredPodcasts = filteredResults

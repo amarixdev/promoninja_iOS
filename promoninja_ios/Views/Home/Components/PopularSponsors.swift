@@ -22,7 +22,7 @@ struct PopularSponsors: View {
         ZStack {
             
             HStack {
-                Text("Promoninja curates exclusive deals across hundreds of podcasts, just for you.")
+                Text("\"Promoninja curates exclusive deals across hundreds of podcasts, just for you.\"")
                     .opacity(0.8)
                     .font(.subheadline)
                     .fontWeight(.medium)
@@ -35,7 +35,7 @@ struct PopularSponsors: View {
         .background(.ultraThinMaterial)
         .opacity(0.95)
         .cornerRadius(10)
-        .shadow(radius: 20)
+        .shadow(radius: 10)
         .padding(.top, 30)
         .padding(.bottom, 20)
         

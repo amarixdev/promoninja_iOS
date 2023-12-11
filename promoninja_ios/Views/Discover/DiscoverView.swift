@@ -76,6 +76,7 @@ struct DiscoverView: View {
                                                                    NavigationLink(value: category ){
                                                                        HStack {
                                                                                Text("View all")
+                                                                               .fontWeight(.semibold)
                                                                                Image(systemName: "arrow.right")
                                                                        }
                                                                        .foregroundStyle(.white)

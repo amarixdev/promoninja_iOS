@@ -41,7 +41,7 @@ struct ContentView: View {
     @State var shouldScrollToTop_home = false
     @State var shouldScrollToTop_discover = false
 
-    
+   
 
     var body: some View {
 
@@ -51,7 +51,7 @@ struct ContentView: View {
             if oldValue == newValue {
                 
               
-                if newValue == "home" {
+                if newValue == .home {
                     if router.homePath.count == 0  {
                        
                             shouldScrollToTop_home = true
@@ -62,7 +62,7 @@ struct ContentView: View {
                     }
                 
                 } else if
-                    newValue == "discover" {
+                    newValue == .discover {
                     if router.discoverPath.count == 0 {
                        
                             shouldScrollToTop_discover = true
@@ -74,7 +74,7 @@ struct ContentView: View {
                     }
                 }
                 else if
-                    newValue == "search" {
+                    newValue == .search {
                     if router.searchPath.count == 0 {
                        
                             shouldScrollToTop_discover = true
@@ -97,17 +97,15 @@ struct ContentView: View {
             Group {
                 NavigationStack(path: $router.homePath) {
                     HomeScreen(shouldScrollToTop: $shouldScrollToTop_home)
-                     
-                        
-                           
+                      
                    }
                     .tabItem {
                         Image(systemName: "house")
                            
                     }
-                    .tag("home")
+                    .tag(Navigation.home)
                     .onAppear {
-                        selectedTab.name = "home"
+                        selectedTab.name = .home
                     }
                   
                     
@@ -120,9 +118,9 @@ struct ContentView: View {
                         Image(systemName: "circle.grid.2x2")
                      
                     }
-                    .tag("discover")
+                    .tag(Navigation.discover)
                     .onAppear {
-                        selectedTab.name = "discover"
+                        selectedTab.name = .discover
                     }
                 
                 
@@ -134,9 +132,9 @@ struct ContentView: View {
                         Image(systemName: "magnifyingglass")
                      
                     }
-                    .tag("search")
+                    .tag(Navigation.search)
                     .onAppear {
-                        selectedTab.name = "search"
+                        selectedTab.name = .search
                     }
                 
                 

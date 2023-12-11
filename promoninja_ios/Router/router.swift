@@ -20,11 +20,15 @@ class Router: ObservableObject {
 }
 
 class CurrentTab: ObservableObject {
-    @Published var name: String = "home"
+    @Published var name: Navigation = .home
 }
 
 
 
-enum Navigation: String, Hashable {
-    case discoverPage
+enum Navigation: String {
+    case home
+    case discover
+    case search
+    
+    
 }

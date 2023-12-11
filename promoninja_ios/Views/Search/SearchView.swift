@@ -13,13 +13,14 @@ struct SearchView: View {
     @StateObject var viewModel = SearchViewModel()
     @Environment(\.isSearching) var isSearching
     @Environment(\.dismissSearch) var dismissSearch
+    
 
     var body: some View {
   
         SearchingView(viewModel: viewModel, currentCategory: $viewModel.currentCategory, searchText: $viewModel.searchText)
       
 
-            .searchable(text: $viewModel.searchText, prompt: viewModel.currentCategory == .Podcast ? "Find a podcast to support" : "Find a product or service")
+            .searchable(text: $viewModel.searchText, prompt: viewModel.currentCategory == .Podcast ? "Find a podcast - \"Bad Friends\"" : "Find a sponsor - \"Tushy\"")
         
             .onChange(of: viewModel.searchText) {
                 if viewModel.searchText.isEmpty && !isSearching {
@@ -65,7 +66,9 @@ struct SearchView: View {
         .navigationDestination(for: GetPodcastsQuery.Data.GetPodcast.self) { podcast in
             PodcastView(title: GraphQLNullable(stringLiteral: podcast.title))
                 }
-        
+        .navigationDestination(for: GetSponsorsQuery.Data.GetSponsor.self) { sponsor in
+            SponsorView(name: sponsor.name ?? "")
+        }
         
      
     }
@@ -90,7 +93,7 @@ struct SearchingView: View {
     
     @Environment(\.isSearching) var isSearching
 
-    
+    @State private var displayFilter = false
     @State private var all_podcasts = [GetPodcastsQuery.Data.GetPodcast?]()
 
  
@@ -104,12 +107,25 @@ struct SearchingView: View {
         
     }
     
+    
+    
+    func toggleFilter ()  {
+        if isSearching {
+            setTimeout(0.25) {
+                withAnimation {
+                    displayFilter = true
+                }
+            }
+        } else {
+            displayFilter = false
+        }
+    }
 
 
     var body: some View {
         ZStack {
    
-            if !viewModel.filteredPodcasts.isEmpty {
+            if !viewModel.filteredPodcasts.isEmpty && viewModel.currentCategory == .Podcast {
                 if let searchTheme = searchTheme {
                     LinearGradient(gradient: Gradient(colors: [searchTheme, .black, Color.black]), startPoint: .top, endPoint: .bottom)
                         .ignoresSafeArea()
@@ -128,7 +144,7 @@ struct SearchingView: View {
             }
             
             
-           if isSearching {
+           if displayFilter {
                 VStack {
                     Picker("Search for a podcast or sponsor", selection: $currentCategory) {
                         ForEach(searchCategories, id: \.self) { category in
@@ -148,7 +164,7 @@ struct SearchingView: View {
                 
                     if viewModel.currentCategory == .Podcast {
                         List {
-                            ForEach(viewModel.filteredPodcasts, id:\.self) { podcast in
+                            ForEach(viewModel.filteredPodcasts.prefix(6), id:\.self) { podcast in
 
                                 NavigationLink(value: podcast){
                                     HStack {
@@ -159,6 +175,7 @@ struct SearchingView: View {
                                                     .scaledToFill()
                                                     .frame(width: 60, height: 60)
                                                     .cornerRadius(10)
+                                                    .shadow(radius: 10)
                                          
                                             } else {
                                                 Placeholder(frameSize: 60, imgSize: 25, icon: .podcast)
@@ -180,8 +197,8 @@ struct SearchingView: View {
                                     
                                 }
                                 .listRowBackground(Color.clear)
-                                .background(.clear)
-                                .padding(.vertical, 10)
+                                .ignoresSafeArea()
+ 
                                 
                                
                             }
@@ -191,9 +208,48 @@ struct SearchingView: View {
                                           
                      
                     } else {
-                        ForEach(viewModel.filteredSponsors.prefix(10), id:\.self) { sponsor in
-                            Text(sponsor?.name ?? "")
+                        List {
+                            ForEach(viewModel.filteredSponsors.prefix(6), id:\.self) { sponsor in
+
+                                NavigationLink(value: sponsor){
+                                    HStack {
+                                        LazyImage(url: URL(string: sponsor?.imageUrl ?? ""), transaction: Transaction(animation: .bouncy)) { phase in
+                                            if let image = phase.image {
+                                                image
+                                                    .resizable()
+                                                    .scaledToFill()
+                                                    .frame(width: 60, height: 60)
+                                                    .cornerRadius(10)
+                                                    .shadow(radius: 10)
+                                         
+                                            } else {
+                                                Placeholder(frameSize: 60, imgSize: 25, icon: .sponsor)
+                                            }
+                                        }
+                                        
+                                        VStack(alignment:.leading) {
+                                            Text(sponsor?.name?.truncated(30) ?? "")
+                                                .font(.subheadline)
+                                                .fontWeight(.medium)
+                                            Text(sponsor?.url?.truncated(30) ?? "")
+                                                .font(.subheadline)
+                                                .opacity(0.8)
+                                        }
+                                        Spacer()
+                               
+                                        
+                                    }
+                                    
+                                }
+                                .listRowBackground(Color.clear)
+                                .ignoresSafeArea()
+
+                                
+                               
+                            }
                         }
+                        .listStyle(.plain)
+                        
                     }
                   
                     
@@ -201,6 +257,10 @@ struct SearchingView: View {
                 }
             }
             
+        }
+        
+        .onChange(of: isSearching) {
+            toggleFilter()
         }
    
         

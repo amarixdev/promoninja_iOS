@@ -16,115 +16,155 @@ struct PodcastSelectionSheet: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var currentTab: CurrentTab
     
+    @State private var viewLoaded = false
     let router = Router.router
     
     var body: some View {
-        VStack {
-            
+        ScrollView {
             VStack {
-                Image(creator.image)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 120, height: 120)
-                    .clipShape(Circle())
-                Text(creator.fullName)
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .padding(.bottom, 10)
-                Text(creator.summary)
-                    .font(.caption)
-                    .multilineTextAlignment(.center)
-                    .opacity(0.8)
-            
-            }
-            
-            .padding(.top)
-            .padding(.bottom, 40)
-           
-            
-
-            let multiplePodcasts = creator.multiplePodcasts
-            VStack {
-                Text(multiplePodcasts ? "Check out my podcasts" : "Check out my podcast")
-                    .font(.headline)
-                    .onTapGesture {
-                       print (multiplePodcasts)
-                    }
                 
-                Text("Listeners can enjoy various discounts.")
-                    .font(.caption)
-                    .opacity(0.8)
-            }
-            .padding(.bottom, 10)
-      
-                VStack() {
-        
-                    if !podcasts.isEmpty
-                    {
-        
-                        Divider()
-                        HStack {
-                            ForEach(podcasts, id: \.self) {podcast in
-                                ZStack {
-                                    Color.clear
-                                        .contentShape(Rectangle())
-                                        .frame(width: .none, height: 80)
-                                        .cornerRadius(10)
-                                     
-                               
-                                        HStack(spacing: 10) {
-                                            LazyImage(url: URL(string: podcast.imageUrl ?? "")!, transaction: Transaction(animation: .bouncy)) { phase in
-                                                if let image = phase.image {
-                                                    image.resizable()
-                                                        .frame(width: 60, height: 60)
-                                                        .cornerRadius(10)
-                                                } else {
-                                                    Placeholder(frameSize: 60, imgSize: 30, icon: .podcast)
-                                                    
-                                                }
-                                            }
-                                            
-                                            Text(multiplePodcasts ? podcast.title.truncated(15) : podcast.title)
-                                                .font(.caption)
-                                                .fontWeight(.semibold)
-                                           
-                                            Spacer()
-                                            
-                                        }
-                                       
-                                        .padding(.vertical, 10)
-                                   
-                                   
-                                }
-                                .onTapGesture {
-                                    print("l")
-                                    withAnimation {
-                                        tapped = podcast.title
-                                    }
-                                  
-                                    router.homePath.append(podcast)
-                                    dismiss()
-                                }
-                               
-                              
-                              
-                                
-                             
-                               
-                              
+                ZStack {
+                    Image(systemName: "")
+                    VStack {
+                        Image(creator.image)
+                            .resizable()
+                            .scaledToFill()
+                            .frame( height: 300)
+                            .overlay {
+                                LinearGradient(colors: [.black.opacity(0), .black], startPoint: .top, endPoint: .bottom)
+                                    .frame(height: 300)
                             }
+                            .clipped()
+                    Spacer()
+                    }
+                  
+                    VStack {
+                        
+                        Text(creator.fullName)
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .padding(.bottom, 10)
+                        Text(creator.summary)
+                            .font(.caption)
+                            .multilineTextAlignment(.center)
+                            .opacity(0.8)
+                            .padding(.horizontal)
+                    }
+                    .padding(.top, 250)
+                    
+                    .frame(width: UIScreen.main.bounds.width)
+
+                  
+                
+                }
+                .frame(width: UIScreen.main.bounds.width)
+
+                let multiplePodcasts = creator.multiplePodcasts
+                VStack {
+                    Text(multiplePodcasts ? "Check out my podcasts" : "Check out my podcast")
+                        .font(.headline)
+                        .onTapGesture {
+                           print (multiplePodcasts)
                         }
                     
-                    }
-                    else {
-                        Color.clear
-                            .contentShape(Rectangle())
-                            .frame(width: .none, height: 88)
-                            .cornerRadius(10)
-                    }
+                    Text("Listeners can enjoy various discounts.")
+                        .font(.caption)
+                        .opacity(0.8)
+                        .padding(.bottom, 10)
                 }
-              
-            Spacer()
+                .padding(.top, 20)
+      
+          
+                VStack(alignment:.leading) {
+            
+                        if !podcasts.isEmpty
+                        {
+
+                                List {
+                                    ForEach(podcasts, id: \.self) {podcast in
+
+                                        ZStack {
+                                            Color.clear
+                                                .contentShape(Rectangle())
+                                                .frame( height: 80)
+                                                .zIndex(10)
+                                                .onTapGesture {
+                                                  
+                                              
+                                                        tapped = podcast.title
+                                                    
+                                                    router.homePath.append(podcast)
+                                                    dismiss()
+                                                }
+                                                
+
+
+                                            
+                                            
+                                                
+                                            HStack(spacing: 20) {
+                                                LazyImage(url: URL(string: podcast.imageUrl ?? "")!, transaction: Transaction(animation: .bouncy)) { phase in
+                                                    if let image = phase.image {
+                                                        image.resizable()
+                                                            .frame(width: 70, height: 70)
+                                                            .cornerRadius(10)
+                                                    } else {
+                                                        Placeholder(frameSize: 60, imgSize: 30, icon: .podcast)
+                                                        
+                                                    }
+                                                }
+                                                VStack(alignment:.leading) {
+                                                    Text(podcast.title)
+                                                        .font(.caption)
+                                                        .fontWeight(.semibold)
+                                                    
+                                                    Text(podcast.publisher ?? "")
+                                                        .font(.caption)
+                                                        .opacity(0.8)
+                                                        
+                                                }
+                                              
+                                                    
+                                                Spacer()
+                                                Image(systemName: "chevron.right")
+                                                    .opacity(0.5)
+                                            
+                                            }
+                                       
+                                        }
+                                        .listRowBackground(Color.sponsorTheme)
+                                        .animation(.easeIn, value: tapped)
+                                     
+                                    }
+                                }
+                                .listStyle(.insetGrouped)
+                                .scrollContentBackground(.hidden)
+
+                            
+                               
+                             
+                                .fadeInView(viewLoaded: $viewLoaded)
+                                .frame(width: UIScreen.main.bounds.width, height: multiplePodcasts ? 300 : 185)
+                                .cornerRadius(10)
+                            
+                        
+                        }
+                        else {
+                            ZStack {
+                                ProgressView()
+                                Color.clear
+                                    .contentShape(Rectangle())
+                                    .frame(width: .none, height: 88)
+                                    .cornerRadius(10)
+                            }
+                           
+                        }
+                    }
+         
+                
+                  
+                Spacer()
+            }
         }
         .padding()
         .onAppear {

@@ -14,7 +14,7 @@ import NukeUI
 struct SponsorView: View {
     @StateObject var viewModel: SponsorViewModel
     @Environment(\.dismiss) var dismiss
-
+    @State private var viewLoaded = false
     var name: String
     
     init(name: String ) {
@@ -32,10 +32,9 @@ struct SponsorView: View {
         var body: some View {
             if !dataLoaded {
                 ZStack {
-                    LinearGradient(gradient: Gradient(colors: [.sponsorTheme, .sponsorTheme.opacity(0.25), .black]), startPoint: .top, endPoint: .bottom)
-                        .ignoresSafeArea()
-                    PulsatingLoadingView()
-                        
+                    LoadingAnimation()
+                    
+                    
                 }
                 .onChange(of: sponsor) {
                     dataLoaded = true
@@ -157,6 +156,7 @@ struct SponsorView: View {
                                 .padding(.vertical)
                                 .padding(.horizontal, 0)
                         }
+                    .fadeInView(viewLoaded: $viewLoaded)
                    
                     .navigationTitle(sponsor?.name?.truncated(25) ?? "")
                         .toolbarColorScheme(.dark, for: .navigationBar)

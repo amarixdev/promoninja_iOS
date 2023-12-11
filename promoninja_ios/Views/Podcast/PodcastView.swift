@@ -32,12 +32,12 @@ struct PodcastView: View {
     }
     
     
-    @State var showMore = false
-    @State var imgLoaded = false
-    
+    @State private var showMore = false
+    @State private var imgLoaded = false
+    @State private var viewLoaded = false
     var body: some View {
         if podcast?.imageUrl == nil  {
-                PulsatingLoadingView()
+            LoadingAnimation()
          .toolbarStyle()
           
         } else {
@@ -187,6 +187,7 @@ struct PodcastView: View {
                     
                     
                 }
+                .fadeInView(viewLoaded: $viewLoaded)
                 .navigationTitle(podcast?.title.truncated(25) ?? "")
                 .toolbarStyle()
         

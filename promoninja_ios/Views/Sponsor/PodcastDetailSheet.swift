@@ -80,10 +80,13 @@ struct PodcastDetailSheet: View {
                         
                             .onTapGesture {
                                 if let podcast = podcast {
-                                    if currentTab.name == "home" {
+                                    if currentTab.name == .home {
                                         router.homePath.append(podcast)
-                                    } else if currentTab.name == "discover" {
+                                    } else if currentTab.name == .discover {
                                         router.discoverPath.append(podcast)
+                                    } else if currentTab.name == .search {
+                                        router.searchPath.append(podcast)
+
                                     }
                                     
                                     dismiss()
@@ -157,7 +160,8 @@ struct PodcastDetailSheet: View {
                         } label: {
                             HStack {
                                 ZStack {
-                                    Text(promoCode)
+                                    Text(promoCode.uppercased())
+                                    
                                         .font(.title2)
                                         .fontWeight(.heavy)
                                         .tracking(5)

@@ -44,7 +44,7 @@ struct HomeScreen: View {
     }
     
     
-    
+    @State private var viewLoaded = false
     var body: some View {
             ZStack {
                 LinearGradient(gradient: Gradient(colors: [.sponsorTheme, .sponsorTheme.opacity(0.25), .black]), startPoint: .top, endPoint: .bottom)
@@ -57,7 +57,7 @@ struct HomeScreen: View {
                         .frame(width: 100, height: 100)
                         .scaledToFit()
                     
-                    LoadingAnimation()
+                    LoadingAnimation(homeScreen: true)
                     
                 } else
                
@@ -77,10 +77,10 @@ struct HomeScreen: View {
                                   GreetingView()
                                      
                                   Spacer()
-                                  Image(systemName: "magnifyingglass.circle.fill")
+                                  Image(.logo)
                                       .resizable()
                                       .scaledToFit()
-                                      .frame(width: 50, height: 50)
+                                      .frame(width: 65, height: 65)
                                       .foregroundStyle(.gray)
                               }
                              
@@ -109,6 +109,7 @@ struct HomeScreen: View {
               }
               
                 }
+         
         
             .navigationDestination(for: GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast.self) { podcast in
                 PodcastView(title: GraphQLNullable(stringLiteral: podcast.title))

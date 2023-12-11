@@ -104,5 +104,3 @@ struct SponsorListView: View {
     }
 }
 
-
-

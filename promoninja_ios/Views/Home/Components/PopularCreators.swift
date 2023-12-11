@@ -19,6 +19,7 @@ struct PopularCreators: View {
     @State private var showSelection = false
     @State private var tapped = false
 
+    @GestureState private var podcastTapped = false
     
     
     var body: some View {
@@ -39,35 +40,31 @@ struct PopularCreators: View {
    
                                                              .resizable()
                                                              .scaledToFill()
-                                                             .frame(width: 100, height: 100)
                                                              .clipShape(Circle())
-                                                          
-   
-   
-   
+                                                             .frame(width: 100, height: 100)
+
                                                          Text(creator.fullName)
                                                              .font(.caption)
                                                              .fontWeight(.semibold)
                                                              .foregroundStyle(.white)
    
                                                      }
+                                                 
    
                                                  .onTapGesture {
                                                      selectedCreator = creator
                                                      getPodcastData(title: GraphQLNullable(stringLiteral: creator.podcasts[0]))
                                                      showSelection = true
-                                                     
-                                
-                                                    
    
                                                  }
-                                                 .sheet(isPresented: $showSelection) {
+
+                                                .sheet(isPresented: $showSelection) {
                                                      ZStack {
                                                          LinearGradient(colors: [Color(.sponsorTheme).opacity(0.85), .black.opacity(0.95), .black], startPoint: .top, endPoint: .bottom)
                                                              .ignoresSafeArea(.all)
    
                                                          PodcastSelectionSheet(creator: $selectedCreator )
-                                                             .presentationDetents([.medium, .large])
+                                                             .presentationDetents([.large])
    
                                                      }
    
@@ -78,7 +75,8 @@ struct PopularCreators: View {
    
                                      }
                                      .scrollIndicators(.hidden)
-//                                     .sensoryFeedback(.selection, trigger: selectedCreator)
+                                    
+
         Divider ()
             .padding()
     }

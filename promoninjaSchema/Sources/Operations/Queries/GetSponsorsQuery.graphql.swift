@@ -7,7 +7,7 @@ public class GetSponsorsQuery: GraphQLQuery {
   public static let operationName: String = "GetSponsors"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query GetSponsors($input: Pagination) { getSponsors(input: $input) { __typename sponsorCategory { __typename name } name imageUrl summary offer } }"#
+      #"query GetSponsors($input: Pagination) { getSponsors(input: $input) { __typename sponsorCategory { __typename name } name imageUrl summary offer url } }"#
     ))
 
   public var input: GraphQLNullable<Pagination>
@@ -44,6 +44,7 @@ public class GetSponsorsQuery: GraphQLQuery {
         .field("imageUrl", String?.self),
         .field("summary", String?.self),
         .field("offer", String?.self),
+        .field("url", String?.self),
       ] }
 
       public var sponsorCategory: [SponsorCategory?]? { __data["sponsorCategory"] }
@@ -51,6 +52,7 @@ public class GetSponsorsQuery: GraphQLQuery {
       public var imageUrl: String? { __data["imageUrl"] }
       public var summary: String? { __data["summary"] }
       public var offer: String? { __data["offer"] }
+      public var url: String? { __data["url"] }
 
       /// GetSponsor.SponsorCategory
       ///

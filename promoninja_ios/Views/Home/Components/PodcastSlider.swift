@@ -30,9 +30,13 @@ struct PodcastSlider: View {
     var categories: [GetPodcastCategoriesQuery.Data.GetPodcastCategory?]
 
    @Binding var podcasts: [GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast?]
-    @State private var tapped = false
+    @State private var categoryTapped = false
+    @GestureState private var podcastTapped = false
+    
+
       
     var body: some View {
+                      
         ScrollView(.horizontal) {
             HStack {
                 ForEach(categories, id:\.self) { category in
@@ -41,10 +45,11 @@ struct PodcastSlider: View {
                         Button(name.capitalized ) {
                       
                             viewModel.currentCategory = name
-                            tapped = true
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2 ) {
-                                tapped = false
+                            categoryTapped = true
+                            setTimeout(0.2) {
+                                categoryTapped = false
                             }
+
                         }
                           .fontWeight(.medium)
                           .font(.subheadline)
@@ -52,8 +57,8 @@ struct PodcastSlider: View {
                             .tint(viewModel.currentCategory == name ? .logo : .sponsorTheme)
                             .foregroundStyle(viewModel.currentCategory == name ? .white : .white.opacity(0.8))
                             .animation(.none, value: viewModel.currentCategory == name)
-                            .scaleEffect(viewModel.currentCategory == name && tapped ? 0.9 : 1.0)
-                            .animation(.bouncy, value: tapped)
+                            .scaleEffect(viewModel.currentCategory == name && categoryTapped ? 0.9 : 1.0)
+                            .animation(.bouncy, value: categoryTapped)
                            
                             
                     }
@@ -80,9 +85,9 @@ struct PodcastSlider: View {
                                         .scaledToFit()
                                         .frame(width: 150, height: 150)
                                         .cornerRadius(10)
+                                        .scaleEffect(podcastTapped ? 0.9 : 1.0)
                                         
-
-                                        
+                                      
                                 } else {
                            
                                     Placeholder(frameSize: 150, imgSize: 50, icon: .podcast)
@@ -90,6 +95,7 @@ struct PodcastSlider: View {
                                    
                             }
                         }
+                        
                             VStack(alignment:.leading, spacing: 3) {
                                 Text(podcast?.title.truncated(16) ?? "")
                                     .font(.caption)
@@ -101,6 +107,9 @@ struct PodcastSlider: View {
                             .padding(.leading, 5)
                             .padding(.top, 5)
                         }
+                    
+                   
+                    
                    
                   
                

@@ -73,10 +73,12 @@ struct SponsorDetailSheet: View {
                                 .onTapGesture {
                                     
                                     if let sponsor = sponsor {
-                                        if currentTab.name == "home" {
+                                        if currentTab.name == .home {
                                             router.homePath.append(sponsor)
-                                        } else if currentTab.name == "discover" {
+                                        } else if currentTab.name == .discover {
                                             router.discoverPath.append(sponsor)
+                                        } else if currentTab.name == .search {
+                                            router.searchPath.append(sponsor)
                                         }
                                         
                                         
@@ -156,7 +158,7 @@ struct SponsorDetailSheet: View {
                             } label: {
                                 HStack {
                                     ZStack {
-                                        Text(promoCode)
+                                        Text(promoCode.uppercased())
                                             .font(.title2)
                                             .fontWeight(.heavy)
                                             .tracking(5)

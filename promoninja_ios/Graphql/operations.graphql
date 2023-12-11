@@ -56,6 +56,7 @@ query GetPodcasts {
           imageUrl
           summary
           offer
+          url
         }
       }
 

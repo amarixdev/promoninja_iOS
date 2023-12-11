@@ -23,7 +23,8 @@ let comedySummary: [String: String] = [
     "Tom Segura" : "Thomas Weston Segura is a Peruvian-American stand-up comedian, writer, author, actor, and podcaster. Segura co-hosts the Your Mom's House podcast with his wife, fellow comedian Christina Pazsitzky. Segura also co-hosts the podcast Two Bears One Cave with friend and fellow comedian Bert Kreischer.",
     
     "Andrew Santino" : "Andrew James Santino is an American stand-up comedian, actor, and podcaster known for television series and films such as Sin City Saints, The Disaster Artist, Mixology, I'm Dying Up Here, Beef, and Dave.",
-    "Bobbi Althoff": "Known and beloved for her deadpan humor and for intentionally making her interviewees uncomfortable, Althoff has amassed over 5 million TikTok followers and 500,000 subscribers on her YouTube channel, where she posts her podcast episodes. The 26-year-old influencer began posting videos on TikTok in 2021, mainly focusing on content surrounding her children and her pregnancy experiences. However, she skyrocketed to fame in 2023 when she began her podcast, The Really Good Podcast."
+    
+    "Bobbi Althoff": "Bobbi is renowned for her comedic videos and has utilized her platforms to share various aspects of her life, including her engagement, pregnancy, encounters with celebrities, and advancements in her career. With her high-profile interviews on \"The Really Good Podcast,\" Bobbi Althoff continues to make waves online and captivate audiences with her entertaining and engaging content."
 ]
 
 
