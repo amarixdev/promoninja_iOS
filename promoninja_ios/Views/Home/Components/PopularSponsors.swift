@@ -19,11 +19,22 @@ struct PopularSponsors: View {
     
     let sponsorVM: SponsorViewModel
     var body: some View {
+        HStack {
+            Text("Trending Offers")
+                .font(.title.bold())
+//                .opacity(0.6)
+            Spacer()
+        }
+        .padding(.leading)
+      
         ZStack {
-            
+            Image(.logo)
+                .frame(width: 100, height: 100)
+                .blur(radius: 30)
+                .opacity(0.75)
+                
             HStack {
-                Text("\"Promoninja curates exclusive deals across hundreds of podcasts, just for you.\"")
-                    .opacity(0.8)
+                Text("\"We've searched hundreds podcasts to find you the best deals!\"")
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .multilineTextAlignment(.center)

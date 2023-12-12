@@ -14,6 +14,7 @@ struct HomeScreen: View {
     @Binding var shouldScrollToTop: Bool
     @StateObject var viewModel = PodcastCategoryViewModel()
     @StateObject var sponsorVM = SponsorViewModel(name: "", homePage: true)
+    @EnvironmentObject var selectedTab: CurrentTab
     
     
     @State private var selectedCreator = Creator(fullName: "", image: .logo, podcasts: [], summary: "")
@@ -47,7 +48,7 @@ struct HomeScreen: View {
     @State private var viewLoaded = false
     var body: some View {
             ZStack {
-                LinearGradient(gradient: Gradient(colors: [.sponsorTheme, .sponsorTheme.opacity(0.25), .black]), startPoint: .top, endPoint: .bottom)
+                Color.appTheme
                     .ignoresSafeArea()
                 
                 
@@ -63,15 +64,7 @@ struct HomeScreen: View {
                
               {
                   ScrollViewReader { reader in
-                      ScrollView  {
-                          GeometryReader { geo in
-                              Rectangle()
-                                .frame(width: 0, height: 0)
-                                .onChange(of: geo.frame(in: .global).midY) {
-                                    shouldScrollToTop = false
-                            }
-                          }
-                         
+                      ScrollView  {                         
                           VStack {
                               HStack(alignment:.top) {
                                   GreetingView()
@@ -89,13 +82,26 @@ struct HomeScreen: View {
                               Spacer()
                           }
                           .id(Self.topId)
-    
+                          
                    
                           PodcastSlider(viewModel: viewModel, categories: categories, podcasts: $viewModel.podcasts)
                           
                           PopularCreators(currentCategory: $viewModel.currentCategory)
                         
                           PopularSponsors(sponsorVM: sponsorVM)
+                          
+                          VStack(spacing: 20) {
+                              Text("Didn't find what you were looking for?")
+                                  .font(.subheadline)
+                                  .fontWeight(.semibold)
+                                  .opacity(0.8)
+                              Button("Discover More Deals") {
+                                  selectedTab.name = .discover
+                              }
+                              .buttonStyle(.bordered)
+                          }
+                          .padding(.bottom, 20)
+                         
                         
                           
                       }
@@ -103,13 +109,23 @@ struct HomeScreen: View {
                                          withAnimation {
                                              reader.scrollTo(Self.topId, anchor: .top)
                                          }
+                          setTimeout(0.25) {
+                              shouldScrollToTop = false
+                          }
                                      }
                   }
                       .padding(.vertical)
               }
               
                 }
-         
+            .navigationDestination(for: GetPodcastCategoriesQuery.Data.GetPodcastCategory?.self ) { category in
+                if let category = category {
+                    PodcastCategory(category: category)
+                }
+            }
+            .navigationDestination(for: GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast.self) { podcast in
+                        PodcastView(title: GraphQLNullable(stringLiteral:podcast.title ) )
+                    }
         
             .navigationDestination(for: GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast.self) { podcast in
                 PodcastView(title: GraphQLNullable(stringLiteral: podcast.title))

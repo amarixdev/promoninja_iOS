@@ -31,20 +31,20 @@ struct DiscoverView: View {
         
        
             ZStack {
-                LinearGradient(gradient: Gradient(colors: [.sponsorTheme, .sponsorTheme.opacity(0.25), .black]), startPoint: .top, endPoint: .bottom)
+                Color.appTheme
                     .ignoresSafeArea()
                 if categories.isEmpty {
                     LoadingAnimation()
                 } else {
                     ScrollViewReader { reader in
                          ScrollView  {
-                             GeometryReader { geo in
-                                 Rectangle()
-                                   .frame(width: 0, height: 0)
-                                   .onChange(of: geo.frame(in: .global).midY) {
-                                       shouldScrollToTop = false
-                               }
-                             }
+//                             GeometryReader { geo in
+//                                 Rectangle()
+//                                   .frame(width: 0, height: 0)
+//                                   .onChange(of: geo.frame(in: .global).midY) {
+//                                       shouldScrollToTop = false
+//                               }
+//                             }
                                VStack {
                                   
                                    //category fields
@@ -95,7 +95,7 @@ struct DiscoverView: View {
                                                        if !userIsLegal && ( category.name == "Alcohol" || category.name == "Smoke & Vape") {
                                                            ZStack {
                                                              
-                                                               Color.black
+                                                               Color.appTheme
                                                                    .contentShape(Rectangle())
                                                                    .frame(height: 150)
                                                                    .blur(radius: 10)
@@ -204,6 +204,9 @@ struct DiscoverView: View {
                                             withAnimation {
                                                 reader.scrollTo(Self.topId, anchor: .top)
                                             }
+                             setTimeout(0.25) {
+                                 shouldScrollToTop = false
+                             }
                                         }
                      }
                 }

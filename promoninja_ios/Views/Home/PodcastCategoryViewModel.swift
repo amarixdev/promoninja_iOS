@@ -19,12 +19,13 @@ class PodcastCategoryViewModel:ObservableObject {
     
     @Published var categoryData: [GetPodcastCategoriesQuery.Data.GetPodcastCategory?]?
     @Published var podcasts = [GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast?]()
+    @Published var podcastCategory: GetPodcastCategoriesQuery.Data.GetPodcastCategory??
      
     init () {
-        getSponsorCategoryData()
+        getPodcastCategoryData()
     }
     
-    func getSponsorCategoryData () {
+    func getPodcastCategoryData () {
         Network.shared.apollo.fetch(query: GetPodcastCategoriesQuery()) { result in
             guard let data = try? result.get().data else { return }
             if let categoryData = data.getPodcastCategories {
@@ -37,12 +38,12 @@ class PodcastCategoryViewModel:ObservableObject {
     }
     
     func getCategoryPodcasts (for categoryName: String)  {
-        print("running..")
         let category = self.categoryData?.first(where: { category in
               category?.name == categoryName
           })
         DispatchQueue.main.async {
             self.podcasts = category??.podcast ?? []
+            self.podcastCategory = category
         }
     
     }

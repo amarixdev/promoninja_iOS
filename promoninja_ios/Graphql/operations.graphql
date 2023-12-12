@@ -156,6 +156,10 @@ query GetSponsorCategory ($input: SponsorCategoryInput!) {
               sponsors {
                 name
                     }
+                category {
+                name
+              }
+                
             }
         }
       }

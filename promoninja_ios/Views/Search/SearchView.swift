@@ -131,14 +131,10 @@ struct SearchingView: View {
                         .ignoresSafeArea()
                         .animation(.easeIn(duration: 0.25), value: searchTheme)
              
-                } else {
-                    LinearGradient(gradient: Gradient(colors: [.sponsorTheme.opacity(0.75), .black, Color.black]), startPoint: .top, endPoint: .bottom)
-                        .ignoresSafeArea()
-                        .animation(.easeIn(duration: 0.25), value: viewModel.filteredPodcasts.isEmpty)
                 }
             }
             else {
-                LinearGradient(gradient: Gradient(colors: [.sponsorTheme.opacity(0.75), .black, Color.black]), startPoint: .top, endPoint: .bottom)
+                LinearGradient(gradient: Gradient(colors: [.sponsorTheme.opacity(0.75), .sponsorTheme.opacity(0.25), Color.black]), startPoint: .top, endPoint: .bottom)
                     .ignoresSafeArea()
                     .animation(.easeIn(duration: 0.25), value: viewModel.filteredPodcasts.isEmpty)
             }
@@ -167,7 +163,7 @@ struct SearchingView: View {
                             ForEach(viewModel.filteredPodcasts.prefix(6), id:\.self) { podcast in
 
                                 NavigationLink(value: podcast){
-                                    HStack {
+                                    HStack(spacing: 15) {
                                         LazyImage(url: URL(string: podcast?.imageUrl ?? ""), transaction: Transaction(animation: .bouncy)) { phase in
                                             if let image = phase.image {
                                                 image
@@ -206,13 +202,13 @@ struct SearchingView: View {
                         .listStyle(.plain)
                         
                                           
-                     
+                   //if category == .Sponsor
                     } else {
                         List {
                             ForEach(viewModel.filteredSponsors.prefix(6), id:\.self) { sponsor in
 
                                 NavigationLink(value: sponsor){
-                                    HStack {
+                                    HStack(spacing: 15) {
                                         LazyImage(url: URL(string: sponsor?.imageUrl ?? ""), transaction: Transaction(animation: .bouncy)) { phase in
                                             if let image = phase.image {
                                                 image

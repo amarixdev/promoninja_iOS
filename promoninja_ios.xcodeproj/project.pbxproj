@@ -21,6 +21,7 @@
 		A32010D62B12A42F00F22357 /* PodcastDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32010D52B12A42F00F22357 /* PodcastDetailSheet.swift */; };
 		A32010D82B12A46400F22357 /* SponsorDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32010D72B12A46400F22357 /* SponsorDetailSheet.swift */; };
 		A323E3D82B226C560087291B /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323E3D72B226C560087291B /* SearchView.swift */; };
+		A3263AE92B27879E006C7125 /* PodcastCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3263AE82B27879E006C7125 /* PodcastCategory.swift */; };
 		A34E64C32B1D249800CAB65D /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34E64C22B1D249800CAB65D /* TestView.swift */; };
 		A356346F2B15C9AE00928A9B /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356346E2B15C9AE00928A9B /* CategoryView.swift */; };
 		A35634722B16794400928A9B /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35634712B16794400928A9B /* HomeScreenView.swift */; };
@@ -75,6 +76,7 @@
 		A32010D52B12A42F00F22357 /* PodcastDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastDetailSheet.swift; sourceTree = "<group>"; };
 		A32010D72B12A46400F22357 /* SponsorDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorDetailSheet.swift; sourceTree = "<group>"; };
 		A323E3D72B226C560087291B /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		A3263AE82B27879E006C7125 /* PodcastCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastCategory.swift; sourceTree = "<group>"; };
 		A34E64C22B1D249800CAB65D /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		A356346E2B15C9AE00928A9B /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		A35634712B16794400928A9B /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 			children = (
 				A3B837FC2B2113290078BFE7 /* PopularCreators.swift */,
 				A3B838022B211B7B0078BFE7 /* PodcastSlider.swift */,
+				A3263AE82B27879E006C7125 /* PodcastCategory.swift */,
 				A3B838002B2119960078BFE7 /* PopularSponsors.swift */,
 				A3A2E7032B15527700E8B53C /* GreetingView.swift */,
 				A3A45D3D2B181207003EF626 /* PodcastSelectionSheet.swift */,
@@ -423,6 +426,7 @@
 				A32010CC2B12665600F22357 /* SponsorListView.swift in Sources */,
 				A39C77A22B1FA1EE0058097F /* Placeholder.swift in Sources */,
 				A3B838032B211B7B0078BFE7 /* PodcastSlider.swift in Sources */,
+				A3263AE92B27879E006C7125 /* PodcastCategory.swift in Sources */,
 				A3A6527E2B0BAF9E00AEE068 /* ContentView.swift in Sources */,
 				A3A45D482B19432E003EF626 /* sports.swift in Sources */,
 				A3DC10312B1E15E200A823C1 /* ToolbarStyle.swift in Sources */,

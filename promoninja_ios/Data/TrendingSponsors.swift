@@ -20,6 +20,7 @@ let skinCare = SponsorGroup(title: "Revitalize Your Skin", sponsorNames: ["Apost
 let mentalHealth = SponsorGroup(title: "Find Inner Peace", sponsorNames: ["Better Help", "HeadSpace", "Talkspace"])
 let homeCare = SponsorGroup(title: "Soothe and Sleep", sponsorNames: ["Eight Sleep", "Tushy", "Helix Mattress", "Brooklinen"])
 let underwear = SponsorGroup(title: "Luxe Beneath Layers", sponsorNames: ["MeUndies", "HoneyLove", "Sheath Underwear"])
-let maleProducts = SponsorGroup(title: "Gifts For Dad", sponsorNames: ["True Classic", "Manscaped"])
+let maleProducts = SponsorGroup(title: "Gifts For Dad", sponsorNames: ["True Classic", "Manscaped", "Keeps"])
+let reproductive = SponsorGroup(title: "Sexual and Reproductive", sponsorNames: ["BLUECHEW", "Wisp", "Mochi Melt"])
 
-let sponsorGroups = [supplements, skinCare, homeCare, mentalHealth, underwear, maleProducts]
+let sponsorGroups = [supplements, skinCare, homeCare, mentalHealth, underwear, maleProducts, reproductive]

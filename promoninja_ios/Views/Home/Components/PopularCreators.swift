@@ -40,8 +40,10 @@ struct PopularCreators: View {
    
                                                              .resizable()
                                                              .scaledToFill()
-                                                             .clipShape(Circle())
                                                              .frame(width: 100, height: 100)
+                                                             .clipShape(Circle())
+                                                             .shadow(color: .black, radius: 4, x:-2, y:3)
+                                                           
 
                                                          Text(creator.fullName)
                                                              .font(.caption)
@@ -75,6 +77,7 @@ struct PopularCreators: View {
    
                                      }
                                      .scrollIndicators(.hidden)
+                                     .zIndex(10)
                                     
 
         Divider ()
