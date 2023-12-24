@@ -111,8 +111,8 @@ struct ContentView: View {
                     
                     
                 NavigationStack(path: $router.discoverPath) {
-                        DiscoverView(shouldScrollToTop: $shouldScrollToTop_discover)
-                    
+//                        DiscoverView(shouldScrollToTop: $shouldScrollToTop_discover)       
+                    DiscoverView(shouldScrollToTop: $shouldScrollToTop_discover)
                     }
                     .tabItem {
                         Image(systemName: "circle.grid.2x2")
@@ -124,18 +124,18 @@ struct ContentView: View {
                     }
                 
                 
-                NavigationStack(path: $router.searchPath) {
-                    SearchView()
-                    
-                    }
-                    .tabItem {
-                        Image(systemName: "magnifyingglass")
-                     
-                    }
-                    .tag(Navigation.search)
-                    .onAppear {
-                        selectedTab.name = .search
-                    }
+//                NavigationStack(path: $router.searchPath) {
+//                    SearchView()
+//                    
+//                    }
+//                    .tabItem {
+//                        Image(systemName: "magnifyingglass")
+//                     
+//                    }
+//                    .tag(Navigation.search)
+//                    .onAppear {
+//                        selectedTab.name = .search
+//                    }
                 
                 
                 

@@ -19,7 +19,7 @@ struct CategoryView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [.sponsorTheme, .sponsorTheme.opacity(0.25), .black]), startPoint: .top, endPoint: .bottom)
+            Color.appTheme
                 .ignoresSafeArea()
             ScrollView {
                 VStack(alignment: .leading, spacing: 10)
@@ -52,7 +52,7 @@ struct CategoryView: View {
                                                 .multilineTextAlignment(.leading)
                                                 .foregroundStyle(.white)
                                                 .fontWeight(.semibold)
-                                            Text(sponsor.offer?.truncated(60) ?? "")
+                                            Text(sponsor.summary?.truncated(60) ?? "")
                                                 .font(.caption)
                                                 .multilineTextAlignment(.leading)
                                                 .foregroundStyle(.white)

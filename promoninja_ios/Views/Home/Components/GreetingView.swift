@@ -10,10 +10,11 @@ import SwiftUI
 struct GreetingView: View {
     var body: some View {
         VStack(alignment:.leading) {
-            Text(greetingMessage())
+//            Text(greetingMessage())
+            Text("Save Money")
                 .font(.largeTitle)
                 .fontWeight(.semibold)
-            Text("Let's find some deals!")
+            Text("Support Creators")
                 .font(.title2)
                 .fontWeight(.semibold)
                 .opacity(0.8)

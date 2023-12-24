@@ -13,6 +13,12 @@ import NukeUI
 struct PodcastView: View {
     @StateObject var viewModel: PodcastViewModel
     @Environment(\.dismiss) var dismiss
+    
+    
+    @State private var shine = false
+    @State private var disableTap = false
+
+ 
     var title: GraphQLNullable<String>
     
     init(title: GraphQLNullable<String>) {
@@ -61,6 +67,16 @@ struct PodcastView: View {
                                              .frame(width: 180, height: 180)
                                              .cornerRadius(10)
                                              .shadow(radius: 10)
+                                             .shine(shine)
+                                             .onTapGesture {
+                                                 if !disableTap {
+                                                     shine.toggle()
+                                                 }
+                                                disableTap = true
+                                                 setTimeout(1.6) {
+                                                     disableTap = false
+                                                 }
+                                             }
                                              
                                              
                                     }

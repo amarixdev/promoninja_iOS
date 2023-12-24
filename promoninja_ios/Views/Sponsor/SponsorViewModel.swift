@@ -17,6 +17,7 @@ class SponsorViewModel:ObservableObject {
     @Published var sponsorData: GetSponsorQuery.Data.GetSponsor?
     @Published var trendingSponsors = [[GetSponsorQuery.Data.GetSponsor?]()]
     
+    
    
     init (name: String, homePage: Bool) {
         self.homePage = homePage

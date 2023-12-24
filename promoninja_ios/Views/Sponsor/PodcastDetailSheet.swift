@@ -20,7 +20,7 @@ struct PodcastDetailSheet: View {
     @State private var copied = false
     @State private var degrees:Double = 0
     
-    
+
     
     var podcastTheme: Color {
         return Color(rgbString: podcast?.backgroundColor ?? "rgb(0,0,0)")
@@ -47,7 +47,6 @@ struct PodcastDetailSheet: View {
 
     
     var body: some View {
-    
             
           
             VStack {
@@ -61,6 +60,7 @@ struct PodcastDetailSheet: View {
                                         .resizable()
                                         .frame(width: 100, height: 100)
                                         .cornerRadius(10)
+                                     
                                 }
                                 else {
                                     ZStack {

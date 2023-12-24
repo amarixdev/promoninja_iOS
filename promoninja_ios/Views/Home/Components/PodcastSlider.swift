@@ -44,7 +44,9 @@ struct PodcastSlider: View {
                       
                         if let name = category?.name {
                             Button(name.capitalized ) {
+                                
                                 viewModel.currentCategory = name
+                               
                                 shouldScrollToStart = true
                                 categoryTapped = true
                                 setTimeout(0.2) {
@@ -152,10 +154,16 @@ struct PodcastSlider: View {
 
                     .background {
                         GeometryReader { geo in
+                            
                             Color.clear
                                 .onChange(of: geo.frame(in: .global).minX) {
                                 let offset = geo.frame(in: .global).minX
-                                self.xOffset = offset
+                                    if offset < 0 {
+                                        self.xOffset = offset
+                                    }
+                              
+                                    
+                                
                             }
                         }
                         
@@ -188,23 +196,26 @@ struct PodcastSlider: View {
             }
             .onChange(of: viewModel.currentCategory) {
                 if shouldScrollToStart {
-                    withAnimation {
-                        if shouldFade {
-                            fadeOutList = true
-                        }
-                        reader.scrollTo(String(0) + categoryID)
+                    if shouldFade {
+                        fadeOutList = true
                     }
-                      setTimeout(0.25) {
+                    
+                    withAnimation {
+                        reader.scrollTo(String(0) + categoryID)
+                        
+                    }
+                    
+                    setTimeout(0.25) {
                         withAnimation {
                             fadeOutList = false
                         }
                     }
-    
+                    
                     setTimeout(0.15) {
                         shouldScrollToStart = false
                         shouldFade = false
                     }
-                   
+                    
                 }
              
             }

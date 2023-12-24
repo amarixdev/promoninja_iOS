@@ -7,7 +7,7 @@ public class GetSponsorCategoriesQuery: GraphQLQuery {
   public static let operationName: String = "GetSponsorCategories"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query GetSponsorCategories { getSponsorCategories { __typename name sponsor { __typename name imageUrl offer } } }"#
+      #"query GetSponsorCategories { getSponsorCategories { __typename name sponsor { __typename name imageUrl offer summary } } }"#
     ))
 
   public init() {}
@@ -53,11 +53,13 @@ public class GetSponsorCategoriesQuery: GraphQLQuery {
           .field("name", String?.self),
           .field("imageUrl", String?.self),
           .field("offer", String?.self),
+          .field("summary", String?.self),
         ] }
 
         public var name: String? { __data["name"] }
         public var imageUrl: String? { __data["imageUrl"] }
         public var offer: String? { __data["offer"] }
+        public var summary: String? { __data["summary"] }
       }
     }
   }

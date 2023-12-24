@@ -19,36 +19,42 @@ struct PopularSponsors: View {
     
     let sponsorVM: SponsorViewModel
     var body: some View {
+        
         HStack {
             Text("Trending Offers")
                 .font(.title.bold())
-//                .opacity(0.6)
+                .opacity(0.8)
             Spacer()
         }
         .padding(.leading)
       
-        ZStack {
-            Image(.logo)
-                .frame(width: 100, height: 100)
-                .blur(radius: 30)
-                .opacity(0.75)
-                
-            HStack {
-                Text("\"We've searched hundreds podcasts to find you the best deals!\"")
-                    .font(.subheadline)
-                    .fontWeight(.medium)
-                    .multilineTextAlignment(.center)
-                    .padding(20)
-            }
-           
-                
-        }
-        .background(.ultraThinMaterial)
-        .opacity(0.95)
-        .cornerRadius(10)
-        .shadow(radius: 10)
-        .padding(.top, 30)
-        .padding(.bottom, 20)
+
+//            HStack {
+//                Image(.logo)
+//                    .resizable()
+//                    .scaledToFit()
+//                    .frame(width: 70, height: 70)
+//                    .padding(.leading)
+//              
+//                Text("\"I've searched countless podcasts to bring you the best deals!\"")
+//                    .font(.caption)
+//                    .fontWeight(.medium)
+//                    .padding(.vertical, 20)
+//                    .padding(.trailing, 20)
+//                    .shadow(color:.black, radius: 2)
+// 
+//        
+//            }
+//            .opacity(0.9)
+//           
+//
+//        .background(
+//            LinearGradient(colors: [.sponsorTheme, .sponsorTheme.opacity(0.5)], startPoint: .topLeading, endPoint: .bottomTrailing)
+//        )
+//        .opacity(0.95)
+//        .cornerRadius(10)
+//        .shadow(color:.gray.opacity(0.8), radius: 2)
+//        .padding(20)
         
         VStack {
           ForEach(0 ..< sponsorVM.trendingSponsors.count, id: \.self) { index in
@@ -60,7 +66,7 @@ struct PopularSponsors: View {
                       Spacer()
                   }
               
-                  ScrollView(.horizontal) {
+    
                       HStack(spacing: 15) {
                           
                           ForEach(sponsorVM.trendingSponsors[index], id:\.self) { sponsor in
@@ -73,11 +79,13 @@ struct PopularSponsors: View {
                                                   image
                                                       .resizable()
                                                       .scaledToFit()
-                                                      .frame(width: 150, height: 150)
+                                                      .frame(width: 115, height: 115)
                                                       .cornerRadius(10)
+                                                      .shadow(color:.black, radius: 4, x: 5, y: 4)
+
                                                       
                                               } else {
-                                                  Placeholder(frameSize: 150, imgSize: 50, icon: .sponsor)
+                                                  Placeholder(frameSize: 115, imgSize: 50, icon: .sponsor)
                                               }
                                               
                                            
@@ -98,9 +106,10 @@ struct PopularSponsors: View {
                           }
                               
                           }
+                      .frame(maxWidth:.infinity, alignment:.center)
                       .padding(.bottom)
                           
-                      }
+                      
                   }
                   
               }

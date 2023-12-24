@@ -22,7 +22,7 @@ struct SponsorDetailSheet: View {
     @State private var copied = false
     @State private var degrees:Double = 0
 
-    
+
     var matchingOffer: GetPodcastQuery.Data.GetPodcast.Offer? {
          guard let podcast = podcast,
                let offers = podcast.offer
@@ -41,7 +41,6 @@ struct SponsorDetailSheet: View {
           return matchingOffer?.promoCode ?? ""
       }
   
-    
 
  
     
@@ -57,6 +56,7 @@ struct SponsorDetailSheet: View {
                                             .resizable()
                                             .frame(width: 100, height: 100)
                                             .cornerRadius(10)
+                                       
                                     } else {
                                         ZStack {
                                           ProgressView()

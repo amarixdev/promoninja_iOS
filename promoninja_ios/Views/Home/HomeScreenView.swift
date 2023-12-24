@@ -48,7 +48,7 @@ struct HomeScreen: View {
     @State private var viewLoaded = false
     var body: some View {
             ZStack {
-                Color.appTheme
+                LinearGradient(gradient: Gradient(colors: [.sponsorTheme, .sponsorTheme.opacity(0.5), .black]), startPoint: .top, endPoint: .bottom)
                     .ignoresSafeArea()
                 
                 
@@ -70,10 +70,10 @@ struct HomeScreen: View {
                                   GreetingView()
                                      
                                   Spacer()
-                                  Image(.logo)
+                                  Image(systemName: "questionmark.circle")
                                       .resizable()
                                       .scaledToFit()
-                                      .frame(width: 65, height: 65)
+                                      .frame(width: 35, height: 35)
                                       .foregroundStyle(.gray)
                               }
                              
@@ -87,23 +87,12 @@ struct HomeScreen: View {
                           PodcastSlider(viewModel: viewModel, categories: categories, podcasts: $viewModel.podcasts)
                           
                           PopularCreators(currentCategory: $viewModel.currentCategory)
-                        
-                          PopularSponsors(sponsorVM: sponsorVM)
                           
-                          VStack(spacing: 20) {
-                              Text("Didn't find what you were looking for?")
-                                  .font(.subheadline)
-                                  .fontWeight(.semibold)
-                                  .opacity(0.8)
-                              Button("Discover More Deals") {
-                                  selectedTab.name = .discover
-                              }
-                              .buttonStyle(.bordered)
+                          VStack {
+                              PopularSponsors(sponsorVM: sponsorVM)
                           }
-                          .padding(.bottom, 20)
-                         
-                        
-                          
+                          .frame(alignment:.center)
+
                       }
                       .onChange(of: shouldScrollToTop) {
                                          withAnimation {

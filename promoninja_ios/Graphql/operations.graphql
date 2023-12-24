@@ -113,6 +113,7 @@ query GetSponsorCategories {
       name
       imageUrl
       offer
+      summary
     }
   }
 }
@@ -174,3 +175,10 @@ query GetSponsorCategory ($input: SponsorCategoryInput!) {
         }
       }
 
+query LiveSearchPodcast($input: String!) {
+  liveSearchPodcast(input: $input) {
+    title
+    publisher
+    imageUrl
+  }
+}

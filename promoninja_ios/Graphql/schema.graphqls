@@ -18,6 +18,8 @@ type Query {
   fetchSpotifyPodcast(input: SpotifyAPI!): [Items]
   fetchCategoryPodcasts(input: PodcastInput!): [Podcast]
   getSponsorsCount(input: CountInput!): Int
+  liveSearchPodcast(input: String!): [Podcast]
+
 }
 
 
