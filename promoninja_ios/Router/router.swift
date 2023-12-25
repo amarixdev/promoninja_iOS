@@ -29,6 +29,5 @@ enum Navigation: String {
     case home
     case discover
     case search
-    
-    
+    case qtna
 }

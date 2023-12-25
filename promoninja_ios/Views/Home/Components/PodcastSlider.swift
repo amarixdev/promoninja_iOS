@@ -170,6 +170,7 @@ struct PodcastSlider: View {
                     }
                 
             }
+            .padding(.horizontal, 15)
             .onChange(of: xOffset, {
                 if xOffset < -75 {
                     if !shouldFade {

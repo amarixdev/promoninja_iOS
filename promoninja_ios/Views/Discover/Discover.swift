@@ -75,237 +75,266 @@ struct Discover: View {
         
     }
     
+    func categoryPlaceholders () -> some View {
+        ForEach(1..<9) { _ in
+            
+            ZStack {
+                Rectangle()
+                    .frame(width: 180, height: 100)
+                    .foregroundStyle(.ultraThinMaterial)
+                    .cornerRadius(10)
+                    .shadow(color:.black, radius: 4, x: 3, y: 4)
+            }
+            .padding(.vertical, 2)
+        }
+    }
+    
+    @State private var fadeOpacity:Double = 0
+    
     
     var body: some View {
-            ZStack {
-                
-                LinearGradient(gradient: Gradient(colors: [.sponsorTheme, .sponsorTheme.opacity(0.25), .black]), startPoint: .top, endPoint: .bottom)
-                    .ignoresSafeArea()
-                
-                
-                ScrollViewReader { reader in
-                    ScrollView {
+      
+                ZStack {
+                    
+                    LinearGradient(gradient: Gradient(colors: [.sponsorTheme, .sponsorTheme.opacity(0.25), .black]), startPoint: .top, endPoint: .bottom)
+                        .ignoresSafeArea()
+                    
+                  
+                        ScrollViewReader { reader in
+                            ScrollView {
 
-                            VStack {
-                                VStack {
-                                    ZStack {
-                                        HStack  {
-                                            Rectangle()
-                                                 .frame(width: 290, height: 290)
-                                                 .foregroundStyle(
-                                                    LinearGradient(colors: [.black.opacity(0.3)], startPoint: .leading, endPoint: .trailing)
-                                                 )
-                                                 .shadow(color:.black, radius: 10)
-                                            Spacer()
-                                        }
-                                        .padding(.leading, 10)
-                                        .frame(width: 400)
-                                    
-                                            VStack {
-                                                HStack {
-                                                    Text("Popular ")
-                                                        .fontWeight(.bold)
-                                                        .font(.subheadline)
-                                                        .foregroundStyle(.white)
+                                    VStack {
+                                        VStack {
+                                            ZStack {
+                                                HStack  {
+                                                    Rectangle()
+                                                         .frame(width: 290, height: 290)
+                                                         .foregroundStyle(
+                                                            LinearGradient(colors: [.black.opacity(0.3)], startPoint: .leading, endPoint: .trailing)
+                                                         )
+                                                         .shadow(color:.black, radius: 10)
                                                     Spacer()
                                                 }
-                                                .frame(width: 350)
-                                              
-                                                Spacer()
-                                            }
-                                            .frame(height: 220)
-                                                                   
-                                            Spacer()
-                                        HStack {
-                                            Image(popularSponsors[popularIndex].imageResource)
-                                                .resizable()
-                                                .frame(width: 330, height: 190)
-                                                .shadow(color: .black, radius: 10)
-                                                .padding(.top, 40)
-                                                .animation(.bouncy, value: popularIndex)
-                                                .gesture (
-                                                    DragGesture()
-                                                        
-                                                        .onEnded { value in
-                                                                               if value.translation.width > 50 {
-                                                                                   handleSwipe(dir: "right")
-                                                                               } else if value.translation.width < -50 {
-                                                                                   handleSwipe(dir: "left")
-                                                                               }
-                                                                           }
-                                                )
-                                            Spacer()
-                                        }
-                                        .frame(width: 50, height: 200)
-                                        
-
-                                    }
-                                }
-
-                                NavigationLink(value: popularSponsors[popularIndex]){
-                                    VStack(alignment:.leading)  {
-                                        HStack {
-                                            Text("\(popularSponsors[popularIndex].name)")
-                                                .font(.headline)
-                                                .fontWeight(.medium)
-                                                .animation(.none, value: popularIndex)
-                                            Image(systemName: "chevron.right")
-                                                .opacity(0.8)
-                                        }
-                                       
-                                        Text(popularSponsors[popularIndex].description)
-                                            .opacity(0.8)
-                                            .font(.footnote)
-                                            .multilineTextAlignment(.leading)
-                                        
-                                        
-                                    }
-                                }
-                                .padding()
-                              
-                              
-                                VStack(alignment:.leading) {
-                                        Text("Shop Categories")
-                                    .padding(.horizontal, 5)
-                                    .padding(.bottom, 10)
-                                    .font(.title2)
-                                    .fontWeight(.semibold)
-                                    .opacity(0.8)
-                                                              
-                                    LazyVGrid(columns: [GridItem(.flexible(minimum: 100)), GridItem(.flexible(minimum: 100))], spacing: 10) {
-                                        ForEach(categories, id: \.self) { category in
-                                            NavigationLink(value: category){
-                                                
-                                                
-                                                ZStack {
-                                                    Rectangle()
-                                                        .frame(width: 180, height: 100)
-                                                        .foregroundStyle(.ultraThinMaterial)
-                                                        .cornerRadius(10)
-                                                        .shadow(color:.black, radius: 4, x: 3, y: 4)
-                                                        
-                                                    
-                                                    HStack {
-                                                        VStack {
-                                                            Text(category?.name ?? "")
-                                                                .font(.system(size: 12))
-                                                                .fontWeight(.semibold)
-                                                                .multilineTextAlignment(.leading)
-                                                                
-                                        
-                                                                .lineLimit(category?.name == "Accessories" ? 1 :  2)
+                                                .padding(.leading, 10)
+                                                .frame(width: 400)
+                                            
+                                                    VStack {
+                                                        HStack {
+                                                            Text("Popular ")
+                                                                .fontWeight(.bold)
+                                                                .font(.subheadline)
+                                                                .foregroundStyle(.white)
                                                             Spacer()
                                                         }
-                                                        .frame(width: 100, alignment:.leading)
-                                                        .padding(.top, 10)
-                                                        .padding(.leading, 20)
-                                                 
-                                                           
+                                                        .frame(width: 350)
+                                                      
                                                         Spacer()
-                                                        
-                                                        Image(categoryImages[category!.name]?.0 ?? .accessories)
-                                                            .resizable()
-                                                            .scaledToFit()
-                                                            .frame(width: 70, height: 70)
-                                                            .cornerRadius(5)
-                                                            .rotationEffect(Angle(degrees: 340))
-                                                            .transformEffect(CGAffineTransform(translationX: 20, y: 20))
-                                                            .shadow(color:.black, radius: 4, x: 2, y: 4)
-                                                          
+                                                    }
+                                                    .frame(height: 220)
+                                                                           
+                                                    Spacer()
+                                                HStack {
+                                                    Image(popularSponsors[popularIndex].imageResource)
+                                                        .resizable()
+                                                        .frame(width: 330, height: 190)
+                                                        .shadow(color: .black, radius: 10)
+                                                        .padding(.top, 40)
+                                                        .animation(.bouncy, value: popularIndex)
+                                                        .gesture (
+                                                            DragGesture()
+                                                                
+                                                                .onEnded { value in
+                                                                                       if value.translation.width > 50 {
+                                                                                           handleSwipe(dir: "right")
+                                                                                       } else if value.translation.width < -50 {
+                                                                                           handleSwipe(dir: "left")
+                                                                                       }
+                                                                                   }
+                                                        )
+                                                    Spacer()
+                                                }
+                                                .frame(width: 50, height: 200)
+                                                
+
+                                            }
+                                        }
+
+                                        NavigationLink(value: popularSponsors[popularIndex]){
+                                            VStack(alignment:.leading)  {
+                                                HStack {
+                                                    Text("\(popularSponsors[popularIndex].name)")
+                                                        .font(.headline)
+                                                        .fontWeight(.medium)
+                                                        .animation(.none, value: popularIndex)
+                                                    Image(systemName: "chevron.right")
+                                                        .opacity(0.8)
+                                                }
+                                               
+                                                Text(popularSponsors[popularIndex].description)
+                                                    .opacity(0.8)
+                                                    .font(.footnote)
+                                                    .multilineTextAlignment(.leading)
+                                                
+                                                
+                                            }
+                                        }
+                                        .padding()
+                                      
+                                      
+                                        VStack(alignment:.leading) {
+                                                Text("Shop Categories")
+                                            .padding(.horizontal, 5)
+                                            .padding(.bottom, 10)
+                                            .font(.title2)
+                                            .fontWeight(.semibold)
+                                            .opacity(0.8)
+                                                                      
+                                            LazyVGrid(columns: [GridItem(.flexible(minimum: 100)), GridItem(.flexible(minimum: 100))], spacing: 10) {
+                                                
+                                                if categories.isEmpty {
+                                                    categoryPlaceholders()
+                                                } else
+                                                
+                                                {
+                                                    ForEach(categories, id: \.self) { category in
+                                                        NavigationLink(value: category){
+                                                            
+                                                            
+                                                            ZStack {
+                                                                Rectangle()
+                                                                    .frame(width: 180, height: 100)
+                                                                    .foregroundStyle(.ultraThinMaterial)
+                                                                    .cornerRadius(10)
+                                                                    .shadow(color:.black, radius: 4, x: 3, y: 4)
+                                                                    
+                                                                
+                                                                HStack {
+                                                                    VStack {
+                                                                        Text(category?.name ?? "")
+                                                                            .font(.system(size: 12))
+                                                                            .fontWeight(.semibold)
+                                                                            .multilineTextAlignment(.leading)
+                                                                            
+                                                    
+                                                                            .lineLimit(category?.name == "Accessories" ? 1 :  2)
+                                                                        Spacer()
+                                                                    }
+                                                                    .frame(width: 100, alignment:.leading)
+                                                                    .padding(.top, 10)
+                                                                    .padding(.leading, 20)
+                                                                    .opacity(fadeOpacity)
+                                                                       
+                                                                    Spacer()
+                                                                    
+                                                                    Image(categoryImages[category!.name]?.0 ?? .accessories)
+                                                                        .resizable()
+                                                                        .scaledToFit()
+                                                                        .frame(width: 70, height: 70)
+                                                                        .cornerRadius(5)
+                                                                        .rotationEffect(Angle(degrees: 340))
+                                                                        .transformEffect(CGAffineTransform(translationX: 20, y: 20))
+                                                                        .shadow(color:.black, radius: 4, x: 2, y: 4)
+                                                                        .opacity(fadeOpacity)
+                                                                      
+                                                                        
+                                                                    
+                                                                }
+                                                                .frame(width: 180, height: 100)
+                                                               
+                                                                .cornerRadius(10)
+                                                               
+                                                                .clipped()
+                                                               
+                                                              
+                                                            }
+                                                            .padding(.vertical, 2)
+                                                           
+                                                            .onAppear {
+                                                                withAnimation {
+                                                                    fadeOpacity = 1.0
+                                                                }
+                                                            }
+                                                            
+
+                                                    
+                                                        }
+                                                      
                                                             
                                                         
                                                     }
-                                                    .frame(width: 180, height: 100)
-                                                   
-                                                    .cornerRadius(10)
-                                                   
-                                                    .clipped()
-                                                   
-                                                  
+                                                    
                                                 }
-                                                .padding(.vertical, 2)
-                                                
-
-                                        
                                             }
-                                          
-                                                
                                             
                                         }
-                                    }
-                                    
-                                }
-                                .padding(.top, 20)
-                                .padding(.horizontal,10)
+                                        .padding(.top, 20)
+                                        .padding(.horizontal,10)
 
-                            }
-                            .id(Self.topId)
-                        
+                                    }
+                                    .id(Self.topId)
+                                
+                             
                      
-             
-                        .padding(.vertical, 30)
-                    }
-                    .onChange(of: shouldScrollToTop) {
-                                       withAnimation {
-                                           reader.scrollTo(Self.topId, anchor: .top)
-                                       }
-                        setTimeout(0.25) {
-                            shouldScrollToTop = false
+                                .padding(.vertical, 30)
+                            }
+                            .onChange(of: shouldScrollToTop) {
+                                               withAnimation {
+                                                   reader.scrollTo(Self.topId, anchor: .top)
+                                               }
+                                setTimeout(0.25) {
+                                    shouldScrollToTop = false
+                                }
+                                           }
                         }
-                                   }
-                }
-         
-                
-                
-            }
-          
-            .onReceive(timer, perform: { _ in
-                handleSwipe(dir: "right")
-            })
-            .navigationTitle("Discover More")
-            .id(Self.topId)
-        
-        
-            .navigationDestination(for: GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast.self) { podcast in
-                PodcastView(title: GraphQLNullable(stringLiteral: podcast.title))
-            }
-            
-            
-            .navigationDestination(for: GetSponsorQuery.Data.GetSponsor.Podcast.self) { podcast in
-                        PodcastView(title: GraphQLNullable(stringLiteral:podcast.title ) )
-                    }
-        
-            .navigationDestination(for: GetPodcastQuery.Data.GetPodcast.self) { podcast in
-                PodcastView(title: GraphQLNullable(stringLiteral: podcast.title))
-                    }
-            
-            .navigationDestination(for: GetSponsorCategoriesQuery.Data.GetSponsorCategory.Sponsor.self) { sponsor in
-                if let name = sponsor.name {
-                    SponsorView(name: name )
-                }
-            }
-         
-            .navigationDestination(for: GetPodcastQuery.Data.GetPodcast.Sponsor.self) { sponsor in
-                if let name = sponsor.name {
-                    SponsorView(name: name)
-                }
-                       
-                    }
-        
-            .navigationDestination(for: GetSponsorQuery.Data.GetSponsor.self) { sponsor in
-                if let name = sponsor.name {
-                    SponsorView(name: name)
-                }
-                
                     
-                       
-                    }
-   
-            .navigationDestination(for: Sponsor.self) { sponsor in
+             
+                    
+                    
+                }
+              
+                .onReceive(timer, perform: { _ in
+                    handleSwipe(dir: "right")
+                })
+                .navigationTitle("Discover More")
+                .id(Self.topId)
+                .navigationDestination(for: GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast.self) { podcast in
+                    PodcastView(title: GraphQLNullable(stringLiteral: podcast.title))
+                }
                 
-                SponsorView(name: sponsor.name)
-            }
-    
+                .navigationDestination(for: GetSponsorQuery.Data.GetSponsor.Podcast.self) { podcast in
+                            PodcastView(title: GraphQLNullable(stringLiteral:podcast.title ) )
+                        }
+            
+                .navigationDestination(for: GetPodcastQuery.Data.GetPodcast.self) { podcast in
+                    PodcastView(title: GraphQLNullable(stringLiteral: podcast.title))
+                        }
+                
+                .navigationDestination(for: GetSponsorCategoriesQuery.Data.GetSponsorCategory.Sponsor.self) { sponsor in
+                    if let name = sponsor.name {
+                        SponsorView(name: name )
+                    }
+                }
+             
+                .navigationDestination(for: GetPodcastQuery.Data.GetPodcast.Sponsor.self) { sponsor in
+                    if let name = sponsor.name {
+                        SponsorView(name: name)
+                    }
+                           
+                        }
+            
+                .navigationDestination(for: GetSponsorQuery.Data.GetSponsor.self) { sponsor in
+                    if let name = sponsor.name {
+                        SponsorView(name: name)
+                    }
+                                           
+                        }
+       
+                .navigationDestination(for: Sponsor.self) { sponsor in
+                    
+                    SponsorView(name: sponsor.name)
+                }
+        
+            
         
   
      

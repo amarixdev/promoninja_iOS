@@ -26,6 +26,9 @@ struct DiscoverView: View {
                 Color.appTheme.ignoresSafeArea()
             } else {
                 
+                
+                
+                
                 SearchingView(currentCategory: $viewModel.currentCategory, shouldScrollToTop: $shouldScrollToTop, filteredSponsors: $viewModel.filteredSponsors, filteredPodcasts: $viewModel.filteredPodcasts)
                     .searchable(text: $viewModel.searchText, prompt: viewModel.currentCategory == .Podcast ? "Find a podcast - \"Bad Friends\"" : "Find a sponsor - \"Tushy\"")
                     
@@ -34,6 +37,8 @@ struct DiscoverView: View {
                         Text("Sponsor").tag(Category.Sponsor)
                         
                     }
+           
+                    
           
                   
                 
@@ -104,6 +109,7 @@ struct DiscoverView: View {
 struct SearchingView: View {
     let searchCategories: [ Category] = [.Podcast, .Sponsor]
     @Environment(\.isSearching) var isSearching
+    @StateObject var viewModel = SearchViewModel()
 
     
     @Binding var currentCategory: Category
@@ -228,8 +234,7 @@ struct SearchingView: View {
             
             
         }
-   
-        
+
 
      
         

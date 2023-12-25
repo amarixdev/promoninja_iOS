@@ -70,11 +70,14 @@ struct HomeScreen: View {
                                   GreetingView()
                                      
                                   Spacer()
-                                  Image(systemName: "questionmark.circle")
-                                      .resizable()
-                                      .scaledToFit()
-                                      .frame(width: 35, height: 35)
-                                      .foregroundStyle(.gray)
+                                  NavigationLink(value: Navigation.qtna) {
+                                      Image(systemName: "questionmark.circle")
+                                          .resizable()
+                                          .scaledToFit()
+                                          .frame(width: 35, height: 35)
+                                          .foregroundStyle(.gray)
+                                  }
+                                 
                               }
                              
                               .padding(20)
@@ -148,6 +151,10 @@ struct HomeScreen: View {
                 }
                        
                     }
+            .navigationDestination(for: Navigation.self) { _ in
+                QuestionsView()
+     
+            }
         
 
         }
