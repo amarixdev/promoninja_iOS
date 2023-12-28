@@ -38,12 +38,7 @@ struct HomeScreen: View {
             return false
         }
     }
-    
-    struct TrendingSponsor {
-        let title: String
-        let sponsors: GetSponsorQuery.Data.GetSponsor?
-    }
-    
+        
     
     @State private var viewLoaded = false
     var body: some View {

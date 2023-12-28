@@ -15,7 +15,6 @@ struct ToolBar: ViewModifier {
         .toolbarColorScheme(.dark, for: .navigationBar)
         .tint(.white)
         .toolbarTitleDisplayMode(.inline)
-     
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {

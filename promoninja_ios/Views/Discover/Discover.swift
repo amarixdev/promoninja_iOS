@@ -103,7 +103,7 @@ struct Discover: View {
                         ScrollViewReader { reader in
                             ScrollView {
 
-                                    VStack {
+                                VStack {
                                         VStack {
                                             ZStack {
                                                 HStack  {
@@ -333,12 +333,7 @@ struct Discover: View {
                     
                     SponsorView(name: sponsor.name)
                 }
-        
-            
-        
-  
-     
-    
+
     }
 }
 

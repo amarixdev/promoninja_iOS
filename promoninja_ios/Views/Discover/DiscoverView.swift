@@ -170,9 +170,7 @@ struct SearchingView: View {
                                     .listRowBackground(Color.clear)
                                     .listRowSeparator(.hidden)
                                     .ignoresSafeArea()
-     
-                                    
-                                   
+
                                 }
                             }
                             .listStyle(.plain)

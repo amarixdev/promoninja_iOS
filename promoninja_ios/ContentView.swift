@@ -140,7 +140,8 @@ struct ContentView: View {
                 
                 
             }
-            .toolbarBackground(.appTheme, for: .tabBar)
+           
+           
              
             }
                 .environmentObject(selectedTab)

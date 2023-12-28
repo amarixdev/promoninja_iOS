@@ -1,134 +1,36 @@
-//
-//  TestView.swift
-//  promoninja_ios
-//
-//  Created by Amari DeVaughn on 12/3/23.
-//
-
-
 import SwiftUI
-import Combine
-
-struct Restaurant: Hashable, Identifiable {
-    let id: String
-    let title: String
-    let cuisine: CuisineOption
-}
-
-enum CuisineOption: String {
-    case American, Italian, Japanese
-}
 
 
-
-final class RestaurantManager {
-    
-    func getAllRestaurants() async throws -> [Restaurant] {
-        [
-            Restaurant(id: "1", title: "BurgerShack", cuisine: .American),
-            Restaurant(id: "2", title: "Pasta Palace", cuisine: .Italian),
-            Restaurant(id: "3", title: "Sushi Heavab", cuisine: .Japanese),
-            Restaurant(id: "4", title: "QuickeMart", cuisine: .American)
-        ]
-    }
-}
-
-@MainActor
-final class SearchableViewModel: ObservableObject {
-    @Published private(set) var allRestaurants: [Restaurant] = []
-    @Published private(set) var filteredRestaurants: [Restaurant] = []
-
-    @Published var searchText = ""
-    
-    private var cancellables = Set<AnyCancellable>()
-    
-    let manager = RestaurantManager()
-    
-    init() {
-        addSubscribers()
-    }
-    
-    var isSearching: Bool {
-        !searchText.isEmpty
-    }
-    
-    private func addSubscribers () {
-        $searchText
-            .debounce(for: 0.3, scheduler: DispatchQueue.main)
-            .sink { [weak self] searchText in
-                self?.filterRestaurants(searchText: searchText)
-            }
-            .store(in: &cancellables)
-    }
-    
-    
-    private func filterRestaurants (searchText: String) {
-        guard !searchText.isEmpty else {
-            filteredRestaurants = []
-            return
-        }
-        
-        let search = searchText.lowercased()
-        
-        filteredRestaurants = allRestaurants.filter({ restaurant in
-            let titleContainsSearch = restaurant.cuisine.rawValue.lowercased().contains(search)
-            let cuisineContainsSearch = restaurant.title.lowercased().contains(search)
-            
-            return titleContainsSearch || cuisineContainsSearch
-
-        })
-    }
-    
-    func loadAllRestaurants () async {
-        do {
-            allRestaurants = try await manager.getAllRestaurants()
-        } catch {
-            print(error)
-        }
-    }
-
-}
-
-
-struct SearchableView: View {
-    @StateObject var viewModel = SearchableViewModel()
-    
-   
-    
+struct TestView: View {
     var body: some View {
-        ScrollView() {
-            VStack(alignment:.leading, spacing: 20) {
-                ForEach(viewModel.isSearching ? viewModel.filteredRestaurants : viewModel.allRestaurants) {
-                    restaurantRow(restaurant: $0)
-                }
+        ExpandableView(thumbnail: ThumbnailView(content: {
+            ZStack {
+                Rectangle()
+                    .foregroundStyle(.ultraThinMaterial)
+                    .frame(height: 80)
+                    .cornerRadius(10)
+                Text("What is Promoninja?")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .padding()
             }
-        }
-       
-        .navigationTitle("Restaurant")
-        .task {
-            await viewModel.loadAllRestaurants()
-        }
-        .searchable(text: $viewModel.searchText, placement: .automatic, prompt: "Search Restaurants" )
-        
-    }
-    
-    private func restaurantRow (restaurant: Restaurant) -> some View {
-        VStack(alignment:.leading, spacing:20) {
-            Text(restaurant.title)
-                .font(.headline)
-            Text(restaurant.cuisine.rawValue.capitalized)
-                .font(.caption)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(.black.opacity(0.05))
+        }), expanded: ExpandedView(content: {
+            ZStack {
+                Rectangle()
+                    .foregroundStyle(.ultraThinMaterial)
+                    .frame(height: 220)
+                    .cornerRadius(10)
+                Text("PromoNinja is a free platform that brings together podcast creators, listeners, and sponsors. It simplifies sponsorship management for creators, provides exclusive promotions for listeners, and offers increased reach for sponsors. It's an all in one application for anyone who enjoys podcasts and saving money.")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .padding()
+            }
+        }))
     }
 }
 
 
 #Preview {
-    NavigationStack {
-        SearchableView()
-
-    }
+    TestView()
+        .preferredColorScheme(.dark)
 }
