@@ -9,7 +9,7 @@ import Foundation
 import PromoninjaSchema
 
 
-class PodcastCategoryViewModel: ObservableObject {
+class PodcastCategoryViewModel:ObservableObject {
     
     @Published var currentCategory: String? = "comedy" {
             didSet {

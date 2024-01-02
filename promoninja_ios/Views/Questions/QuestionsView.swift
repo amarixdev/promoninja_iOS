@@ -112,15 +112,18 @@ struct QuestionsView: View {
                     }
                     .padding()
                     
-             
-                    VStack {
+          
+                        VStack {
 
-                        questionBlock(question: "What exactly is Promoninja?", answer: "PromoNinja is a free platform that brings together podcast creators, listeners, and sponsors. It simplifies sponsorship management for creators, provides exclusive promotions for listeners, and offers increased reach for sponsors. It's an all in one application for anyone who enjoys podcasts and saving money.", id: 1)
-                        questionBlock(question: "What if I don't see a podcast I want to support?", answer: "No worries! You can still enjoy the various discounts offered across a wide range of podcasts.", id: 2)
-                        
-                        questionBlock(question: "How do I know the offers are up to date?", answer: "Offers are updated weekly. If you encounter an expired offer, feel free to report it", id: 3)
-                    }
-                    .padding(.bottom, 40)
+                            questionBlock(question: "What exactly is Promoninja?", answer: "PromoNinja is a free platform that brings together podcast creators, listeners, and sponsors. It simplifies sponsorship management for creators, provides exclusive promotions for listeners, and offers increased reach for sponsors. It's an all in one application for anyone who enjoys podcasts and saving money.", id: 1)
+                            questionBlock(question: "What if I don't see a podcast I want to support?", answer: "No worries! You can still enjoy the various discounts offered across a wide range of podcasts.", id: 2)
+                            
+                            questionBlock(question: "How do I know the offers are up to date?", answer: "Offers are updated weekly. If you encounter an expired offer, feel free to report it", id: 3)
+                        }
+                        .padding(.bottom, 40)
+                   
+                   
+                   
                    
                     
                  
@@ -128,9 +131,14 @@ struct QuestionsView: View {
                     Spacer()
                 }
             }
+    
+     
+          
             
             
         }
+           
+
 
         .navigationTitle("Questions")
         .toolbarBackground(.visible, for: .tabBar)

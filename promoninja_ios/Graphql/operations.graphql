@@ -43,6 +43,9 @@ query GetPodcasts {
             url
             summary
             offer
+            sponsorCategory {
+                name
+            }
           }
         }
       }

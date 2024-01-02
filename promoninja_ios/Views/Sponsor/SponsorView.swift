@@ -12,7 +12,7 @@ import NukeUI
 
 
 struct SponsorView: View {
-    @StateObject var viewModel: SponsorViewModel
+   @StateObject var viewModel: SponsorViewModel
     @Environment(\.dismiss) var dismiss
     @State private var viewLoaded = false
     @State private var shine = false

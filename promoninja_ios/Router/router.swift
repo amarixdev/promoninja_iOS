@@ -12,12 +12,10 @@ class Router: ObservableObject {
     static var router = Router()
         
     @Published var homePath = NavigationPath()
-    
     @Published var discoverPath = NavigationPath()
+    @Published var userPath = NavigationPath()
     
-    
-    @Published var searchPath = NavigationPath() 
-}
+    }
 
 class CurrentTab: ObservableObject {
     @Published var name: Navigation = .home
@@ -26,8 +24,6 @@ class CurrentTab: ObservableObject {
 
 
 enum Navigation: String {
-    case home
-    case discover
-    case search
-    case qtna
+    case home, discover, qtna, user
+   
 }

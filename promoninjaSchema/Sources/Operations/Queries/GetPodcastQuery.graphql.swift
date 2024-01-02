@@ -7,7 +7,7 @@ public class GetPodcastQuery: GraphQLQuery {
   public static let operationName: String = "GetPodcast"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query GetPodcast($input: PodcastInput!) { getPodcast(input: $input) { __typename title imageUrl publisher description backgroundColor externalUrl offer { __typename sponsor promoCode url } category { __typename name } sponsors { __typename name imageUrl url summary offer } } }"#
+      #"query GetPodcast($input: PodcastInput!) { getPodcast(input: $input) { __typename title imageUrl publisher description backgroundColor externalUrl offer { __typename sponsor promoCode url } category { __typename name } sponsors { __typename name imageUrl url summary offer sponsorCategory { __typename name } } } }"#
     ))
 
   public var input: PodcastInput
@@ -111,6 +111,7 @@ public class GetPodcastQuery: GraphQLQuery {
           .field("url", String?.self),
           .field("summary", String?.self),
           .field("offer", String?.self),
+          .field("sponsorCategory", [SponsorCategory?]?.self),
         ] }
 
         public var name: String? { __data["name"] }
@@ -118,6 +119,23 @@ public class GetPodcastQuery: GraphQLQuery {
         public var url: String? { __data["url"] }
         public var summary: String? { __data["summary"] }
         public var offer: String? { __data["offer"] }
+        public var sponsorCategory: [SponsorCategory?]? { __data["sponsorCategory"] }
+
+        /// GetPodcast.Sponsor.SponsorCategory
+        ///
+        /// Parent Type: `Category`
+        public struct SponsorCategory: PromoninjaSchema.SelectionSet {
+          public let __data: DataDict
+          public init(_dataDict: DataDict) { __data = _dataDict }
+
+          public static var __parentType: ApolloAPI.ParentType { PromoninjaSchema.Objects.Category }
+          public static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("name", String?.self),
+          ] }
+
+          public var name: String? { __data["name"] }
+        }
       }
     }
   }

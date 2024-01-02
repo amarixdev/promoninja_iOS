@@ -63,9 +63,7 @@ struct PodcastSelectionSheet: View {
                 VStack {
                     Text(multiplePodcasts ? "Check out my podcasts" : "Check out my podcast")
                         .font(.headline)
-                        .onTapGesture {
-                           print (multiplePodcasts)
-                        }
+
                     
                     Text("Listeners can enjoy various discounts.")
                         .font(.caption)

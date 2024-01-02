@@ -113,11 +113,7 @@ struct HomeScreen: View {
             .navigationDestination(for: GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast.self) { podcast in
                         PodcastView(title: GraphQLNullable(stringLiteral:podcast.title ) )
                     }
-        
-            .navigationDestination(for: GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast.self) { podcast in
-                PodcastView(title: GraphQLNullable(stringLiteral: podcast.title))
-            }
-            
+
             
             .navigationDestination(for: GetSponsorQuery.Data.GetSponsor.Podcast.self) { podcast in
                         PodcastView(title: GraphQLNullable(stringLiteral:podcast.title ) )

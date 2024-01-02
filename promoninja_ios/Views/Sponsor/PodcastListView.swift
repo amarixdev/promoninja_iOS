@@ -15,6 +15,9 @@ struct PodcastListView: View {
     @State private var displaySheet = false
     @State private var selectedPodcast: GetSponsorQuery.Data.GetSponsor.Podcast?
     @State private var podcastTheme: Color = Color(.black)
+    
+    
+
 
     init (sponsor: GetSponsorQuery.Data.GetSponsor? ) {
         self.sponsor = sponsor

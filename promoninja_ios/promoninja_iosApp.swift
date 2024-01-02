@@ -7,14 +7,16 @@
 
 import SwiftUI
 import Apollo
-
+import SwiftData
 
 @main
 struct promoninja_iosApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()                
+            ContentView()
+                .modelContainer(for: SavedOffer.self)
+                
         }
     }
 }

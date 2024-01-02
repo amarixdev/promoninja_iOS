@@ -8,6 +8,7 @@
 import SwiftUI
 import Apollo
 import PromoninjaSchema
+import SwiftData
 
 //handle back-swipe
 extension UINavigationController: UIGestureRecognizerDelegate {
@@ -40,7 +41,8 @@ struct ContentView: View {
     @State private var previousTab = ""
     @State var shouldScrollToTop_home = false
     @State var shouldScrollToTop_discover = false
-
+    @State var shouldScrollToTop_user = false
+    @Query(sort:[SortDescriptor(\SavedOffer.sponsor)]) var savedOffers: [SavedOffer]
    
 
     var body: some View {
@@ -55,8 +57,6 @@ struct ContentView: View {
                     if router.homePath.count == 0  {
                        
                             shouldScrollToTop_home = true
-                        
-                       
                     } else {
                         router.homePath.removeLast(router.homePath.count)
                     }
@@ -74,14 +74,12 @@ struct ContentView: View {
                     }
                 }
                 else if
-                    newValue == .search {
-                    if router.searchPath.count == 0 {
-                       
-                            shouldScrollToTop_discover = true
-                        
+                    newValue == .user {
+                    if router.userPath.count == 0 {
+                        shouldScrollToTop_user = true
                         
                     } else {
-                        router.searchPath.removeLast(router.searchPath.count)
+                        router.userPath.removeLast(router.userPath.count)
 
                     }
                 }
@@ -89,12 +87,11 @@ struct ContentView: View {
                
             }
             
-           
-            
-            
                     
         }) {
             Group {
+                
+                //HomeView
                 NavigationStack(path: $router.homePath) {
                     HomeScreen(shouldScrollToTop: $shouldScrollToTop_home)
                       
@@ -109,9 +106,10 @@ struct ContentView: View {
                     }
                   
                     
-                    
+                
+                
+                //DiscoverView
                 NavigationStack(path: $router.discoverPath) {
-//                        DiscoverView(shouldScrollToTop: $shouldScrollToTop_discover)       
                     DiscoverView(shouldScrollToTop: $shouldScrollToTop_discover)
                     }
                     .tabItem {
@@ -124,25 +122,20 @@ struct ContentView: View {
                     }
                 
                 
-//                NavigationStack(path: $router.searchPath) {
-//                    SearchView()
-//                    
-//                    }
-//                    .tabItem {
-//                        Image(systemName: "magnifyingglass")
-//                     
-//                    }
-//                    .tag(Navigation.search)
-//                    .onAppear {
-//                        selectedTab.name = .search
-//                    }
-                
-                
-                
+                //UserView
+                NavigationStack(path: $router.userPath) {
+                    UserView(savedOffers: savedOffers, shouldScrollToTop: $shouldScrollToTop_user)
+                       
+                }
+                .tabItem { Image(systemName: "person.fill") }
+                .tag(Navigation.user)
+                .onAppear {
+                    selectedTab.name = .user
+                }
+          
+
             }
            
-           
-             
             }
                 .environmentObject(selectedTab)
                 .tint(.white)

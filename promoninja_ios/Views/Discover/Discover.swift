@@ -10,16 +10,19 @@ import PromoninjaSchema
 
 
 struct Discover: View {
-    @StateObject var viewModel = SponsorCategoryViewModel()
+
     @Environment(\.dismiss) var dismiss
     @Binding var shouldScrollToTop: Bool
     private static let topId = "topIdHere"
 
     let timer = Timer.publish(every: 8, on: .main, in: .common).autoconnect()
     
-    var categories: [GetSponsorCategoriesQuery.Data.GetSponsorCategory?] {
-        viewModel.categoryData ?? []
-    }
+//    var categories: [GetSponsorCategoriesQuery.Data.GetSponsorCategory?] {
+//        viewModel.categoryData ?? []
+//    }
+//    
+    var categories: [GetSponsorCategoriesQuery.Data.GetSponsorCategory?]
+    
     
     struct Sponsor: Hashable {
         let name: String
@@ -56,7 +59,6 @@ struct Discover: View {
     
     
     func handleSwipe(dir: String) {
-        print(popularIndex)
         if dir == "right" {
             if popularIndex == 2 {
                popularIndex = 0
@@ -89,7 +91,6 @@ struct Discover: View {
         }
     }
     
-    @State private var fadeOpacity:Double = 0
     
     
     var body: some View {
@@ -222,7 +223,7 @@ struct Discover: View {
                                                                     .frame(width: 100, alignment:.leading)
                                                                     .padding(.top, 10)
                                                                     .padding(.leading, 20)
-                                                                    .opacity(fadeOpacity)
+                                                                    
                                                                        
                                                                     Spacer()
                                                                     
@@ -234,7 +235,7 @@ struct Discover: View {
                                                                         .rotationEffect(Angle(degrees: 340))
                                                                         .transformEffect(CGAffineTransform(translationX: 20, y: 20))
                                                                         .shadow(color:.black, radius: 4, x: 2, y: 4)
-                                                                        .opacity(fadeOpacity)
+                                                                      
                                                                       
                                                                         
                                                                     
@@ -249,11 +250,7 @@ struct Discover: View {
                                                             }
                                                             .padding(.vertical, 2)
                                                            
-                                                            .onAppear {
-                                                                withAnimation {
-                                                                    fadeOpacity = 1.0
-                                                                }
-                                                            }
+                                                     
                                                             
 
                                                     
@@ -337,12 +334,12 @@ struct Discover: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        Discover(shouldScrollToTop: .constant(false))
-           
-    }
-    .preferredColorScheme(.dark)
-   
-    
-}
+//#Preview {
+//    NavigationStack {
+//        Discover(shouldScrollToTop: .constant(false))
+//           
+//    }
+//    .preferredColorScheme(.dark)
+//   
+//    
+//}

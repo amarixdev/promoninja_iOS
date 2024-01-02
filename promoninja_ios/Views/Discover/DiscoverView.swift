@@ -111,6 +111,7 @@ struct SearchingView: View {
     @Environment(\.isSearching) var isSearching
     @StateObject var viewModel = SearchViewModel()
 
+    @StateObject var categoryVM = SponsorCategoryViewModel()
     
     @Binding var currentCategory: Category
     @Binding var shouldScrollToTop: Bool
@@ -120,117 +121,126 @@ struct SearchingView: View {
 
     @State private var all_podcasts = [GetPodcastsQuery.Data.GetPodcast?]()
     
-
+    var categories: [GetSponsorCategoriesQuery.Data.GetSponsorCategory?] {
+            categoryVM.categoryData ?? []
+        }
+      
 
     var body: some View {
-        ZStack {
-                Color.appTheme.ignoresSafeArea()
-            if !isSearching {
-                Discover(shouldScrollToTop: $shouldScrollToTop)
-            } else {
-                VStack {
-                        if currentCategory == .Podcast {
-                           
-                            List {
-                                ForEach(filteredPodcasts, id:\.self) { podcast in
-                                    
-                                    let index = filteredPodcasts.firstIndex(of: podcast)
-                                    
-                                    
-                                    NavigationLink(value: podcast){
-                                        HStack(spacing: 15) {
-                                            LazyImage(url: URL(string: podcast?.imageUrl ?? ""), transaction: Transaction(animation: .bouncy)) { phase in
-                                                if let image = phase.image {
-                                                    image
-                                                        .resizable()
-                                                        .scaledToFill()
-                                                        .frame(width: index == 0 ? 100 : 60, height: index == 0 ? 100 : 60)
-                                                        .cornerRadius(10)
-                                                        .shadow(color:.black, radius: 6, x: 3, y: 3)
-                                             
-                                                } else {
-                                                    Placeholder(frameSize: index == 0 ? 100 : 60, imgSize: 25, icon: .podcast)
+        if categories.isEmpty {
+            LoadingAnimation()
+        } else
+        
+        {
+            ZStack {
+                    Color.appTheme.ignoresSafeArea()
+                if !isSearching {
+                    Discover(shouldScrollToTop: $shouldScrollToTop, categories: categories)
+                } else {
+                    VStack {
+                            if currentCategory == .Podcast {
+                               
+                                List {
+                                    ForEach(filteredPodcasts, id:\.self) { podcast in
+                                        
+                                        let index = filteredPodcasts.firstIndex(of: podcast)
+                                        
+                                        
+                                        NavigationLink(value: podcast){
+                                            HStack(spacing: 15) {
+                                                LazyImage(url: URL(string: podcast?.imageUrl ?? ""), transaction: Transaction(animation: .bouncy)) { phase in
+                                                    if let image = phase.image {
+                                                        image
+                                                            .resizable()
+                                                            .scaledToFill()
+                                                            .frame(width: index == 0 ? 100 : 60, height: index == 0 ? 100 : 60)
+                                                            .cornerRadius(10)
+                                                            .shadow(color:.black, radius: 6, x: 3, y: 3)
+                                                 
+                                                    } else {
+                                                        Placeholder(frameSize: index == 0 ? 100 : 60, imgSize: 25, icon: .podcast)
+                                                    }
                                                 }
+                                                
+                                                VStack(alignment:.leading) {
+                                                    Text(podcast?.title.truncated(30) ?? "")
+                                                        .font(.subheadline)
+                                                        .fontWeight(.medium)
+                                                    Text(podcast?.publisher?.truncated(30) ?? "")
+                                                        .font(.subheadline)
+                                                        .opacity(0.8)
+                                                }
+                                                Spacer()
+                                       
+                                                
                                             }
-                                            
-                                            VStack(alignment:.leading) {
-                                                Text(podcast?.title.truncated(30) ?? "")
-                                                    .font(.subheadline)
-                                                    .fontWeight(.medium)
-                                                Text(podcast?.publisher?.truncated(30) ?? "")
-                                                    .font(.subheadline)
-                                                    .opacity(0.8)
-                                            }
-                                            Spacer()
-                                   
                                             
                                         }
-                                        
+                                        .listRowBackground(Color.clear)
+                                        .listRowSeparator(.hidden)
+                                        .ignoresSafeArea()
+
                                     }
-                                    .listRowBackground(Color.clear)
-                                    .listRowSeparator(.hidden)
-                                    .ignoresSafeArea()
-
                                 }
-                            }
-                            .listStyle(.plain)
+                                .listStyle(.plain)
 
-                        } else  {
-                            List {
-                                ForEach(filteredSponsors, id:\.self) { sponsor in
-                                                                    
-                                    let index = filteredSponsors.firstIndex(of: sponsor)
+                            } else  {
+                                List {
+                                    ForEach(filteredSponsors, id:\.self) { sponsor in
+                                                                        
+                                        let index = filteredSponsors.firstIndex(of: sponsor)
 
-                                    NavigationLink(value: sponsor){
-                                        HStack(spacing: 15) {
-                                            LazyImage(url: URL(string: sponsor?.imageUrl ?? ""), transaction: Transaction(animation: .bouncy)) { phase in
-                                                if let image = phase.image {
-                                                    image
-                                                        .resizable()
-                                                        .scaledToFill()
-                                                        .frame(width: index == 0 ? 100 : 60, height: index == 0 ? 100 : 60)
-                                                        .cornerRadius(10)
-                                                        .shadow(color:.black, radius: 6, x: 3, y: 3)
-                                             
-                                                } else {
-                                                    Placeholder(frameSize: index == 0 ? 100 : 60, imgSize: 25, icon: .sponsor)
+                                        NavigationLink(value: sponsor){
+                                            HStack(spacing: 15) {
+                                                LazyImage(url: URL(string: sponsor?.imageUrl ?? ""), transaction: Transaction(animation: .bouncy)) { phase in
+                                                    if let image = phase.image {
+                                                        image
+                                                            .resizable()
+                                                            .scaledToFill()
+                                                            .frame(width: index == 0 ? 100 : 60, height: index == 0 ? 100 : 60)
+                                                            .cornerRadius(10)
+                                                            .shadow(color:.black, radius: 6, x: 3, y: 3)
+                                                 
+                                                    } else {
+                                                        Placeholder(frameSize: index == 0 ? 100 : 60, imgSize: 25, icon: .sponsor)
+                                                    }
                                                 }
+                                                
+                                                VStack(alignment:.leading) {
+                                                    Text(sponsor?.name?.truncated(30) ?? "")
+                                                        .font(.subheadline)
+                                                        .fontWeight(.medium)
+                                                    Text(sponsor?.url?.truncated(30) ?? "")
+                                                        .font(.subheadline)
+                                                        .opacity(0.8)
+                                                }
+                                                Spacer()
+                                       
+                                                
                                             }
-                                            
-                                            VStack(alignment:.leading) {
-                                                Text(sponsor?.name?.truncated(30) ?? "")
-                                                    .font(.subheadline)
-                                                    .fontWeight(.medium)
-                                                Text(sponsor?.url?.truncated(30) ?? "")
-                                                    .font(.subheadline)
-                                                    .opacity(0.8)
-                                            }
-                                            Spacer()
-                                   
                                             
                                         }
-                                        
-                                    }
-                                    .listRowBackground(Color.clear)
-                                    .listRowSeparator(.hidden)
-                                    .ignoresSafeArea()
+                                        .listRowBackground(Color.clear)
+                                        .listRowSeparator(.hidden)
+                                        .ignoresSafeArea()
 
-                                    
-                                   
+                                        
+                                       
+                                    }
                                 }
+                                .listStyle(.plain)
+                                
                             }
-                            .listStyle(.plain)
+                          
                             
+                           
                         }
-                      
-                        
-                       
-                    }
+                    
+                }
+               
+                
                 
             }
-           
-            
-            
         }
 
 
