@@ -16,6 +16,8 @@ struct HomeScreen: View {
     @StateObject var sponsorVM = SponsorViewModel(name: "", homePage: true)
     @EnvironmentObject var selectedTab: CurrentTab
     
+    @State private var scrollOffset =  CGFloat()
+    
     
     @State private var selectedCreator = Creator(fullName: "", image: .logo, podcasts: [], summary: "")
     
@@ -24,7 +26,8 @@ struct HomeScreen: View {
     }
     @State private var creatorData: GetPodcastQuery.Data.GetPodcast?
     @State private var showSelection = false
-    
+    @StateObject var router = Router.router
+
     
     var categories: [GetPodcastCategoriesQuery.Data.GetPodcastCategory?] {
         viewModel.categoryData?.filter {$0?.name != "news & politics"} ?? []
@@ -38,73 +41,119 @@ struct HomeScreen: View {
             return false
         }
     }
-        
+      
+    @State private var displayNavTitle = false
+    
     
     @State private var viewLoaded = false
     var body: some View {
-            ZStack {
-                LinearGradient(gradient: Gradient(colors: [.sponsorTheme, .sponsorTheme.opacity(0.5), .black]), startPoint: .top, endPoint: .bottom)
-                    .ignoresSafeArea()
-                
-                
-                if !dataLoaded  {
-                    Image(.logo)
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                        .scaledToFit()
-                    
-                    LoadingAnimation(homeScreen: true)
-                    
-                } else
-               
-              {
-                  ScrollViewReader { reader in
-                      ScrollView  {                         
-                          VStack {
-                              HStack(alignment:.top) {
-                                  GreetingView()
-                                     
-                                  Spacer()
-                                  NavigationLink(value: Navigation.qtna) {
-                                      Image(systemName: "questionmark.circle")
-                                          .resizable()
-                                          .scaledToFit()
-                                          .frame(width: 35, height: 35)
-                                          .foregroundStyle(.gray)
-                                  }
-                                 
-                              }
-                             
-                              .padding(20)
-                             
-                              Spacer()
-                          }
-                          .id(Self.topId)
-                          
-                   
-                          PodcastSlider(viewModel: viewModel, categories: categories, podcasts: $viewModel.podcasts)
-                          
-                          PopularCreators(currentCategory: $viewModel.currentCategory)
-                          
-                          VStack {
-                              PopularSponsors(sponsorVM: sponsorVM)
-                          }
-                          .frame(alignment:.center)
+        ZStack {
+            GradientView()
+            
+            ScrollViewReader { reader in
+                ScrollView {
 
-                      }
-                      .onChange(of: shouldScrollToTop) {
-                                         withAnimation {
-                                             reader.scrollTo(Self.topId, anchor: .top)
-                                         }
-                          setTimeout(0.25) {
-                              shouldScrollToTop = false
+                        if !dataLoaded {
+                            Image(.logo)
+                                .resizable()
+                                .frame(width: 100, height: 100)
+                                .scaledToFit()
+                            LoadingAnimation(homeScreen: true)
+                            
+                        } else
+                          {
+             
+                                VStack {
+                                    HStack(alignment:.top) {
+                                        GreetingView()
+                                        Spacer()
+  
+                                    }
+                                    .padding(.leading, 25)
+                                    .id(Self.topId)
+                                                                    
+                                    PodcastSlider(viewModel: viewModel, categories: categories, podcasts: $viewModel.podcasts)
+                                        .padding(.top, 20)
+                                        
+                                       
+                                    
+                                    PopularCreators(currentCategory: $viewModel.currentCategory)
+                                        .padding(.horizontal)
+                                    
+                                    VStack {
+                                        PopularSponsors(sponsorVM: sponsorVM)
+                                    }
+                                    .frame(alignment:.center)
+
+                                
+                            
+                                .padding(.vertical)
+                                    
+                                }
+                                .background {
+                                    GeometryReader { geo in
+                                        
+                                        Color.clear
+                                            .onChange(of: geo.frame(in: .global).minY) {
+                                            let offset = geo.frame(in: .global).minY
+                                                if offset < 10 {
+                                                    self.scrollOffset = offset
+                                                    if !displayNavTitle {
+                                                        displayNavTitle = true
+                                                    }
+                                                    
+                                                } else if offset > 10 {
+                                                    if displayNavTitle {
+                                                        displayNavTitle = false
+                                                    }
+                                                }
+                                          
+                                                
+                                            
+                                        }
+                                    }
+                                    
+                                }
+                                
+                                
+                            
+                                  
+                                                        
                           }
-                                     }
-                  }
-                      .padding(.vertical)
-              }
-              
+                        
+                        
+                        
+                    
+                
+                      
+                        
+                    
                 }
+                .onChange(of: shouldScrollToTop) {
+                                   withAnimation {
+                                       reader.scrollTo(Self.topId, anchor: .top)
+                                   }
+                    setTimeout(0.25) {
+                        shouldScrollToTop = false
+                    }
+                               }
+                
+                
+
+                
+            }
+        }
+        
+            .toolbar {
+                Button {
+                    router.homePath.append(Navigation.qtna)
+                } label: {
+                    Image(systemName: "questionmark.circle")
+                }
+            }
+            
+            .navigationTitle(displayNavTitle ? "Home" : "")
+            .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: GetPodcastCategoriesQuery.Data.GetPodcastCategory?.self ) { category in
                 if let category = category {
                     PodcastCategory(category: category)
@@ -164,6 +213,22 @@ struct HomeScreen: View {
 
    }
 
+struct CustomLargeTitleView: View {
+    var body: some View {
+        ScrollView {
+            VStack {
+                // Custom Large Title View
+                HStack {
+                    Image(systemName: "star.fill") // Example icon
+                    Text("Custom Large Title").font(.largeTitle) // Your custom title
+                }
+                .padding()
+                .background(Color.white) // Background for the title area
+            }
+        }
+        .navigationBarHidden(true)
+    }
+}
 
 #Preview {
     NavigationStack {

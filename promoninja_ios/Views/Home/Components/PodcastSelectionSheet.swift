@@ -94,13 +94,8 @@ struct PodcastSelectionSheet: View {
                                                     router.homePath.append(podcast)
                                                     dismiss()
                                                 }
-                                                
-
-
-                                            
-                                            
-                                                
-                                            HStack(spacing: 20) {
+                                        
+                                            HStack {
                                                 LazyImage(url: URL(string: podcast.imageUrl ?? "")!, transaction: Transaction(animation: .bouncy)) { phase in
                                                     if let image = phase.image {
                                                         image.resizable()
@@ -111,6 +106,7 @@ struct PodcastSelectionSheet: View {
                                                         
                                                     }
                                                 }
+                                                .padding(.leading, 20)
                                                 VStack(alignment:.leading) {
                                                     Text(podcast.title)
                                                         .font(.caption)
@@ -121,15 +117,18 @@ struct PodcastSelectionSheet: View {
                                                         .opacity(0.8)
                                                         
                                                 }
+                                                .frame(width: 230, alignment: .leading)
                                               
                                                     
-                                                Spacer()
+                                                
                                                 Image(systemName: "chevron.right")
                                                     .opacity(0.5)
+                                                    .padding(.trailing, 20)
                                             
                                             }
                                        
                                         }
+                                        .ignoresSafeArea()
                                         .listRowBackground(Color.sponsorTheme)
                                         .animation(.easeIn, value: tapped)
                                      

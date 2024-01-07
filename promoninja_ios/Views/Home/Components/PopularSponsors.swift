@@ -27,34 +27,7 @@ struct PopularSponsors: View {
             Spacer()
         }
         .padding(.leading)
-      
 
-//            HStack {
-//                Image(.logo)
-//                    .resizable()
-//                    .scaledToFit()
-//                    .frame(width: 70, height: 70)
-//                    .padding(.leading)
-//              
-//                Text("\"I've searched countless podcasts to bring you the best deals!\"")
-//                    .font(.caption)
-//                    .fontWeight(.medium)
-//                    .padding(.vertical, 20)
-//                    .padding(.trailing, 20)
-//                    .shadow(color:.black, radius: 2)
-// 
-//        
-//            }
-//            .opacity(0.9)
-//           
-//
-//        .background(
-//            LinearGradient(colors: [.sponsorTheme, .sponsorTheme.opacity(0.5)], startPoint: .topLeading, endPoint: .bottomTrailing)
-//        )
-//        .opacity(0.95)
-//        .cornerRadius(10)
-//        .shadow(color:.gray.opacity(0.8), radius: 2)
-//        .padding(20)
         
         VStack {
           ForEach(0 ..< sponsorVM.trendingSponsors.count, id: \.self) { index in

@@ -87,11 +87,10 @@ struct SponsorListView: View {
                                 .sheet(isPresented: $displaySheet) {
                                     ZStack {
                                         LinearGradient(colors: [Color(.sponsorTheme).opacity(0.85), .black.opacity(0.95), .black], startPoint: .top, endPoint: .bottom)
-                                            .ignoresSafeArea(.all)
-                                        SponsorDetailSheet(podcast: $selectedPodcast , sponsor: $selectedSponsor)
+                                     
+                                        SponsorDetailSheet(favoritePage:false, podcast: $selectedPodcast , sponsor: $selectedSponsor)
                                             .presentationDetents([.medium, .large])
                                             .presentationBackground(.clear)
-
                                     }
                              
                                 }

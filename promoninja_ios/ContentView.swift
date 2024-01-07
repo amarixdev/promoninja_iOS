@@ -42,7 +42,6 @@ struct ContentView: View {
     @State var shouldScrollToTop_home = false
     @State var shouldScrollToTop_discover = false
     @State var shouldScrollToTop_user = false
-    @Query(sort:[SortDescriptor(\SavedOffer.sponsor)]) var savedOffers: [SavedOffer]
    
 
     var body: some View {
@@ -124,7 +123,7 @@ struct ContentView: View {
                 
                 //UserView
                 NavigationStack(path: $router.userPath) {
-                    UserView(savedOffers: savedOffers, shouldScrollToTop: $shouldScrollToTop_user)
+                    ProfileView()
                        
                 }
                 .tabItem { Image(systemName: "person.fill") }
@@ -132,10 +131,7 @@ struct ContentView: View {
                 .onAppear {
                     selectedTab.name = .user
                 }
-          
-
-            }
-           
+                }
             }
                 .environmentObject(selectedTab)
                 .tint(.white)

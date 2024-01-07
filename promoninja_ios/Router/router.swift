@@ -25,5 +25,15 @@ class CurrentTab: ObservableObject {
 
 enum Navigation: String {
     case home, discover, qtna, user
-   
+}
+
+enum Profile: String, CaseIterable, Hashable {
+    case podcast, offers
+    
+    var label: Label<Text,Image> {
+        switch self {
+        case .podcast:  Label("Favorite Podcasts", systemImage: "antenna.radiowaves.left.and.right")
+        case .offers:  Label("Saved Offers", systemImage: "cart.fill")
+        }
+    }
 }

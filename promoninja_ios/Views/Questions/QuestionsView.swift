@@ -77,8 +77,7 @@ struct QuestionsView: View {
     var body: some View {
         ZStack {
             
-            LinearGradient(gradient: Gradient(colors: [.sponsorTheme, .sponsorTheme.opacity(0.5), .black]), startPoint: .top, endPoint: .bottom)
-                .ignoresSafeArea()
+            GradientView()
             
             ScrollView {
                 VStack {
@@ -144,7 +143,7 @@ struct QuestionsView: View {
         .toolbarBackground(.visible, for: .tabBar)
         .tint(.black)
 
-        .toolbarStyle()
+        .toolbarStyle(inline: true)
         .onReceive(timer, perform: { _ in
             withAnimation(.easeInOut(duration: 0.5)) {
                 if rotateAngle == 350 {

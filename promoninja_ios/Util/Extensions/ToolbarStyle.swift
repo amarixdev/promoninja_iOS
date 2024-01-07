@@ -9,12 +9,13 @@ import SwiftUI
 
 struct ToolBar: ViewModifier {
     @Environment(\.dismiss) var dismiss
+    let inline: Bool
     
     func body(content: Content) -> some View {
         content
         .toolbarColorScheme(.dark, for: .navigationBar)
         .tint(.white)
-        .toolbarTitleDisplayMode(.inline)
+        .toolbarTitleDisplayMode(inline ? .inline : .automatic)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -37,8 +38,8 @@ struct ToolBar: ViewModifier {
 
 
 extension View {
-    func toolbarStyle () -> some View {
+    func toolbarStyle (inline: Bool) -> some View {
         
-        modifier(ToolBar())
+        modifier(ToolBar(inline: inline))
     }
 }

@@ -23,8 +23,11 @@
 		A323E3D82B226C560087291B /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A323E3D72B226C560087291B /* DiscoverView.swift */; };
 		A3263AE92B27879E006C7125 /* PodcastCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3263AE82B27879E006C7125 /* PodcastCategory.swift */; };
 		A32898582B2A514A00DD2E23 /* ShineEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32898572B2A514A00DD2E23 /* ShineEffect.swift */; };
-		A33EA1AC2B4241490036E4C4 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA1AB2B4241490036E4C4 /* UserView.swift */; };
+		A33EA1AC2B4241490036E4C4 /* SavedOffersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA1AB2B4241490036E4C4 /* SavedOffersView.swift */; };
 		A33EA1B02B4242790036E4C4 /* SavedOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA1AF2B4242790036E4C4 /* SavedOffer.swift */; };
+		A33EA1B22B45AB9E0036E4C4 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA1B12B45AB9E0036E4C4 /* ProfileView.swift */; };
+		A33EA1B42B45B8080036E4C4 /* FavoritePodcastsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA1B32B45B8080036E4C4 /* FavoritePodcastsView.swift */; };
+		A33EA1B82B45BBCD0036E4C4 /* FavoritePodcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA1B72B45BBCD0036E4C4 /* FavoritePodcast.swift */; };
 		A34E64C32B1D249800CAB65D /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34E64C22B1D249800CAB65D /* TestView.swift */; };
 		A3559BDD2B3D06770012C82D /* ExpandableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3559BDC2B3D06770012C82D /* ExpandableView.swift */; };
 		A356346F2B15C9AE00928A9B /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A356346E2B15C9AE00928A9B /* CategoryView.swift */; };
@@ -35,7 +38,7 @@
 		A39C779F2B1E634B0058097F /* LoadingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C779E2B1E634B0058097F /* LoadingAnimation.swift */; };
 		A39C77A22B1FA1EE0058097F /* Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C77A12B1FA1EE0058097F /* Placeholder.swift */; };
 		A3A2E7042B15527700E8B53C /* GreetingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A2E7032B15527700E8B53C /* GreetingView.swift */; };
-		A3A2E7062B15577C00E8B53C /* SponsorCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A2E7052B15577C00E8B53C /* SponsorCategoryViewModel.swift */; };
+		A3A2E7062B15577C00E8B53C /* SponsorCategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A2E7052B15577C00E8B53C /* SponsorCategoriesViewModel.swift */; };
 		A3A45D3E2B181207003EF626 /* PodcastSelectionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A45D3D2B181207003EF626 /* PodcastSelectionSheet.swift */; };
 		A3A45D402B18F861003EF626 /* comedy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A45D3F2B18F861003EF626 /* comedy.swift */; };
 		A3A45D432B18FCC3003EF626 /* society.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A45D422B18FCC3003EF626 /* society.swift */; };
@@ -65,6 +68,8 @@
 		A3C879602B2612A500A3F375 /* FadeIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C8795F2B2612A500A3F375 /* FadeIn.swift */; };
 		A3DC10312B1E15E200A823C1 /* ToolbarStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DC10302B1E15E200A823C1 /* ToolbarStyle.swift */; };
 		A3DDB5DA2B17C17800EDD43F /* TrendingCreators.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DDB5D92B17C17800EDD43F /* TrendingCreators.swift */; };
+		A3F972152B491DB0007AB6C5 /* PromoCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F972142B491DB0007AB6C5 /* PromoCode.swift */; };
+		A3F972172B4A1C69007AB6C5 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F972162B4A1C69007AB6C5 /* GradientView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,8 +88,11 @@
 		A323E3D72B226C560087291B /* DiscoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
 		A3263AE82B27879E006C7125 /* PodcastCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastCategory.swift; sourceTree = "<group>"; };
 		A32898572B2A514A00DD2E23 /* ShineEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShineEffect.swift; sourceTree = "<group>"; };
-		A33EA1AB2B4241490036E4C4 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
+		A33EA1AB2B4241490036E4C4 /* SavedOffersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedOffersView.swift; sourceTree = "<group>"; };
 		A33EA1AF2B4242790036E4C4 /* SavedOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedOffer.swift; sourceTree = "<group>"; };
+		A33EA1B12B45AB9E0036E4C4 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		A33EA1B32B45B8080036E4C4 /* FavoritePodcastsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePodcastsView.swift; sourceTree = "<group>"; };
+		A33EA1B72B45BBCD0036E4C4 /* FavoritePodcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePodcast.swift; sourceTree = "<group>"; };
 		A34E64C22B1D249800CAB65D /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		A3559BDC2B3D06770012C82D /* ExpandableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableView.swift; sourceTree = "<group>"; };
 		A356346E2B15C9AE00928A9B /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
@@ -95,7 +103,7 @@
 		A39C779E2B1E634B0058097F /* LoadingAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAnimation.swift; sourceTree = "<group>"; };
 		A39C77A12B1FA1EE0058097F /* Placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Placeholder.swift; sourceTree = "<group>"; };
 		A3A2E7032B15527700E8B53C /* GreetingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingView.swift; sourceTree = "<group>"; };
-		A3A2E7052B15577C00E8B53C /* SponsorCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorCategoryViewModel.swift; sourceTree = "<group>"; };
+		A3A2E7052B15577C00E8B53C /* SponsorCategoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorCategoriesViewModel.swift; sourceTree = "<group>"; };
 		A3A45D3D2B181207003EF626 /* PodcastSelectionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastSelectionSheet.swift; sourceTree = "<group>"; };
 		A3A45D3F2B18F861003EF626 /* comedy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = comedy.swift; sourceTree = "<group>"; };
 		A3A45D422B18FCC3003EF626 /* society.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = society.swift; sourceTree = "<group>"; };
@@ -121,6 +129,8 @@
 		A3C8795F2B2612A500A3F375 /* FadeIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeIn.swift; sourceTree = "<group>"; };
 		A3DC10302B1E15E200A823C1 /* ToolbarStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarStyle.swift; sourceTree = "<group>"; };
 		A3DDB5D92B17C17800EDD43F /* TrendingCreators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingCreators.swift; sourceTree = "<group>"; };
+		A3F972142B491DB0007AB6C5 /* PromoCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCode.swift; sourceTree = "<group>"; };
+		A3F972162B4A1C69007AB6C5 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,7 +208,9 @@
 		A33EA1AD2B42414F0036E4C4 /* User */ = {
 			isa = PBXGroup;
 			children = (
-				A33EA1AB2B4241490036E4C4 /* UserView.swift */,
+				A33EA1AB2B4241490036E4C4 /* SavedOffersView.swift */,
+				A33EA1B12B45AB9E0036E4C4 /* ProfileView.swift */,
+				A33EA1B32B45B8080036E4C4 /* FavoritePodcastsView.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -207,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				A33EA1AF2B4242790036E4C4 /* SavedOffer.swift */,
+				A33EA1B72B45BBCD0036E4C4 /* FavoritePodcast.swift */,
 			);
 			path = SwiftData;
 			sourceTree = "<group>";
@@ -250,7 +263,7 @@
 			children = (
 				A323E3D72B226C560087291B /* DiscoverView.swift */,
 				A38BEE622B361C6300CDFC81 /* Discover.swift */,
-				A3A2E7052B15577C00E8B53C /* SponsorCategoryViewModel.swift */,
+				A3A2E7052B15577C00E8B53C /* SponsorCategoriesViewModel.swift */,
 			);
 			path = Discover;
 			sourceTree = "<group>";
@@ -347,6 +360,7 @@
 		A3A6529D2B0C3C9900AEE068 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				A3F972132B491D9D007AB6C5 /* Components */,
 				A3C8795E2B26125D00A3F375 /* Functions */,
 				A3C8795C2B26123B00A3F375 /* Extensions */,
 				A39C77A12B1FA1EE0058097F /* Placeholder.swift */,
@@ -373,6 +387,15 @@
 				A3C8795A2B26098D00A3F375 /* SetTimeout.swift */,
 			);
 			path = Functions;
+			sourceTree = "<group>";
+		};
+		A3F972132B491D9D007AB6C5 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				A3F972142B491DB0007AB6C5 /* PromoCode.swift */,
+				A3F972162B4A1C69007AB6C5 /* GradientView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -467,7 +490,7 @@
 				A3B838032B211B7B0078BFE7 /* PodcastSlider.swift in Sources */,
 				A3263AE92B27879E006C7125 /* PodcastCategory.swift in Sources */,
 				A3A6527E2B0BAF9E00AEE068 /* ContentView.swift in Sources */,
-				A33EA1AC2B4241490036E4C4 /* UserView.swift in Sources */,
+				A33EA1AC2B4241490036E4C4 /* SavedOffersView.swift in Sources */,
 				A3A45D482B19432E003EF626 /* sports.swift in Sources */,
 				A3DC10312B1E15E200A823C1 /* ToolbarStyle.swift in Sources */,
 				A38BEE652B3895C900CDFC81 /* QuestionsView.swift in Sources */,
@@ -477,6 +500,7 @@
 				A314B4E92B2272C6008EE50E /* SearchViewModel.swift in Sources */,
 				A3A45D4C2B194CAD003EF626 /* crime.swift in Sources */,
 				A32010C22B0FD65300F22357 /* SponsorView.swift in Sources */,
+				A3F972172B4A1C69007AB6C5 /* GradientView.swift in Sources */,
 				A30079C42B143B7200B86848 /* Playground.swift in Sources */,
 				A3A45D4A2B1946C2003EF626 /* technology.swift in Sources */,
 				A32010BA2B0FC59D00F22357 /* PodcastView.swift in Sources */,
@@ -487,9 +511,11 @@
 				A33EA1B02B4242790036E4C4 /* SavedOffer.swift in Sources */,
 				A3559BDD2B3D06770012C82D /* ExpandableView.swift in Sources */,
 				A32010D82B12A46400F22357 /* SponsorDetailSheet.swift in Sources */,
+				A33EA1B22B45AB9E0036E4C4 /* ProfileView.swift in Sources */,
 				A323E3D82B226C560087291B /* DiscoverView.swift in Sources */,
 				A3A45D462B192D36003EF626 /* educational.swift in Sources */,
 				A32010D62B12A42F00F22357 /* PodcastDetailSheet.swift in Sources */,
+				A3F972152B491DB0007AB6C5 /* PromoCode.swift in Sources */,
 				A3A45D3E2B181207003EF626 /* PodcastSelectionSheet.swift in Sources */,
 				A3B837FD2B2113290078BFE7 /* PopularCreators.swift in Sources */,
 				A32010BC2B0FC5AD00F22357 /* PodcastViewModel.swift in Sources */,
@@ -501,8 +527,10 @@
 				A35634722B16794400928A9B /* HomeScreenView.swift in Sources */,
 				A3A2E7042B15527700E8B53C /* GreetingView.swift in Sources */,
 				A356346F2B15C9AE00928A9B /* CategoryView.swift in Sources */,
-				A3A2E7062B15577C00E8B53C /* SponsorCategoryViewModel.swift in Sources */,
+				A3A2E7062B15577C00E8B53C /* SponsorCategoriesViewModel.swift in Sources */,
+				A33EA1B42B45B8080036E4C4 /* FavoritePodcastsView.swift in Sources */,
 				A32010CA2B12583300F22357 /* TruncateString.swift in Sources */,
+				A33EA1B82B45BBCD0036E4C4 /* FavoritePodcast.swift in Sources */,
 				A3A652992B0BC0FF00AEE068 /* Network.swift in Sources */,
 				A3A45D4E2B1AC75E003EF626 /* TrendingSponsors.swift in Sources */,
 				A3B838012B2119960078BFE7 /* PopularSponsors.swift in Sources */,

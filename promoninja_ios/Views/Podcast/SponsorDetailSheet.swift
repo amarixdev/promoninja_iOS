@@ -8,12 +8,14 @@
 import SwiftUI
 import PromoninjaSchema
 import SwiftData
+import NukeUI
 
 
 
 
 
 struct SponsorDetailSheet: View {
+    let favoritePage: Bool
     @Binding var podcast: GetPodcastQuery.Data.GetPodcast?
     @Binding var sponsor: GetPodcastQuery.Data.GetPodcast.Sponsor?
     @StateObject var router = Router.router
@@ -61,7 +63,7 @@ struct SponsorDetailSheet: View {
             HStack {
                 Spacer()
                 VStack {
-                    Image(systemName: isFavorited ? "star.fill" :"star")
+                    Image(systemName: isFavorited ? "bookmark.fill" :"bookmark")
                         .onTapGesture {
                             Task {
                                 guard let podcastTitle = podcast?.title else {return}
@@ -78,7 +80,7 @@ struct SponsorDetailSheet: View {
                 HStack(spacing: 15) {
                     if let imageUrl = sponsor?.imageUrl {
                   
-                            AsyncImage(url: URL (string: imageUrl)!, transaction: Transaction(animation: .bouncy)) { phase in
+                            LazyImage(url: URL (string: imageUrl)!, transaction: Transaction(animation: .bouncy)) { phase in
                                 if let image = phase.image {
                                     image
                                         .resizable()
@@ -100,8 +102,6 @@ struct SponsorDetailSheet: View {
                             )
                             .onTapGesture {
                                 
-                                print(currentTab.name)
-                                print(router.userPath.count)
                                 
                                 if let sponsor = sponsor {
                                     if currentTab.name == .home {
@@ -115,7 +115,7 @@ struct SponsorDetailSheet: View {
                                     
                                    
                                 }
-                                
+                                print(router.userPath.count)
                                     dismiss()
                                 }
                                 
@@ -156,15 +156,45 @@ struct SponsorDetailSheet: View {
                             .fontWeight(.semibold)
                             .font(.caption)
                             .padding(.leading, 5)
-                        
-                        Link(destination: URL(string: "https://"+affiliateLink)!, label: {
-                            Text(affiliateLink)
-                                .font(.subheadline)
-                                .opacity(0.8)
-                        })
-                        .padding(10)
-                        .background()
-                        .cornerRadius(10)
+                        HStack {
+                            
+                            Link(destination: URL(string: "https://"+affiliateLink)!, label: {
+                                Text(affiliateLink)
+                                    .font(.subheadline)
+                                    .opacity(0.8)
+                            })
+                            .padding(10)
+                            .background()
+                            .cornerRadius(10)
+                            
+                  
+                            if favoritePage && promoCode.isEmpty  {
+                                Spacer()
+                                
+                                HStack {
+                                    LazyImage(url: URL(string: podcast?.imageUrl ?? "")) { phase in
+                                        if let image = phase.image {
+                                            image
+                                                .resizable()
+                                                .frame(width: 50, height: 50)
+                                                .cornerRadius(10)
+                                                .shadow(color: .black, radius: 5, x: 3, y: 4)
+                                        }
+                                    }
+                         
+                                }
+                                .onTapGesture {
+                                    if let podcast = podcast {
+                                        router.userPath.append(podcast)
+                                    }
+                                   
+                                    dismiss()
+                                }
+                                
+                           
+                            }
+                        }
+                     
                     }
                    
                     Divider()
@@ -174,46 +204,40 @@ struct SponsorDetailSheet: View {
                //promoCode Button
               
                Spacer()
+                
                 if !promoCode.isEmpty {
-                    HStack {
-                        VStack(alignment:.leading, spacing: 10) {
-                            Text("Use code at checkout")
-                                .font(.subheadline)
-                                .opacity(0.8)
-                            Button {
-                                let pasteboard = UIPasteboard.general
-                                pasteboard.string = promoCode
-                                copied = true
-                                withAnimation {
-                                    degrees += 360
-                                }
-                              
-                            } label: {
-                                HStack {
-                                    ZStack {
-                                        Text(promoCode.uppercased())
-                                            .font(.title2)
-                                            .fontWeight(.heavy)
-                                            .tracking(5)
-                                            .opacity(copied ? 0 : 1)
-                                        Text("Copied")
-                                            .font(.title2)
-                                            .fontWeight(.heavy)
-                                            .tracking(5)
-                                            .opacity(copied ? 1 : 0)
-                                    }
-                                    .animation(.none, value: copied)
-                                    Image(systemName: "doc.on.doc")
-                                        .imageScale(.small)
-                                }
-                               
-                               
-                            }
-                        }
+                    HStack(alignment: .bottom) {
+                        PromoCode(promoCode: promoCode, copied: $copied, degrees: $degrees)
                         Spacer()
+                        if favoritePage  {
+                            
+                           
+                            HStack(alignment:.bottom) {
+                                LazyImage(url: URL(string: podcast?.imageUrl ?? "")) { phase in
+                                    if let image = phase.image {
+                                        image
+                                            .resizable()
+                                            .frame(width: 40, height: 40)
+                                            .cornerRadius(10)
+                                            .shadow(color: .black, radius: 5, x: 3, y: 4)
+                                    }
+                                }
+                            }
+                            .onTapGesture {
+                                if let podcast = podcast {
+                                    router.userPath.append(podcast)
+                                }
+                                dismiss()
+                            }
+                            
+                       
+                        }
+                      
                     }
-                  
                 }
+                   
+                  
+                
          
                 
                 Spacer()
@@ -228,6 +252,7 @@ struct SponsorDetailSheet: View {
                     
             let fetchDescriptor = FetchDescriptor<SavedOffer>(predicate: #Predicate { offer in
                 offer.sponsor == sponsor && offer.podcast.title == podcast
+ 
                 
             })
             

@@ -12,22 +12,21 @@ import SwiftData
 
 @Model class SavedOffer {
     struct Podcast: Codable  {
-        var title: String
-        var image: String
-        var publisher: String
-        
+        var title: String?
+        var image: String?
+        var publisher: String?
     }
     
     var podcast: Podcast
-    var sponsor: String
-    var offer: String
-    var category: String
-   
+    var sponsor: String?
+    var offer: String?
+    var category: String?
     
-    init(podcast: Podcast, sponsor: String, offer: String, category: String) {
+    init(podcast: Podcast, sponsor: String?, offer: String?, category: String?) {
         self.podcast = podcast
         self.sponsor = sponsor
         self.offer = offer
         self.category = category
     }
 }
+

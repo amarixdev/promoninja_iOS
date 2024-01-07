@@ -15,7 +15,7 @@ struct SponsorGroup: Hashable {
 }
 
 
-let supplements = SponsorGroup(title: "Fuel Your Body", sponsorNames: ["Liquid IV" , "Athletic Greens", "MUDWTR" /*,"Nutrisense"*/])
+let supplements = SponsorGroup(title: "Fuel Your Body", sponsorNames: ["Liquid IV" , "Athletic Greens", "Nutrisense"]) //MUDWTR
 let skinCare = SponsorGroup(title: "Revitalize Your Skin", sponsorNames: ["Apostrophe", "One Skin", "IPSY"])
 let mentalHealth = SponsorGroup(title: "Find Inner Peace", sponsorNames: ["Better Help", "HeadSpace", "Talkspace"])
 let homeCare = SponsorGroup(title: "Soothe and Sleep", sponsorNames: ["Eight Sleep", "Helix Mattress", "Brooklinen"])

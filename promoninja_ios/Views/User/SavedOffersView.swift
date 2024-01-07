@@ -11,48 +11,53 @@ import NukeUI
 import ApolloAPI
 import PromoninjaSchema
 
-struct UserView: View {
+struct SavedOffersView: View {
     private static let topId = "topIdHere"
-    var savedOffers: [SavedOffer]
-    @Binding var shouldScrollToTop: Bool
-    
+    var savedOffers: [SavedOffer]    
     @Environment(\.modelContext) var modelContext
-    
+
     @State var selectedSponsor: GetPodcastQuery.Data.GetPodcast.Sponsor?
     @State var selectedPodcast: GetPodcastQuery.Data.GetPodcast?
     
+    var filteredOffers: [SavedOffer] {
+        if searchText.isEmpty {
+            return savedOffers
+        } else {
+           return savedOffers.filter { offer in
+               guard let sponsor = offer.sponsor else { return false}
+               
+             return   sponsor.localizedCaseInsensitiveContains(searchText)
+            }
+        }
+       
+    }
     
     @StateObject var viewModel = PodcastViewModel(title: GraphQLNullable(stringLiteral: ""))
     @State private var displaySheet = false
-    
-    var podcastTheme: Color {
-        return Color(rgbString: selectedPodcast?.backgroundColor ?? "rgb(0,0,0)")
-    }
-    
+    @State private var searchText = ""
     
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [.sponsorTheme, .sponsorTheme.opacity(0.25), .black]), startPoint: .top, endPoint: .bottom)
-                .ignoresSafeArea()
+            GradientView()
             if savedOffers.isEmpty {
                 VStack(alignment: .leading) {
                     HStack {
                         Text("Tap the ")
-                        Image(systemName: "star")
-                        Text("icon to save a deal")
+                        Image(systemName: "bookmark")
+                        Text("icon to save an offer")
                     }
                     .foregroundStyle(.secondary)
                     Spacer()
                 }
-                .padding()
-                .frame(width: UIScreen.main.bounds.width, alignment:.leading)
+                .padding(.top, 50)
+                .frame(width: UIScreen.main.bounds.width, alignment:.center)
                 
                
             } else {
                 VStack {
-                    ScrollViewReader { reader in
+          
                         List {
-                            ForEach(savedOffers) { offer in
+                            ForEach(filteredOffers) { offer in
                                 let index = savedOffers.firstIndex(of: offer)
                                 
                                 ZStack(alignment:.leading) {
@@ -65,7 +70,7 @@ struct UserView: View {
                                                 Circle()
                                                     .frame(width: 5, height: 5)
                                                     .foregroundStyle(.green)
-                                                Text(offer.sponsor)
+                                                Text(offer.sponsor ?? "")
                                                     .font(.title3)
                                                     .fontWeight(.semibold)
                                                 
@@ -73,7 +78,7 @@ struct UserView: View {
                                                 Button {
                                                     
                                                 } label: {
-                                                    Text(offer.category)
+                                                    Text(offer.category ?? "")
                                                         .font(.caption)
                                                         .padding(.vertical, 5)
                                                         .padding(.horizontal, 10)
@@ -85,7 +90,7 @@ struct UserView: View {
                                             }
                                             HStack {
                                                 
-                                                Text(offer.offer)
+                                                Text(offer.offer ?? "")
                                                     .font(.subheadline)
                                                     .foregroundStyle(.secondary)
                                                     .padding(.bottom)
@@ -101,7 +106,7 @@ struct UserView: View {
                                             .font(.caption)
                                         
                                         HStack(spacing: 15) {
-                                            LazyImage(url: URL(string: offer.podcast.image)) {
+                                            LazyImage(url: URL(string: offer.podcast.image ?? "")) {
                                                 phase in
                                                 if let image = phase.image {
                                                     image
@@ -116,10 +121,10 @@ struct UserView: View {
                                             }
                                             
                                             VStack(alignment:.leading) {
-                                                Text(offer.podcast.title)
+                                                Text(offer.podcast.title?.truncated(30) ?? "")
                                                     .font(.subheadline)
                                                     .fontWeight(.semibold)
-                                                Text(offer.podcast.publisher)
+                                                Text(offer.podcast.publisher?.truncated(30) ?? "")
                                                     .font(.subheadline)
                                                     .foregroundStyle(.secondary)
                                             }
@@ -137,7 +142,7 @@ struct UserView: View {
                                     .onTapGesture {
                                             
                                         Task {
-                                            let title = GraphQLNullable<String>(stringLiteral: offer.podcast.title)
+                                            let title = GraphQLNullable<String>(stringLiteral: offer.podcast.title ?? "")
                                             
                                             Network.shared.apollo.fetch(query: GetPodcastQuery(input: PodcastInput(podcast: title))) { result in
                                                 guard let data = try? result.get().data else { return }
@@ -152,7 +157,6 @@ struct UserView: View {
                                                             if self.selectedSponsor != nil {
                                                                 self.displaySheet = true
                                                                       }
-                                                            
                                                            
                                                         }
                                                     }
@@ -162,105 +166,46 @@ struct UserView: View {
                                     }
                                   
                                 .id(index == 0 ? Self.topId: Self.topId)
-                                .listRowBackground(Color.sponsorTheme.opacity(0.5))
+                                .listRowBackground(Color.sponsorTheme.opacity(0.25))
                                 .listRowSeparator(.hidden)
-                             
-                             
-                                
-                                
-                                
-                       
-                        
-                                  
-                            
-                            
-                               
+
                             }
                             .onDelete(perform: deleteOffer)
                       
                         }
-                        .onChange(of: shouldScrollToTop) {
-                                           withAnimation {
-                                               reader.scrollTo(Self.topId, anchor: .top)
-                                           }
-                            setTimeout(0.25) {
-                                shouldScrollToTop = false
-                            }
-                                       }
                         .listStyle(.plain)
                         .listRowSpacing(30)
-                    }
-                   
-                  
-                    
-                }
 
+                }
                 .padding(.top, 20)
             }
            
             
         }
+        .searchable(text: $searchText)
 
         .sheet(isPresented: $displaySheet) {
             ZStack {
                 LinearGradient(colors: [Color(.sponsorTheme).opacity(0.85), .black.opacity(0.95), .black], startPoint: .top, endPoint: .bottom)
-                    .ignoresSafeArea(.all)
                 
-                SponsorDetailSheet(podcast: $selectedPodcast , sponsor: $selectedSponsor)
+                SponsorDetailSheet(favoritePage: true, podcast: $selectedPodcast , sponsor: $selectedSponsor)
                     .presentationDetents([.medium, .large])
                     .presentationBackground(.clear)
-
             }
 
         }
      
-        .navigationTitle("Saved Deals (\(savedOffers.count))")
-        .navigationDestination(for: GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast.self) { podcast in
-            PodcastView(title: GraphQLNullable(stringLiteral: podcast.title))
-        }
-    
-    
-        .navigationDestination(for: GetSponsorQuery.Data.GetSponsor.Podcast.self) { podcast in
-            PodcastView(title: GraphQLNullable(stringLiteral:podcast.title ) )
-        }
-    
-        .navigationDestination(for: GetPodcastQuery.Data.GetPodcast.self) { podcast in
-            PodcastView(title: GraphQLNullable(stringLiteral: podcast.title))
-        }
-    
-        .navigationDestination(for: GetSponsorCategoriesQuery.Data.GetSponsorCategory.Sponsor.self) { sponsor in
-            if let name = sponsor.name {
-                SponsorView(name: name )
-            }
-        }
-    
-        .navigationDestination(for: GetPodcastQuery.Data.GetPodcast.Sponsor.self) { sponsor in
-            if let name = sponsor.name {
-                SponsorView(name: name)
-            }
-            
-        }
-    
-        .navigationDestination(for: GetSponsorQuery.Data.GetSponsor.self) { sponsor in
-            if let name = sponsor.name {
-                SponsorView(name: name)
-            }
-            
-        }
-    
-        .navigationDestination(for: GetPodcastsQuery.Data.GetPodcast.self) { podcast in
-            PodcastView(title: GraphQLNullable(stringLiteral: podcast.title))
-        }
-        .navigationDestination(for: GetSponsorsQuery.Data.GetSponsor.self) { sponsor in
-            SponsorView(name: sponsor.name ?? "")
-        }
-
-
+        .navigationTitle("Saved Offers (\(savedOffers.count))")
         .toolbar {
-            EditButton()
-       
+            if !savedOffers.isEmpty {
+                EditButton()
+            }
+           
         }
+        .toolbarStyle(inline: false)
     }
+ 
+    
     
     func deleteOffer(offsets: IndexSet) {
         for offset in offsets {
@@ -268,8 +213,8 @@ struct UserView: View {
             modelContext.delete(offer)
         }
     }
-    
 }
+
 
 #Preview {
     do {
@@ -290,7 +235,7 @@ struct UserView: View {
         
    return 
         NavigationStack {
-            UserView(savedOffers: offers, shouldScrollToTop: .constant(false))
+            SavedOffersView(savedOffers: offers)
                 .preferredColorScheme(.dark)
                 .modelContainer(container)
         }

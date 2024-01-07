@@ -13,11 +13,11 @@ struct GreetingView: View {
 //            Text(greetingMessage())
             Text("Save Money")
                 .font(.largeTitle)
-                .fontWeight(.semibold)
+                .fontWeight(.bold)
             Text("Support Creators")
                 .font(.title2)
                 .fontWeight(.semibold)
-                .opacity(0.8)
+                .foregroundStyle(.secondary)
         }
        
     }

@@ -1,5 +1,5 @@
 //
-//  SponsorCategoryViewModel.swift
+//  SponsorCategoriesViewModel.swift
 //  promoninja_ios
 //
 //  Created by Amari DeVaughn on 11/27/23.
@@ -8,7 +8,7 @@
 import SwiftUI
 import PromoninjaSchema
 
-class SponsorCategoryViewModel:ObservableObject {
+class SponsorCategoriesViewModel:ObservableObject {
     
     
     @Published var categoryData: [GetSponsorCategoriesQuery.Data.GetSponsorCategory?]?

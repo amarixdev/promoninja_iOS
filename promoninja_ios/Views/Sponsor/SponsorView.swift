@@ -42,16 +42,14 @@ struct SponsorView: View {
                 .onChange(of: sponsor) {
                     dataLoaded = true
                 }
-                .toolbarStyle()
+                .toolbarStyle(inline: true)
                 
                    
             } else {
            
                     ZStack {
                         
-                        LinearGradient(gradient: Gradient(colors: [.sponsorTheme, .sponsorTheme.opacity(0.25), .black]), startPoint: .top, endPoint: .bottom)
-                            .ignoresSafeArea()
-                            
+                        GradientView()
                        ScrollView {
                             VStack {
                        
@@ -89,7 +87,7 @@ struct SponsorView: View {
                                 if let summary = sponsor?.summary {
                             
                                     Text(summary)
-                                        .multilineTextAlignment(.center)
+                                        .multilineTextAlignment(.leading)
                                         .font(.subheadline)
                                         .opacity(0.8)
                                         .padding(.horizontal, 20)
@@ -103,7 +101,7 @@ struct SponsorView: View {
                                         .foregroundStyle(.ultraThinMaterial)
                                         .shadow(color: .black, radius: 20)
                                     
-                                    VStack(spacing: 12) {
+                                    VStack(alignment:.leading, spacing: 12) {
                                         if let offer = sponsor?.offer {
                                             HStack {
                                                 Circle()
@@ -115,7 +113,7 @@ struct SponsorView: View {
                                             
                                             Text(offer)
                                                 .font(.subheadline)
-                                                .multilineTextAlignment(.center)
+                                                .multilineTextAlignment(.leading)
                                                 .opacity(0.8)
                                         }
                                         
@@ -143,7 +141,7 @@ struct SponsorView: View {
                                        
                                         .italic()
                                         .font(.subheadline)
-                                        .opacity(0.8)
+                                        .foregroundStyle(.secondary)
                                 }
                                 .frame(width: 300)
                                 

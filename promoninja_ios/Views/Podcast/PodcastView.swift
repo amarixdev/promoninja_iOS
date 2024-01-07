@@ -8,6 +8,7 @@
 import SwiftUI
 import PromoninjaSchema
 import NukeUI
+import SwiftData
 
 
 struct PodcastView: View {
@@ -17,8 +18,8 @@ struct PodcastView: View {
     
     @State private var shine = false
     @State private var disableTap = false
-
- 
+    @State private var sensory = false
+    @Environment(\.modelContext) var modelContext
     var title: GraphQLNullable<String>
     
     init(title: GraphQLNullable<String>) {
@@ -32,19 +33,38 @@ struct PodcastView: View {
     }
     
     
+    var noSponsors: Bool {
+        return  ((viewModel.podcastData?.sponsors?.isEmpty) == true)
+    }
+    
     
     var podcastTheme: Color {
         return Color(rgbString: podcast?.backgroundColor ?? "rgb(0,0,0)")
+    }
+    
+    var logoMessage: String {
+        if noSponsors {
+           return  "Oops! No available sponsors. Check again later."
+            
+        } else {
+            
+           return  "Empower your favorite podcaster by making your purchase through their affiliate link."
+        }
+       
     }
     
     
     @State private var showMore = false
     @State private var imgLoaded = false
     @State private var viewLoaded = false
+    
+    @State private var isFavorited = false
     var body: some View {
+        
+        
         if podcast?.imageUrl == nil  {
             LoadingAnimation()
-         .toolbarStyle()
+                .toolbarStyle(inline: true)
           
         } else {
           
@@ -167,7 +187,7 @@ struct PodcastView: View {
                                     .frame(width: 100, height: 100)
                                 
                                 Text("""
-                                           "Empower your favorite podcaster by making your purchase through their affiliate link."
+                                           \(logoMessage)
                                            
                                            """)
                                     .multilineTextAlignment(.center)
@@ -188,7 +208,11 @@ struct PodcastView: View {
                             }
                             .padding(.leading)
                                
+                            if !noSponsors {
                                 SponsorListView(podcast: podcast)
+                            }
+                            
+                              
                           
                         
                             Spacer()
@@ -204,20 +228,79 @@ struct PodcastView: View {
                     
                 }
                 .fadeInView(viewLoaded: $viewLoaded)
+                .task {
+                    //Check is podcast is favorited
+                    guard let podcastTitle = podcast?.title else { return }
+                                        
+                    do {
+                        let fetchDescriptor = FetchDescriptor<FavoritePodcast>(predicate: #Predicate { favoritePodcast in
+                            favoritePodcast.title == podcastTitle
+                        })
+                        
+                        let podcast = try modelContext.fetch(fetchDescriptor)
+                        
+                        if podcast.isEmpty {
+                            isFavorited = false
+                        } else {
+                            isFavorited = true
+                        }
+                                            
+                    } catch {
+                        print("error: \(error.localizedDescription)")
+                    }
+                }
                 .navigationTitle(podcast?.title.truncated(25) ?? "")
-                .toolbarStyle()
-        
-           
-             
+                .toolbar {
+                    Button {
+                        Task {
+                            try handleFavorite(podcastTitle: podcast?.title ?? "")
+                        }
+                        
+                    } label: {
+                        Image(systemName: isFavorited ? "heart.fill" : "heart")
+                            .imageScale(.medium)
+                    }
+                }
+                .toolbarStyle(inline: true)
+        }
+    }
+    
+    
+    
+    
+    func handleFavorite (podcastTitle: String) throws {
+
+        if isFavorited {
+            //remove favorite
+            isFavorited = false
+            sensory.toggle()
+            do {
+                try modelContext.delete(model: FavoritePodcast.self, where: #Predicate { podcast in
+                    podcast.title == podcastTitle
+                })
+                
+            } catch {
+                print("Failed to delete with error: \(error.localizedDescription)")
+            }
+    
+        } else {
+            isFavorited = true
+            sensory.toggle()
+            
+            let favoritePodcast = FavoritePodcast(title: podcast?.title ?? "", image: podcast?.imageUrl ?? "", publisher: podcast?.publisher ?? "")
+                   
+            modelContext.insert(favoritePodcast)
         }
         
-        
-    
- 
     }
+
 }
 
 #Preview {
-    PodcastView( title: "Aubrey Marcus Podcast")
-        .preferredColorScheme(.dark)
+    NavigationStack {
+        PodcastView( title: "Aubrey Marcus Podcast")
+            .preferredColorScheme(.dark)
+            .modelContainer(for: FavoritePodcast.self)
+    }
+   
 }

@@ -21,9 +21,11 @@ struct PodcastDetailSheet: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var currentTab: CurrentTab
     
-    @State private var copied = false
     @State private var degrees:Double = 0
+    @State private var copied = false
     @State private var isFavorited = false
+    @State private var sensory = false
+
 
     
     var podcastTheme: Color {
@@ -64,7 +66,7 @@ struct PodcastDetailSheet: View {
                 Spacer()
                 VStack(spacing: 10) {
                   
-                    Image(systemName: isFavorited ? "star.fill" : "star")
+                    Image(systemName: isFavorited ? "bookmark.fill" : "bookmark")
                         .onTapGesture {
                             Task {
                                 guard let podcastTitle = podcast?.title else { return }
@@ -82,14 +84,12 @@ struct PodcastDetailSheet: View {
                 //header
                 HStack(spacing: 15) {
                     if let imageUrl = podcast?.imageUrl {
-                  
                             LazyImage(url: URL (string: imageUrl)!, transaction: Transaction(animation: .bouncy)) { phase in
                                 if let image = phase.image {
                                     image
                                         .resizable()
                                         .frame(width: 100, height: 100)
                                         .cornerRadius(10)
-                                     
                                 }
                                 else {
                                     ZStack {
@@ -98,15 +98,12 @@ struct PodcastDetailSheet: View {
                                     }
                                     .frame(width: 100, height: 100)
                                 }
-                     
-                               
                             }
                             .rotation3DEffect(
                                 .degrees(degrees),
                                                       axis: (x: 0.0, y: 1.0, z: 0.0)
                             )
                            
-                        
                             .onTapGesture {
                                 if let podcast = podcast {
                                     if currentTab.name == .home {
@@ -115,15 +112,10 @@ struct PodcastDetailSheet: View {
                                         router.discoverPath.append(podcast)
                                     } else if currentTab.name == .user {
                                         router.userPath.append(podcast)
-
                                     }
-                                    
                                     dismiss()
-                                    
                                     }
                                 }
-                                
-                    
                     }
              
                     VStack(alignment:.leading) {
@@ -132,7 +124,6 @@ struct PodcastDetailSheet: View {
                         Text(podcast?.publisher ?? "")
                             .font(.subheadline)
                             .opacity(0.8)
-                        
                     }
                     .frame(width: 200, alignment: .leading)
       
@@ -179,38 +170,7 @@ struct PodcastDetailSheet: View {
                 
                 if !promoCode.isEmpty {
                     HStack {
-                        VStack(alignment:.leading, spacing: 10) {
-                            Text("Use code at checkout")
-                                .font(.subheadline)
-                                .opacity(0.8)
-                            Button {
-                                let pasteboard = UIPasteboard.general
-                                pasteboard.string = promoCode
-                                copied = true
-                                withAnimation {
-                                    degrees += 360
-                                }
-                            } label: {
-                                HStack {
-                                    ZStack {
-                                        Text(promoCode.uppercased())
-                                        
-                                            .font(.title2)
-                                            .fontWeight(.heavy)
-                                            .tracking(5)
-                                            .opacity(copied ? 0 : 1)
-                                        Text("Copied")
-                                            .font(.title2)
-                                            .fontWeight(.heavy)
-                                            .tracking(5)
-                                            .opacity(copied ? 1 : 0)
-                                    }
-                                    .animation(.none, value: copied)
-                                    Image(systemName: "doc.on.doc")
-                                        .imageScale(.small)
-                                }
-                            }
-                        }
+                      PromoCode(promoCode: promoCode, copied: $copied, degrees: $degrees)
                         Spacer()
                     }
                 
@@ -223,11 +183,12 @@ struct PodcastDetailSheet: View {
         .task {
             //Check is offer is favorited
             guard let sponsor = matchingOffer?.sponsor else { return }
-            guard let podcast = podcast?.title else { return }
+            guard let podcastTitle = podcast?.title else { return }
                     
             let fetchDescriptor = FetchDescriptor<SavedOffer>(predicate: #Predicate { offer in
-                offer.sponsor == sponsor && offer.podcast.title == podcast
                 
+                return  offer.sponsor == sponsor && offer.podcast.title  == podcastTitle
+
             })
             
             do {
@@ -240,13 +201,13 @@ struct PodcastDetailSheet: View {
                 }
                                     
             } catch {
-                print("error: \(error.localizedDescription)")
+                print("Failed to set with error: \(error.localizedDescription)")
             }
 
         }
 
             .sensoryFeedback(.success, trigger: copied)
-            .sensoryFeedback(.success, trigger: isFavorited)
+            .sensoryFeedback(.success, trigger: sensory)
             
                    
             .padding()
@@ -260,6 +221,9 @@ struct PodcastDetailSheet: View {
         if isFavorited {
             //remove favorite
             isFavorited = false
+            sensory.toggle()
+            
+            
             do {
                 try modelContext.delete(model: SavedOffer.self, where: #Predicate { offer in
                     offer.sponsor == sponsorName && offer.podcast.title == podcastTitle
@@ -271,6 +235,7 @@ struct PodcastDetailSheet: View {
     
         } else {
             isFavorited = true
+            sensory.toggle()
             
             let favoritedOffer = SavedOffer(podcast: .init(title: podcast?.title ?? "", image: podcast?.imageUrl ?? "", publisher: podcast?.publisher ?? ""), sponsor: matchingOffer?.sponsor ?? "", offer: sponsor?.offer ?? "", category: sponsor?.sponsorCategory?[0]?.name ?? "")
                     

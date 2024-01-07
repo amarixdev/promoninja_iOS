@@ -15,21 +15,17 @@ struct DiscoverView: View {
     @StateObject var viewModel = SearchViewModel()
     @Environment(\.isSearching) var isSearching
     @Environment(\.dismissSearch) var dismissSearch
-    
     @Binding var shouldScrollToTop: Bool
-
-  
+    @State var selectedCategoryTitle = ""
+    
     
 
     var body: some View {
             if viewModel.podcasts.isEmpty && viewModel.sponsors.isEmpty {
-                Color.appTheme.ignoresSafeArea()
+                GradientView()
             } else {
                 
-                
-                
-                
-                SearchingView(currentCategory: $viewModel.currentCategory, shouldScrollToTop: $shouldScrollToTop, filteredSponsors: $viewModel.filteredSponsors, filteredPodcasts: $viewModel.filteredPodcasts)
+                SearchingView(currentCategory: $viewModel.currentCategory, shouldScrollToTop: $shouldScrollToTop, filteredSponsors: $viewModel.filteredSponsors, filteredPodcasts: $viewModel.filteredPodcasts, selectedCategoryTitle: $selectedCategoryTitle)
                     .searchable(text: $viewModel.searchText, prompt: viewModel.currentCategory == .Podcast ? "Find a podcast - \"Bad Friends\"" : "Find a sponsor - \"Tushy\"")
                     
                     .searchScopes($viewModel.currentCategory) {
@@ -37,16 +33,14 @@ struct DiscoverView: View {
                         Text("Sponsor").tag(Category.Sponsor)
                         
                     }
-           
-                    
-          
-                  
-                
+
                     .onChange(of: viewModel.searchText) {
                         if viewModel.searchText.isEmpty && !isSearching {
                             dismissSearch()
                         }
                     }
+                    .navigationTitle("Discover More")
+
                     .navigationDestination(for: GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast.self) { podcast in
                         PodcastView(title: GraphQLNullable(stringLiteral: podcast.title))
                     }
@@ -87,9 +81,10 @@ struct DiscoverView: View {
                         SponsorView(name: sponsor.name ?? "")
                     }
                     .navigationDestination(for: GetSponsorCategoriesQuery.Data.GetSponsorCategory.self) { category in
-                        CategoryView(category: category)
+                        CategoryView(category: category, selectedCategoryTitle: $selectedCategoryTitle )
                     
                     }
+                
             
             }
         }
@@ -111,16 +106,16 @@ struct SearchingView: View {
     @Environment(\.isSearching) var isSearching
     @StateObject var viewModel = SearchViewModel()
 
-    @StateObject var categoryVM = SponsorCategoryViewModel()
+    @StateObject var categoryVM = SponsorCategoriesViewModel()
     
     @Binding var currentCategory: Category
     @Binding var shouldScrollToTop: Bool
 
     @Binding var filteredSponsors:[GetSponsorsQuery.Data.GetSponsor?]
     @Binding var filteredPodcasts: [GetPodcastsQuery.Data.GetPodcast?]
-
+    @Binding var selectedCategoryTitle: String
     @State private var all_podcasts = [GetPodcastsQuery.Data.GetPodcast?]()
-    
+
     var categories: [GetSponsorCategoriesQuery.Data.GetSponsorCategory?] {
             categoryVM.categoryData ?? []
         }
@@ -128,14 +123,16 @@ struct SearchingView: View {
 
     var body: some View {
         if categories.isEmpty {
-            LoadingAnimation()
+            
+            GradientView()
+            
         } else
         
         {
             ZStack {
-                    Color.appTheme.ignoresSafeArea()
+                GradientView()
                 if !isSearching {
-                    Discover(shouldScrollToTop: $shouldScrollToTop, categories: categories)
+                    Discover( categories: categories, shouldScrollToTop: $shouldScrollToTop, selectedCategoryTitle: $selectedCategoryTitle)
                 } else {
                     VStack {
                             if currentCategory == .Podcast {
