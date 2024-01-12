@@ -16,7 +16,7 @@ struct PodcastListView: View {
     @State private var selectedPodcast: GetSponsorQuery.Data.GetSponsor.Podcast?
     @State private var podcastTheme: Color = Color(.black)
     
-    
+    @State private var displayReport = false
 
 
     init (sponsor: GetSponsorQuery.Data.GetSponsor? ) {
@@ -74,31 +74,34 @@ struct PodcastListView: View {
                                             } else {
                                                 Placeholder(frameSize: 50, imgSize: 20, icon: .podcast)
                                             }
-                                           
-                                        
+                                            
+                                            
                                         }
                                         VStack(alignment:.leading) {
                                             if let title = podcast?.title {
                                                 Text(title.truncated(25) )
                                                     .font(.caption)
-                                                    
+                                                
                                                     .foregroundStyle(.white)
                                             }
                                             if let publisher = podcast?.publisher {
                                                 Text(publisher.truncated(25))
                                                     .font(.caption)
-                                                    
+                                                
                                                     .foregroundStyle(.gray)
                                             }
                                         }
                                         Spacer()
-//                                        Image(systemName: "ellipsis")
-//                                            .padding(.trailing)
+                           
+                                        
+                                        
                                     }
+                                    
                                
                                    
                                 }
-                  
+                        
+
                                 .sheet(isPresented: $displaySheet) {
                                     
                                      ZStack {

@@ -11,12 +11,10 @@ import SwiftData
 
 @main
 struct promoninja_iosApp: App {
-    
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .modelContainer(for: [SavedOffer.self, FavoritePodcast.self])
-
         }
     }
 }

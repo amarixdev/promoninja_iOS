@@ -16,6 +16,7 @@ struct PopularSponsors: View {
         let sponsors: GetSponsorQuery.Data.GetSponsor?
     }
     
+    var lastUpdated = Date.now
     
     let sponsorVM: SponsorViewModel
     var body: some View {
@@ -28,8 +29,14 @@ struct PopularSponsors: View {
         }
         .padding(.leading)
 
+
         
-        VStack {
+        VStack(alignment:.leading) {
+            Text( "Last updated: " + String(lastUpdated.formatted(.dateTime.month().year()).description))
+                .italic()
+                .foregroundStyle(.secondary)
+                .padding(.leading)
+            
           ForEach(0 ..< sponsorVM.trendingSponsors.count, id: \.self) { index in
               VStack {
                   HStack {

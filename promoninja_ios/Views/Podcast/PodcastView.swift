@@ -54,7 +54,7 @@ struct PodcastView: View {
     }
     
     
-    @State private var showMore = false
+    @State private var showMore = true
     @State private var imgLoaded = false
     @State private var viewLoaded = false
     
@@ -126,7 +126,7 @@ struct PodcastView: View {
                             if let description = podcast?.description {
                                 VStack(spacing: 15) {
                                     DisclosureGroup(isExpanded: $showMore) {
-                                        Text(description)
+                                        TruncateView(text: description)
                                     } label: {
                                         Button {
                                             withAnimation {
@@ -135,10 +135,7 @@ struct PodcastView: View {
                                            
                                         } label: {
                                             Text(showMore ? "Hide details" : "See details")
-                                                
-                                               
-                                               
-                                            
+
                                         }
                                         .buttonStyle(.bordered)
                                         .padding(.bottom)

@@ -43,7 +43,6 @@ struct SponsorView: View {
                     dataLoaded = true
                 }
                 .toolbarStyle(inline: true)
-                
                    
             } else {
            

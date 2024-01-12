@@ -9,6 +9,7 @@ import SwiftUI
 import PromoninjaSchema
 import NukeUI
 import SwiftData
+import MessageUI
 
 struct PodcastDetailSheet: View {
     
@@ -26,6 +27,7 @@ struct PodcastDetailSheet: View {
     @State private var isFavorited = false
     @State private var sensory = false
 
+    @State private var isShowingMailView = false
 
     
     var podcastTheme: Color {
@@ -55,9 +57,9 @@ struct PodcastDetailSheet: View {
     
     
   
-    
-    
-
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    @State private var showGratitude = false
     
     var body: some View {
             
@@ -152,22 +154,36 @@ struct PodcastDetailSheet: View {
                             .fontWeight(.semibold)
                             .font(.caption)
                             .padding(.leading, 5)
-                        
-                        Link(destination: URL(string: "https://"+affiliateLink)!, label: {
-                            Text(affiliateLink)
-                                .font(.subheadline)
-                                .opacity(0.8)
-                        })
-                        .padding(10)
-                        .background()
-                        .cornerRadius(10)
+                        HStack {
+                            Link(destination: URL(string: "https://"+affiliateLink)!, label: {
+                                Text(affiliateLink)
+                                    .font(.subheadline)
+                                    .opacity(0.8)
+                            })
+                            .padding(10)
+                            .background()
+                            .cornerRadius(10)
+                            Spacer()
+                            Menu {
+                                Button {
+                                   showAlert = true
+                                } label: {
+                                    Label("Report Issue", systemImage: "exclamationmark.circle")
+                                }
+                            } label: {
+                                Image(systemName: "ellipsis")
+                                    .padding(20)
+                            }
+                           
+                        }
+                   
                     }
                    
                     Divider()
                 }
                 
                Spacer()
-                
+           
                 if !promoCode.isEmpty {
                     HStack {
                       PromoCode(promoCode: promoCode, copied: $copied, degrees: $degrees)
@@ -205,16 +221,36 @@ struct PodcastDetailSheet: View {
             }
 
         }
-
+        .alert("Thanks for the feedback!", isPresented: $showGratitude) {
+            
+        } message: {
+            Text("The developer has been notified.")
+        }
+        .alert("Report Issue", isPresented: $showAlert) {
+            Button("Invalid Url") {
+                sendEmail(reportType: .invalidURL, podcastTitle: podcast?.title ?? "", sponsorTitle: sponsor?.name ?? "")
+                showGratitude = true
+            }
+            Button("Expired Promotion") {
+                sendEmail(reportType: .expiredPromotion, podcastTitle: podcast?.title ?? "", sponsorTitle: sponsor?.name ?? "")
+                showGratitude = true
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Please let us know the problem.")
+        }
             .sensoryFeedback(.success, trigger: copied)
             .sensoryFeedback(.success, trigger: sensory)
             
                    
             .padding()
+        
+        
           
-            
         
     }
+ 
+    
     
     func handleFavorite (podcastTitle: String, sponsorName: String) throws {
 
@@ -243,8 +279,11 @@ struct PodcastDetailSheet: View {
         }
         
     }
+    
+  
 
 }
+
 
 //#Preview {
 //    PodcastDetailSheet()

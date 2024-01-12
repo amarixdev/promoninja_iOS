@@ -63,7 +63,8 @@ struct PodcastCategory: View {
         if sortByOffer || sortByAZ {
             podcasts = sortedPodcasts
         }
-        else if !searchText.isEmpty {
+        if !searchText.isEmpty {
+            
             podcasts = filteredPodcasts
         }
         
@@ -76,8 +77,6 @@ struct PodcastCategory: View {
     @State private var searchText = ""
     
     @State private var reverseSort = false
-    
-
     
     var body: some View {
         ZStack {
@@ -150,7 +149,19 @@ struct PodcastCategory: View {
         .toolbar {
             Menu {
                 Button {
-                   
+                    if sortByAZ {
+                        reverseSort.toggle()
+                    } else {
+                        sortByAZ = true
+                        sortByOffer = false
+                        reverseSort = false
+                    }
+                } label: {
+                    Label("Title", systemImage: sortByAZ ? "checkmark" : "")
+                }
+                
+
+                Button {
                     
                     if sortByOffer {
                         reverseSort.toggle()
@@ -161,23 +172,20 @@ struct PodcastCategory: View {
                     }
 
                 } label: {
-                    Label("Sort by offers", systemImage: sortByOffer ? "checkmark" : "")
+                    Label("Offer count", systemImage: sortByOffer ? "checkmark" : "")
                 }
-                
-                
-                Button {
-                    if sortByAZ {
-                        reverseSort.toggle()
-                    } else {
-                        sortByAZ = true
-                        sortByOffer = false
-                        reverseSort = false
-                    }
-                } label: {
-                    Label("Sort A-Z", systemImage: sortByAZ ? "checkmark" : "")
-                }
+           
             } label: {
-                Image(systemName: "arrow.up.arrow.down")
+                ZStack {
+                    Circle()
+                        .frame(width: 35, height: 35)
+                        .foregroundStyle(.appTheme)
+                    Image(systemName: "arrow.up.arrow.down")
+                        .imageScale(.small)
+
+                }
+               
+                
             }
         }
     }

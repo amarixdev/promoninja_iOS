@@ -1,87 +1,29 @@
-//
-//  QuestionsView.swift
-//  promoninja_ios
-//
-//  Created by Amari DeVaughn on 12/24/23.
-//
 
 import SwiftUI
 
+
 struct QuestionsView: View {
     @State private var rotateAngle = 370
-    
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
     
-    
-    func questionBlock (question: String, answer: String, id: Int) -> some View {
-            
-        var blockHeight: CGFloat {
-            var height: CGFloat
-            switch(id) {
-            case 1: height = 280
-            case 2: height = 200
-            case 3: height = 180
-            default: height = 200
-            }
-            return height
+    @ViewBuilder
+    func questionBlock(question: String, answer: String) -> some View {
+        VStack(alignment:.leading, spacing: 10) {
+            Text(question)
+                .font(.headline)
+            Text(answer)
+                .opacity(0.8)
+                .font(.subheadline)
         }
-        
-       
-        return  ExpandableView(thumbnail: ThumbnailView(content: {
-            ZStack {
-                Rectangle()
-                    .foregroundStyle(.ultraThinMaterial)
-                    .frame(height: 80)
-                    .cornerRadius(10)
-   
-                HStack {
-                        Text(question)
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                            .padding()
-                    Spacer()
-                    Image(systemName: "chevron.down")
-                        .opacity(0.8)
-                        .padding()
-            
-                }
-                        
-               
-            }
-        }), expanded: ExpandedView(content: {
-            ZStack {
-                Rectangle()
-                    .foregroundStyle(.ultraThinMaterial)
-                    .frame(height: blockHeight)
-                    .cornerRadius(10)
-                VStack {
-                    Text(question)
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                        .padding()
-                    Spacer()
-                    Text(answer)
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                        .padding()
-                    Spacer()
-                }
-       
-               
-            }
-
-        }))
-
+    
     }
     
     var body: some View {
         ZStack {
-            
             GradientView()
-            
             ScrollView {
                 VStack {
-                    
                     Image(.logo)
                         .resizable()
                         .frame(width: 120, height: 120)
@@ -92,6 +34,7 @@ struct QuestionsView: View {
                     
                         )
                         .shadow(color:.black, radius: 4, x: 2, y: 3)
+                        .padding(.bottom, 20)
                     VStack(alignment: .leading, spacing: 20) {
                         Text("Did you know?")
                             .font(.title)
@@ -99,6 +42,7 @@ struct QuestionsView: View {
                             .opacity(0.8)
                         Text("Podcasts typically earn 5% - 20% commission when listeners use their affiliate links")
                             .font(.subheadline)
+                            .opacity(0.8)
                         
                         HStack {
                             Text("Commonly Asked")
@@ -108,37 +52,29 @@ struct QuestionsView: View {
                             Spacer()
                         }
                         .padding(.top, 20)
-                    }
-                    .padding()
-                    
-          
-                        VStack {
-
-                            questionBlock(question: "What exactly is Promoninja?", answer: "PromoNinja is a free platform that brings together podcast creators, listeners, and sponsors. It simplifies sponsorship management for creators, provides exclusive promotions for listeners, and offers increased reach for sponsors. It's an all in one application for anyone who enjoys podcasts and saving money.", id: 1)
-                            questionBlock(question: "What if I don't see a podcast I want to support?", answer: "No worries! You can still enjoy the various discounts offered across a wide range of podcasts.", id: 2)
+                        VStack(alignment:.leading, spacing: 50) {
+                                questionBlock(question: "What exactly is Promoninja?", answer: "PromoNinja is a free platform that brings together podcast creators, listeners, and sponsors. It simplifies sponsorship management for creators, provides exclusive promotions for listeners, and offers increased reach for sponsors. It's an all in one application for anyone who enjoys podcasts and saving money.")
                             
-                            questionBlock(question: "How do I know the offers are up to date?", answer: "Offers are updated weekly. If you encounter an expired offer, feel free to report it", id: 3)
+                                
+                            questionBlock(question: "What if I don't see a podcast I want to support?", answer: "No worries! You can still enjoy the various discounts offered across a wide range of podcasts.")
+                            
+                            questionBlock(question: "How do I know the offers are up to date?", answer: "Offers are updated weekly. If you encounter an expired offer, feel free to report it")
+                            
+                            questionBlock(question: "What if, for example, Audible offers 30% off for one podcast, and 60% for another? ", answer: "The is a very rare instance. Sponsors tend to offer the same deals across podcasts.")
+                            
+                            questionBlock(question: "How can I get my podcast featured on the platform?", answer: "Podcasts must have at least one sponsor to be featured. If you would like to have your show featured, contact us @Promoninja1.gmail.com")
                         }
-                        .padding(.bottom, 40)
-                   
-                   
-                   
-                   
                     
-                 
-                   
-                    Spacer()
+                       
+                        
+                    }
                 }
+                .padding(20)
+                .padding(.bottom, 20)
             }
-    
-     
           
-            
-            
+          
         }
-           
-
-
         .navigationTitle("Questions")
         .toolbarBackground(.visible, for: .tabBar)
         .tint(.black)
@@ -152,15 +88,18 @@ struct QuestionsView: View {
             }
           
         })
+      
         
+        
+     
     }
 }
+
 
 #Preview {
     NavigationStack {
         QuestionsView()
+            .preferredColorScheme(.dark)
     }
-    .preferredColorScheme(.dark)
-    
-        
+   
 }

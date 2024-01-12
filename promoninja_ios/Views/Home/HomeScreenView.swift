@@ -148,7 +148,14 @@ struct HomeScreen: View {
                 Button {
                     router.homePath.append(Navigation.qtna)
                 } label: {
-                    Image(systemName: "questionmark.circle")
+                    ZStack {
+                        Circle()
+                            .frame(width: 35, height: 35)
+                            .foregroundStyle(displayNavTitle ? .appTheme.opacity(0.5) : .appTheme)
+                        Image(systemName: "questionmark")
+                            .imageScale(displayNavTitle ? .small : .small)
+                    }
+                  
                 }
             }
             
@@ -192,8 +199,7 @@ struct HomeScreen: View {
                        
                     }
             .navigationDestination(for: Navigation.self) { _ in
-                QuestionsView()
-     
+                    QuestionsView()
             }
         
 

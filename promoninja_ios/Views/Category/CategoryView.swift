@@ -72,7 +72,6 @@ struct CategoryView: View {
                         
                         
                         .onChange(of: onChangeToggle) {
-                            print("Toggled")
                                 withAnimation {
                                         withAnimation {
                                             reader.scrollTo(buttonID, anchor: .center)
@@ -80,6 +79,7 @@ struct CategoryView: View {
                             }
                            
                         }
+                        .sensoryFeedback(.selection, trigger: selectedCategoryTitle)
                     }
                 }
                 .padding([.horizontal, .bottom])
@@ -88,11 +88,7 @@ struct CategoryView: View {
                     
                 
                 ScrollView {
-              
-                
-                    
-                    
-                    
+
                     
                     VStack(alignment: .leading, spacing: 10)
                      {

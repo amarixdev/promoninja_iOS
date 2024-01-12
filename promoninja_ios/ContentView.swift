@@ -36,6 +36,8 @@ extension Binding {
 }
 
 struct ContentView: View {
+    @StateObject var networkManager = NetworkManager()
+
     @StateObject var router = Router.router
     @StateObject var selectedTab = CurrentTab()
     @State private var previousTab = ""
@@ -43,98 +45,119 @@ struct ContentView: View {
     @State var shouldScrollToTop_discover = false
     @State var shouldScrollToTop_user = false
    
-
+    
     var body: some View {
+        if !networkManager.isConnected {
+            ZStack {
+                GradientView()
+                VStack(spacing: 30) {
+                    Image(.logo)
+                        .resizable()
+                        .frame(width: 100, height: 100)
+                        .shadow(color: .black, radius: 4, x: 3, y: 4)
 
-        TabView(selection: $selectedTab.name.onUpdate { oldValue, newValue in
-            //handle tabIcon navigation functionality
-           
-            if oldValue == newValue {
-                
-              
-                if newValue == .home {
-                    if router.homePath.count == 0  {
-                       
-                            shouldScrollToTop_home = true
-                    } else {
-                        router.homePath.removeLast(router.homePath.count)
-                    }
-                
-                } else if
-                    newValue == .discover {
-                    if router.discoverPath.count == 0 {
-                       
-                            shouldScrollToTop_discover = true
-                        
-                        
-                    } else {
-                        router.discoverPath.removeLast(router.discoverPath.count)
-
-                    }
+                    Text("No Internet Connection")
+                        .padding(20)
+                        .background(.ultraThinMaterial)
+                        .cornerRadius(10)
                 }
-                else if
-                    newValue == .user {
-                    if router.userPath.count == 0 {
-                        shouldScrollToTop_user = true
-                        
-                    } else {
-                        router.userPath.removeLast(router.userPath.count)
-
-                    }
-                }
-                
-               
             }
+         
             
+            
+        } else
+        
+        {
+            TabView(selection: $selectedTab.name.onUpdate { oldValue, newValue in
+                //handle tabIcon navigation functionality
+               
+                if oldValue == newValue {
                     
-        }) {
-            Group {
+                  
+                    if newValue == .home {
+                        if router.homePath.count == 0  {
+                           
+                                shouldScrollToTop_home = true
+                        } else {
+                            router.homePath.removeLast(router.homePath.count)
+                        }
+                    
+                    } else if
+                        newValue == .discover {
+                        if router.discoverPath.count == 0 {
+                           
+                                shouldScrollToTop_discover = true
+                            
+                            
+                        } else {
+                            router.discoverPath.removeLast(router.discoverPath.count)
+
+                        }
+                    }
+                    else if
+                        newValue == .user {
+                        if router.userPath.count == 0 {
+                            shouldScrollToTop_user = true
+                            
+                        } else {
+                            router.userPath.removeLast(router.userPath.count)
+
+                        }
+                    }
+                    
+                   
+                }
                 
-                //HomeView
-                NavigationStack(path: $router.homePath) {
-                    HomeScreen(shouldScrollToTop: $shouldScrollToTop_home)
+                        
+            }) {
+                Group {
+                    
+                    //HomeView
+                    NavigationStack(path: $router.homePath) {
+                        HomeScreen(shouldScrollToTop: $shouldScrollToTop_home)
+                          
+                       }
+                        .tabItem {
+                            Image(systemName: "house")
+                               
+                        }
+                        .tag(Navigation.home)
+                        .onAppear {
+                            selectedTab.name = .home
+                        }
                       
-                   }
-                    .tabItem {
-                        Image(systemName: "house")
+                        
+                    
+                    
+                    //DiscoverView
+                    NavigationStack(path: $router.discoverPath) {
+                        DiscoverView(shouldScrollToTop: $shouldScrollToTop_discover)
+                        }
+                        .tabItem {
+                            Image(systemName: "circle.grid.2x2")
+                         
+                        }
+                        .tag(Navigation.discover)
+                        .onAppear {
+                            selectedTab.name = .discover
+                        }
+                    
+                    
+                    //UserView
+                    NavigationStack(path: $router.userPath) {
+                        ProfileView()
                            
                     }
-                    .tag(Navigation.home)
+                    .tabItem { Image(systemName: "person.fill") }
+                    .tag(Navigation.user)
                     .onAppear {
-                        selectedTab.name = .home
+                        selectedTab.name = .user
                     }
-                  
-                    
-                
-                
-                //DiscoverView
-                NavigationStack(path: $router.discoverPath) {
-                    DiscoverView(shouldScrollToTop: $shouldScrollToTop_discover)
                     }
-                    .tabItem {
-                        Image(systemName: "circle.grid.2x2")
-                     
-                    }
-                    .tag(Navigation.discover)
-                    .onAppear {
-                        selectedTab.name = .discover
-                    }
-                
-                
-                //UserView
-                NavigationStack(path: $router.userPath) {
-                    ProfileView()
-                       
                 }
-                .tabItem { Image(systemName: "person.fill") }
-                .tag(Navigation.user)
-                .onAppear {
-                    selectedTab.name = .user
-                }
-                }
-            }
-                .environmentObject(selectedTab)
-                .tint(.white)
+                    .environmentObject(selectedTab)
+                    .tint(.white)
+        }
         }
 
     
