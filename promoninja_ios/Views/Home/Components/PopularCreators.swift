@@ -29,13 +29,13 @@ struct PopularCreators: View {
  
             Spacer()
         }
-        .padding()
+        .padding(.vertical)
         
         ScrollView(.horizontal) {
                                          HStack(spacing: 20) {
                                              ForEach(creators, id: \.self) { creator in
    
-                                                     VStack {
+                                                 VStack(spacing: 10) {
                                                          Image(creator.image)
    
                                                              .resizable()

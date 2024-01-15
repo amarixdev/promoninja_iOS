@@ -12,7 +12,8 @@ import ApolloAPI
 
 struct ProfileView: View {
     
-    @Query(sort:[SortDescriptor(\SavedOffer.sponsor)]) var savedOffers: [SavedOffer]
+    @Query(sort:[SortDescriptor(\SavedOffer.sponsor.name)]) var savedOffers: [SavedOffer]
+    
     @Query(sort:[SortDescriptor(\FavoritePodcast.title)]) var favoritePodcasts: [FavoritePodcast]
     
     var body: some View {
@@ -37,6 +38,19 @@ struct ProfileView: View {
         }
         
         .navigationTitle("Profile")
+        .navigationDestination(for: SavedOffer.Podcast.self, destination: { podcast in
+            if let title = podcast.title {
+                PodcastView(title: GraphQLNullable(stringLiteral: title))
+            }
+           
+        })
+        
+        .navigationDestination(for: SavedOffer.Sponsor.self, destination: { sponsor in
+            if let name = sponsor.name {
+                SponsorView(name: name )
+            }
+        })
+        
         .navigationDestination(for: Profile.self) { page in
             if page.rawValue == "podcast" {
                 FavoritePodcastsView(favoritePodcasts: favoritePodcasts)

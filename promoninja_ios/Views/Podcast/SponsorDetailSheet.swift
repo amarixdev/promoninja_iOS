@@ -40,10 +40,8 @@ struct SponsorDetailSheet: View {
          return matchingOffer!
       }
     
-    
 
     
-  
       
       var affiliateLink: String {
           return matchingOffer?.url ?? ""
@@ -52,8 +50,10 @@ struct SponsorDetailSheet: View {
       var promoCode: String {
           return matchingOffer?.promoCode ?? ""
       }
-  
 
+      @State private var showAlert = false
+      @State private var alertMessage = ""
+      @State private var showGratitude = false
  
     
     var body: some View {
@@ -77,7 +77,7 @@ struct SponsorDetailSheet: View {
             .padding(.top, 45)
             VStack {
                 //header
-                HStack(spacing: 15) {
+                HStack(alignment:.top, spacing: 15) {
                     if let imageUrl = sponsor?.imageUrl {
                   
                             LazyImage(url: URL (string: imageUrl)!, transaction: Transaction(animation: .bouncy)) { phase in
@@ -127,6 +127,12 @@ struct SponsorDetailSheet: View {
                         Text(sponsor?.url ?? "")
                             .font(.subheadline)
                             .opacity(0.8)
+                        Text(sponsor?.sponsorCategory?[0]?.name ?? "" )
+                                .font(.caption)
+                                .padding(.vertical, 5)
+                                .padding(.horizontal, 10)
+                                .background(.ultraThinMaterial)
+                                .cornerRadius(10)
                  
                     }
                     .frame(width: 200, alignment: .leading)
@@ -166,33 +172,20 @@ struct SponsorDetailSheet: View {
                             .padding(10)
                             .background()
                             .cornerRadius(10)
-                            
-                  
-                            if favoritePage && promoCode.isEmpty  {
+       
                                 Spacer()
-                                
-                                HStack {
-                                    LazyImage(url: URL(string: podcast?.imageUrl ?? "")) { phase in
-                                        if let image = phase.image {
-                                            image
-                                                .resizable()
-                                                .frame(width: 50, height: 50)
-                                                .cornerRadius(10)
-                                                .shadow(color: .black, radius: 5, x: 3, y: 4)
-                                        }
+                                Menu {
+                                    Button {
+                                       showAlert = true
+                                    } label: {
+                                        Label("Report Issue", systemImage: "exclamationmark.circle")
                                     }
-                         
+                                } label: {
+                                    Image(systemName: "ellipsis")
+                                        .padding(20)
                                 }
-                                .onTapGesture {
-                                    if let podcast = podcast {
-                                        router.userPath.append(podcast)
-                                    }
-                                   
-                                    dismiss()
-                                }
-                                
-                           
-                            }
+                    
+                  
                         }
                      
                     }
@@ -209,30 +202,6 @@ struct SponsorDetailSheet: View {
                     HStack(alignment: .bottom) {
                         PromoCode(promoCode: promoCode, copied: $copied, degrees: $degrees)
                         Spacer()
-                        if favoritePage  {
-                            
-                           
-                            HStack(alignment:.bottom) {
-                                LazyImage(url: URL(string: podcast?.imageUrl ?? "")) { phase in
-                                    if let image = phase.image {
-                                        image
-                                            .resizable()
-                                            .frame(width: 40, height: 40)
-                                            .cornerRadius(10)
-                                            .shadow(color: .black, radius: 5, x: 3, y: 4)
-                                    }
-                                }
-                            }
-                            .onTapGesture {
-                                if let podcast = podcast {
-                                    router.userPath.append(podcast)
-                                }
-                                dismiss()
-                            }
-                            
-                       
-                        }
-                      
                     }
                 }
                    
@@ -243,6 +212,7 @@ struct SponsorDetailSheet: View {
                 Spacer()
             }
         }
+        .environment(\.colorScheme, .dark)
      
         .task {
 
@@ -251,7 +221,7 @@ struct SponsorDetailSheet: View {
             guard let podcast = podcast?.title else { return }
                     
             let fetchDescriptor = FetchDescriptor<SavedOffer>(predicate: #Predicate { offer in
-                offer.sponsor == sponsor && offer.podcast.title == podcast
+                offer.sponsor.name == sponsor && offer.podcast.title == podcast
  
                 
             })
@@ -268,6 +238,25 @@ struct SponsorDetailSheet: View {
             } catch {
                 print("error: \(error.localizedDescription)")
             }
+        }
+        
+        .alert("Thanks for the feedback!", isPresented: $showGratitude) {
+            
+        } message: {
+            Text("The developer has been notified.")
+        }
+        .alert("Report Issue", isPresented: $showAlert) {
+            Button("Invalid Url") {
+                sendEmail(reportType: .invalidURL, podcastTitle: podcast?.title ?? "", sponsorTitle: sponsor?.name ?? "")
+                showGratitude = true
+            }
+            Button("Expired Promotion") {
+                sendEmail(reportType: .expiredPromotion, podcastTitle: podcast?.title ?? "", sponsorTitle: sponsor?.name ?? "")
+                showGratitude = true
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Please let us know the problem.")
         }
                 .sensoryFeedback(.success, trigger: copied)
                 .sensoryFeedback(.success, trigger: sensory)
@@ -287,7 +276,7 @@ struct SponsorDetailSheet: View {
             sensory.toggle()
             do {
                 try modelContext.delete(model: SavedOffer.self, where: #Predicate { offer in
-                    offer.sponsor == sponsorName && offer.podcast.title == podcastTitle
+                    offer.sponsor.name == sponsorName && offer.podcast.title == podcastTitle
                 })
                 
             } catch {
@@ -297,7 +286,9 @@ struct SponsorDetailSheet: View {
         } else {
             isFavorited = true
             sensory.toggle()
-            let favoritedOffer = SavedOffer(podcast: .init(title: podcast?.title ?? "", image: podcast?.imageUrl ?? "", publisher: podcast?.publisher ?? ""), sponsor: matchingOffer?.sponsor ?? "", offer: sponsor?.offer ?? "", category: sponsor?.sponsorCategory?[0]?.name ?? "")
+//            let favoritedOffer = SavedOffer(podcast: .init(title: podcast?.title ?? "", image: podcast?.imageUrl ?? "", publisher: podcast?.publisher ?? ""), sponsor: matchingOffer?.sponsor ?? "", offer: sponsor?.offer ?? "", category: sponsor?.sponsorCategory?[0]?.name ?? "")
+            let favoritedOffer = SavedOffer(podcast: .init(title: podcast?.title ?? "", image: podcast?.imageUrl ?? "", publisher: podcast?.publisher ?? ""), sponsor: .init(name:  matchingOffer?.sponsor ?? "", category: sponsor?.sponsorCategory?[0]?.name ?? "", image: sponsor?.imageUrl ?? "" ), offer: sponsor?.offer ?? "")
+            
                     
             modelContext.insert(favoritedOffer)
         }

@@ -64,13 +64,26 @@ struct FavoritePodcastsView: View {
                                         }
                                         
                                         VStack(alignment:.leading) {
-                                            Text(podcast.title?.truncated(30) ?? "")
+                                            Text(podcast.title ?? "")
                                                 .font(.subheadline)
                                                 .fontWeight(.semibold)
-                                            Text(podcast.publisher?.truncated(30) ?? "")
-                                                .font(.subheadline)
+                                                .lineLimit(1)
+                                            Text(podcast.publisher ?? "")
+                                                .font(.caption)
                                                 .foregroundStyle(.secondary)
+                                                .lineLimit(1)
+                                            HStack(spacing: 5) {
+                                                Text("Offers:")
+                                                    .font(.caption)
+                                                Text(String (podcast.sponsorCount ?? 8))
+                                                    .font(.caption.bold())
+                                            }
+                                            .padding(.vertical, 5)
+                                            .padding(.horizontal, 8)
+                                            .background(.ultraThinMaterial)
+                                            .cornerRadius(10)
                                         }
+                                        .padding(.trailing, 20)
                                     }
                                     .ignoresSafeArea()
                                     .padding(.vertical, 10)
@@ -81,6 +94,7 @@ struct FavoritePodcastsView: View {
                         }
                       
                         .listStyle(.plain)
+                        
                 }
                 .padding(.top, 20)
             }

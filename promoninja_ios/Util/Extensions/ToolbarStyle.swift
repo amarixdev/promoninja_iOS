@@ -15,7 +15,7 @@ struct ToolBar: ViewModifier {
         content
         .toolbarColorScheme(.dark, for: .navigationBar)
         .tint(.white)
-        .toolbarTitleDisplayMode(inline ? .inline : .automatic)
+        .toolbarTitleDisplayMode(inline ? .inline : .large)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -24,6 +24,7 @@ struct ToolBar: ViewModifier {
                         .foregroundStyle(.white)
                    Spacer()
                 }
+   
                 .frame(width: 50, height: 50)
                 .onTapGesture {
                     dismiss()

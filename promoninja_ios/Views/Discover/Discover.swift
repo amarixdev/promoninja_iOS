@@ -200,20 +200,23 @@ struct Discover: View {
                                                                 
                                                             
                                                             HStack {
-                                                                VStack {
-                                                                    Text(category?.name ?? "")
-                                                                        .font(.system(size: 12))
-                                                                        .fontWeight(.bold)
-                                                                        .multilineTextAlignment(.leading)
-                                                                        .foregroundStyle(.white)
-                                                                        
-                                                
-                                                                        .lineLimit(category?.name == "Accessories" ? 1 :  2)
-                                                                    Spacer()
+                                                                if let name = category?.name {
+                                                                    VStack {
+                                                                        Text( name == "Outdoors" ? "Misc" : name)
+                                                                            .font(.system(size: 12))
+                                                                            .fontWeight(.bold)
+                                                                            .multilineTextAlignment(.leading)
+                                                                            .foregroundStyle(.white)
+                                                                            
+                                                    
+                                                                            .lineLimit(category?.name == "Accessories" ? 1 :  2)
+                                                                        Spacer()
+                                                                    }
+                                                                    .frame(width: 100, alignment:.leading)
+                                                                    .padding(.top, 10)
+                                                                    .padding(.leading, 20)
                                                                 }
-                                                                .frame(width: 100, alignment:.leading)
-                                                                .padding(.top, 10)
-                                                                .padding(.leading, 20)
+                                                       
                                                                 
                                                                    
                                                                 Spacer()
@@ -294,12 +297,4 @@ struct Discover: View {
     }
 }
 
-//#Preview {
-//    NavigationStack {
-//        Discover(shouldScrollToTop: .constant(false))
-//           
-//    }
-//    .preferredColorScheme(.dark)
-//   
-//    
-//}
+

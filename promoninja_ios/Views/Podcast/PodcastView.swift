@@ -63,7 +63,7 @@ struct PodcastView: View {
         
         
         if podcast?.imageUrl == nil  {
-            LoadingAnimation()
+            LoadingAnimation(homeScreen: false)
                 .toolbarStyle(inline: true)
           
         } else {
@@ -74,7 +74,6 @@ struct PodcastView: View {
                         .ignoresSafeArea()
                         
                    ScrollView {
-                       
                         VStack {
                         
                                 LazyImage(
@@ -126,7 +125,22 @@ struct PodcastView: View {
                             if let description = podcast?.description {
                                 VStack(spacing: 15) {
                                     DisclosureGroup(isExpanded: $showMore) {
-                                        TruncateView(text: description)
+                                        VStack(alignment:.leading) {
+                                            Link(destination: URL(string: (podcast?.externalUrl!)!)!) {
+                                                HStack {
+                                                    Image(systemName: "play.circle")
+                                                        .foregroundStyle(.green)
+                                                    Text("Listen on Spotify")
+                                                        .font(.caption.bold())
+
+                                                }
+                                                .padding(.top, 10)
+                                            }
+                                     
+                                         
+                                            TruncateView(text: description)
+                                        }
+                                      
                                     } label: {
                                         Button {
                                             withAnimation {
@@ -225,6 +239,7 @@ struct PodcastView: View {
                     
                 }
                 .fadeInView(viewLoaded: $viewLoaded)
+                .sensoryFeedback(.success, trigger: sensory)
                 .task {
                     //Check is podcast is favorited
                     guard let podcastTitle = podcast?.title else { return }
@@ -284,7 +299,7 @@ struct PodcastView: View {
             isFavorited = true
             sensory.toggle()
             
-            let favoritePodcast = FavoritePodcast(title: podcast?.title ?? "", image: podcast?.imageUrl ?? "", publisher: podcast?.publisher ?? "")
+            let favoritePodcast = FavoritePodcast(title: podcast?.title ?? "", image: podcast?.imageUrl ?? "", publisher: podcast?.publisher ?? "", sponsorCount: podcast?.sponsors?.count ?? 0)
                    
             modelContext.insert(favoritePodcast)
         }

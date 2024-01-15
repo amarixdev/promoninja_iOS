@@ -45,7 +45,7 @@ let trendingCreators: [String: [String: (ImageResource, [String], String)]] = [
         "Travis Kelce": (.kelce, ["New Heights with Jason and Travis Kelce"], sportsSummary["Travis Kelce"]!),
         "Paul George": (.pg, ["Podcast P with Paul George"], sportsSummary[ "Paul George"]!),
         "Bomani Jones": (.bomani, ["The Right Time with Bomani Jones"], sportsSummary["Bomani Jones"]!),
-        "Shannon Sharpe": (.shannon, ["Nightcap with Unc and Ocho"], sportsSummary["Shannon Sharpe"]!)
+        "Shannon Sharpe": (.shannon, ["Nightcap with Unc and Ocho", "Club Shay Shay"], sportsSummary["Shannon Sharpe"]!)
     ],
     
     

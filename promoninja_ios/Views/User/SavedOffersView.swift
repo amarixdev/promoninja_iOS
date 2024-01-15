@@ -18,15 +18,16 @@ struct SavedOffersView: View {
 
     @State var selectedSponsor: GetPodcastQuery.Data.GetPodcast.Sponsor?
     @State var selectedPodcast: GetPodcastQuery.Data.GetPodcast?
-    
+    @StateObject var router = Router.router
+
     var filteredOffers: [SavedOffer] {
         if searchText.isEmpty {
             return savedOffers
         } else {
            return savedOffers.filter { offer in
-               guard let sponsor = offer.sponsor else { return false}
+               guard let sponsor = offer.sponsor.name else { return false}
                
-             return   sponsor.localizedCaseInsensitiveContains(searchText)
+               return  sponsor.localizedCaseInsensitiveContains(searchText)
             }
         }
        
@@ -55,7 +56,6 @@ struct SavedOffersView: View {
                
             } else {
                 VStack {
-          
                         List {
                             ForEach(filteredOffers) { offer in
                                 let index = savedOffers.firstIndex(of: offer)
@@ -66,73 +66,144 @@ struct SavedOffersView: View {
                                         .contentShape(Rectangle())
                                     VStack(alignment:.leading) {
                                         VStack(alignment:.leading) {
-                                            HStack(alignment:.center) {
+                                            HStack(alignment:.top) {
+                                                
+                                                
+                                         
+                                                    LazyImage(url: URL(string: offer.sponsor.image ?? "")) {
+                                                            phase in
+                                                            if let image = phase.image {
+                                                                image
+                                                                    .resizable()
+                                                                    .frame(width: 80, height: 80)
+                                                                    .cornerRadius(10)
+                                                                    .shadow(color:.black, radius: 5, x: 3, y: 5)
+                                                            } else {
+                                                                Placeholder(frameSize: 80, imgSize: 50, icon: .podcast)
+                                                            }
+                                                            
+                                                    }
+                                                    .onTapGesture {
+                                                        router.userPath.append(offer.sponsor)
+                                                    }
+                                                
+
+                                                
+                                                VStack(alignment:.leading) {
+                                                    Text(offer.sponsor.name ?? "")
+                                                        .font(.title3)
+                                                        .fontWeight(.semibold)
+                                          
+                                                    
+                                                       Text(offer.sponsor.category ?? "")
+                                                               .font(.caption)
+                                                               .padding(.vertical, 5)
+                                                               .padding(.horizontal, 10)
+                                                               .background(.ultraThinMaterial)
+                                                               .cornerRadius(10)
+                                                }
+                                                .padding(.leading, 10)
+                                              
+                                                
+                                            }
+                                            HStack(alignment:.top) {
                                                 Circle()
                                                     .frame(width: 5, height: 5)
                                                     .foregroundStyle(.green)
-                                                Text(offer.sponsor ?? "")
-                                                    .font(.title3)
-                                                    .fontWeight(.semibold)
-                                                
-                                                
-                                                Button {
+                                                    .offset(y:6)
                                                     
-                                                } label: {
-                                                    Text(offer.category ?? "")
-                                                        .font(.caption)
-                                                        .padding(.vertical, 5)
-                                                        .padding(.horizontal, 10)
-                                                        .background(.ultraThinMaterial)
-                                                        .cornerRadius(10)
-
-                                                }
-                                                
-                                            }
-                                            HStack {
-                                                
                                                 Text(offer.offer ?? "")
                                                     .font(.subheadline)
                                                     .foregroundStyle(.secondary)
-                                                    .padding(.bottom)
+                                       
                                             }
+                                            .padding(.vertical)
+                                  
                                            
                                         }
-                               
-                            
+
                                         
-                                    
-                                        
-                                        Text("Offered by:")
-                                            .font(.caption)
-                                        
-                                        HStack(spacing: 15) {
-                                            LazyImage(url: URL(string: offer.podcast.image ?? "")) {
-                                                phase in
-                                                if let image = phase.image {
-                                                    image
-                                                        .resizable()
-                                                        .frame(width: 50, height: 50)
-                                                        .cornerRadius(10)
-                                                        .shadow(color:.black, radius: 5, x: 3, y: 5)
-                                                } else {
-                                                    Placeholder(frameSize: 50, imgSize: 35, icon: .podcast)
-                                                }
-                                                
-                                            }
+                                        VStack(alignment:.leading) {
+                                            Text("Offered by:")
+                                                .font(.caption)
                                             
-                                            VStack(alignment:.leading) {
-                                                Text(offer.podcast.title?.truncated(30) ?? "")
-                                                    .font(.subheadline)
-                                                    .fontWeight(.semibold)
-                                                Text(offer.podcast.publisher?.truncated(30) ?? "")
-                                                    .font(.subheadline)
-                                                    .foregroundStyle(.secondary)
+                                            HStack(spacing: 15) {
+                                                
+                                                HStack {
+                                                    LazyImage(url: URL(string: offer.podcast.image ?? "")) {
+                                                        phase in
+                                                        if let image = phase.image {
+                                                            image
+                                                                .resizable()
+                                                                .frame(width: 40, height: 40)
+                                                                .cornerRadius(10)
+                                                                .shadow(color:.black, radius: 5, x: 3, y: 5)
+                                                        } else {
+                                                            Placeholder(frameSize: 50, imgSize: 35, icon: .podcast)
+                                                        }
+                                                        
+                                                    }
+                                                  
+                                                
+                                             
+                                                
+                                                VStack(alignment:.leading) {
+                                                    Text(offer.podcast.title ?? "")
+                                                        .font(.caption)
+                                                        .fontWeight(.semibold)
+                                                        .lineLimit(1)
+                                                    Text(offer.podcast.publisher ?? "")
+                                                        .font(.caption)
+                                                        .foregroundStyle(.secondary)
+                                                        .lineLimit(1)
+                                                }
+                                                }
+                                                .onTapGesture {
+                                                    router.userPath.append(offer.podcast)
+                                                    
+                                                }
+                                         
+                                                Spacer()
+                                                Button {
+                                                    Task {
+                                                        let title = GraphQLNullable<String>(stringLiteral: offer.podcast.title ?? "")
+                                                        
+                                                        Network.shared.apollo.fetch(query: GetPodcastQuery(input: PodcastInput(podcast: title))) { result in
+                                                            guard let data = try? result.get().data else {
+
+                                                                return }
+                                                            
+                                                            if let podcastData = data.getPodcast {
+                                                                DispatchQueue.main.async {
+                                                                    self.selectedPodcast = (podcastData)
+                                                                    
+                                                                    if let selectedSponsor = podcastData.sponsors?.first(where: { sponsor in   sponsor?.name == offer.sponsor.name
+                                                                    }) {
+                                                                        self.selectedSponsor = selectedSponsor
+                                                                        if self.selectedSponsor != nil {
+                                                                            self.displaySheet = true
+                                                                                  }
+                                                                       
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                } label: {
+                                                        Text("Open")
+                                                            .font(.caption)
+                                                    
+
+                                                }
+                                                .buttonStyle(.bordered)
+                                               
                                             }
                                            
+
+                                            .padding(.bottom, 10)
                                         }
                                        
 
-                                        .padding(.bottom, 10)
                                         
                                        
                                     }
@@ -141,28 +212,7 @@ struct SavedOffersView: View {
                                   
                                     .onTapGesture {
                                             
-                                        Task {
-                                            let title = GraphQLNullable<String>(stringLiteral: offer.podcast.title ?? "")
-                                            
-                                            Network.shared.apollo.fetch(query: GetPodcastQuery(input: PodcastInput(podcast: title))) { result in
-                                                guard let data = try? result.get().data else { return }
-                                                
-                                                if let podcastData = data.getPodcast {
-                                                    DispatchQueue.main.async {
-                                                        self.selectedPodcast = (podcastData)
-                                                        
-                                                        if let selectedSponsor = podcastData.sponsors?.first(where: { sponsor in   sponsor?.name == offer.sponsor
-                                                        }) {
-                                                            self.selectedSponsor = selectedSponsor
-                                                            if self.selectedSponsor != nil {
-                                                                self.displaySheet = true
-                                                                      }
-                                                           
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
+                                       
                                     }
                                   
                                 .id(index == 0 ? Self.topId: Self.topId)
@@ -226,9 +276,18 @@ struct SavedOffersView: View {
         
         let jre = SavedOffer.Podcast(title: "The Joe Rogan Experience", image: "https://i.scdn.co/image/9af79fd06e34dea3cd27c4e1cd6ec7343ce20af4", publisher: "Joe Rogan")
         
+        
+//        let ag1 = SavedOffer.Sponsor(name: "Athletic Greens", category: "Health & Wellness", image: "https://healthreporter.com/app/uploads/athletic-greens-ag1.jpg")
+        
+        let blueChew = SavedOffer.Sponsor(name: "BLUECHEW", category: "Health & Wellness", image: "https://i.ytimg.com/vi/RWMjZeud8ys/frame0.jpg")
+        
+        let ag1 = SavedOffer.Sponsor(name: "Athletic Greens", category: "Health & Wellness", image: "https://healthreporter.com/app/uploads/athletic-greens-ag1.jpg")
+        
     let offers = [
-                SavedOffer(podcast: crimeJunkie , sponsor: "Athletic Greens", offer: "Get 5 free travel packs plus a 1-year supply of vitamin D", category: "Health & Wellness"),
-                SavedOffer(podcast: jre, sponsor: "Better Help", offer: "Get 10% off your first month", category: "Health & Wellness")
+                SavedOffer(podcast: crimeJunkie , sponsor: ag1, offer: "Get 5 free travel packs plus a 1-year supply of vitamin D"),
+                
+                SavedOffer(podcast: jre , sponsor: blueChew, offer: "Get 5 free travel packs plus a 1-year supply of vitamin D")
+                
     ]
         
         

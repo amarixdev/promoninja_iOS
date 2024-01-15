@@ -7,33 +7,52 @@
 
 import SwiftUI
 
+struct LoadingDots: View {
+    @State private var isLoading = false
+
+    var body: some View {
+        HStack(spacing: 15) {
+            ForEach(0..<3) { index in
+                Circle()
+                    .frame(width: 20, height: 20)
+                    .foregroundStyle(Color.logo.gradient)
+                    .scaleEffect(self.isLoading ? 1 : 0.6)
+                    .animation(
+                        Animation
+                            .default
+                            .repeatForever(autoreverses: true)
+                            .delay(Double(index) / 6),
+                        value: isLoading
+                    )
+            }
+        }
+        .onAppear() {
+            withAnimation {
+                self.isLoading = true
+            }
+          
+        }
+    }
+}
+
 
 struct LoadingAnimation: View {
-    var homeScreen: Bool?
+    var homeScreen: Bool
     @State private var rotation: Double = 0.0
     @State private var displayLoader = false
     
-    var isHomeScreen: Bool {
-        homeScreen != nil
-    }
+ 
     
     var body: some View {
-        VStack {
-            CircleView(offset: 0, isHomeScreen: isHomeScreen)
-                .rotationEffect(Angle(degrees: rotation))
-            CircleView(offset: 120, isHomeScreen: isHomeScreen)
-                .rotationEffect(Angle(degrees: rotation + 120))
-            CircleView(offset: 240, isHomeScreen: isHomeScreen)
-                .rotationEffect(Angle(degrees: rotation + 240))
+        VStack(alignment:.center) {
+            LoadingDots()
         }
         .transition(.opacity)
-        .opacity(!isHomeScreen && !displayLoader ? 0 : !isHomeScreen && displayLoader ? 1 : 1)
+        .opacity(!homeScreen && !displayLoader ? 0 : !homeScreen && displayLoader ? 1 : 1)
         .onAppear {
-            withAnimation(Animation.linear(duration: 1.5).repeatForever(autoreverses: false)) {
-                rotation = 360
-            }
-            if !isHomeScreen {
+            if !homeScreen {
                 setTimeout(1.0) {
+                    print("")
                         withAnimation(.easeIn) {
                             displayLoader = true
                         }
@@ -41,25 +60,13 @@ struct LoadingAnimation: View {
                     }
             }
      
-            
         }
-    }
-}
-
-struct CircleView: View {
-    let offset: Double
-    let isHomeScreen: Bool
-    
-    var body: some View {
-        Circle()
-            .fill(isHomeScreen ? .loading : .loading)
-            .frame(width: 20, height: 20)
-            .offset(x: 80 * cos(offset * .pi / 180), y: 80 * sin(offset * .pi / 180))
+        .environment(\.colorScheme, .dark)
     }
 }
 
 
 #Preview {
-    LoadingAnimation()
+    LoadingAnimation(homeScreen: false)
         .preferredColorScheme(.dark)
 }

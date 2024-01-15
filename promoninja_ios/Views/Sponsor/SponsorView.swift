@@ -35,8 +35,7 @@ struct SponsorView: View {
         var body: some View {
             if !dataLoaded {
                 ZStack {
-                    LoadingAnimation()
-                    
+                    LoadingAnimation(homeScreen: false)
                     
                 }
                 .onChange(of: sponsor) {
@@ -171,21 +170,8 @@ struct SponsorView: View {
                     .navigationTitle(sponsor?.name?.truncated(25) ?? "")
                         .toolbarColorScheme(.dark, for: .navigationBar)
                         .tint(.white)
-                        .toolbarTitleDisplayMode(.inline)
-                
-                        .navigationBarBackButtonHidden(true)
-                        .toolbar {
-                            ToolbarItem(placement: .topBarLeading) {
-                                Button {
-                                    dismiss()
-                                } label: {
-                                    Image(systemName: "chevron.left")
-                                        .foregroundStyle(.white)
-                                }
-                            }
-                        }
-                
-                
+                        .toolbarStyle(inline: true)
+
                 
 
                         
@@ -199,6 +185,9 @@ struct SponsorView: View {
         }
 
 #Preview {
-    SponsorView(name: "squarespace")
-        .preferredColorScheme(.dark)
+    NavigationStack {
+        SponsorView(name: "squarespace")
+            .preferredColorScheme(.dark)
+    }
+   
 }

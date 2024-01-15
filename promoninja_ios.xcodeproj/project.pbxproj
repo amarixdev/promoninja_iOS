@@ -24,6 +24,7 @@
 		A3263AE92B27879E006C7125 /* PodcastCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3263AE82B27879E006C7125 /* PodcastCategory.swift */; };
 		A32898582B2A514A00DD2E23 /* ShineEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32898572B2A514A00DD2E23 /* ShineEffect.swift */; };
 		A33352A42B504D16001E3683 /* TruncateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33352A32B504D16001E3683 /* TruncateView.swift */; };
+		A33E6E022B54AEAB006AAAC5 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33E6E012B54AEAB006AAAC5 /* SplashScreenView.swift */; };
 		A33EA1AC2B4241490036E4C4 /* SavedOffersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA1AB2B4241490036E4C4 /* SavedOffersView.swift */; };
 		A33EA1B02B4242790036E4C4 /* SavedOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA1AF2B4242790036E4C4 /* SavedOffer.swift */; };
 		A33EA1B22B45AB9E0036E4C4 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EA1B12B45AB9E0036E4C4 /* ProfileView.swift */; };
@@ -91,6 +92,7 @@
 		A32898572B2A514A00DD2E23 /* ShineEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShineEffect.swift; sourceTree = "<group>"; };
 		A33352A32B504D16001E3683 /* TruncateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruncateView.swift; sourceTree = "<group>"; };
 		A33352A52B505807001E3683 /* promoninja-ios-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "promoninja-ios-Info.plist"; sourceTree = SOURCE_ROOT; };
+		A33E6E012B54AEAB006AAAC5 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		A33EA1AB2B4241490036E4C4 /* SavedOffersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedOffersView.swift; sourceTree = "<group>"; };
 		A33EA1AF2B4242790036E4C4 /* SavedOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedOffer.swift; sourceTree = "<group>"; };
 		A33EA1B12B45AB9E0036E4C4 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 				A39C77A12B1FA1EE0058097F /* Placeholder.swift */,
 				A3F972142B491DB0007AB6C5 /* PromoCode.swift */,
 				A3F972162B4A1C69007AB6C5 /* GradientView.swift */,
+				A33E6E012B54AEAB006AAAC5 /* SplashScreenView.swift */,
 				A33352A32B504D16001E3683 /* TruncateView.swift */,
 			);
 			path = Components;
@@ -534,6 +537,7 @@
 				A3B837FD2B2113290078BFE7 /* PopularCreators.swift in Sources */,
 				A32010BC2B0FC5AD00F22357 /* PodcastViewModel.swift in Sources */,
 				A38BEE632B361C6300CDFC81 /* Discover.swift in Sources */,
+				A33E6E022B54AEAB006AAAC5 /* SplashScreenView.swift in Sources */,
 				A35634742B1679A200928A9B /* PodcastCategoryViewModel.swift in Sources */,
 				A3C879602B2612A500A3F375 /* FadeIn.swift in Sources */,
 				A3A45D402B18F861003EF626 /* comedy.swift in Sources */,

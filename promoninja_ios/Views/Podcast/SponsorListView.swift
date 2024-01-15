@@ -65,32 +65,38 @@ struct SponsorListView: View {
                                            
                                         
                                         }
+                                        .onTapGesture {
+                                            selectedSponsor = sponsor
+                                            displaySheet = true
+                                        }
 
                                         VStack(alignment:.leading) {
                                             if let name = sponsor?.name {
-                                                Text(name.truncated(25) )
+                                                Text(name )
                                                     .font(.caption)
-                                                    
                                                     .foregroundStyle(.white)
+                                                    .lineLimit(1)
                                             }
                                             if let url = sponsor?.url {
-                                                Text(url.truncated(25))
+                                                Text(url)
                                                     .font(.caption)
-                                                    
                                                     .foregroundStyle(.gray)
+                                                    .lineLimit(1)
                                             }
                                         }
+                                        .padding(.trailing, 20)
                                         Spacer()
                                     }
                                    
                                 }
                                 .sheet(isPresented: $displaySheet) {
                                     ZStack {
-                                        LinearGradient(colors: [Color(.sponsorTheme).opacity(0.85), .black.opacity(0.95), .black], startPoint: .top, endPoint: .bottom)
+                                        LinearGradient(colors: [Color(.sponsorTheme).opacity(0.95), .black.opacity(0.95), .black], startPoint: .top, endPoint: .bottom)
                                      
                                         SponsorDetailSheet(favoritePage:false, podcast: $selectedPodcast , sponsor: $selectedSponsor)
                                             .presentationDetents([.medium, .large])
                                             .presentationBackground(.clear)
+                                            .environment(\.colorScheme, .dark)
                                     }
                              
                                 }

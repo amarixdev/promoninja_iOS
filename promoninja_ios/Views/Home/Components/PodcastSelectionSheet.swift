@@ -87,10 +87,7 @@ struct PodcastSelectionSheet: View {
                                                 .frame( height: 80)
                                                 .zIndex(10)
                                                 .onTapGesture {
-                                                  
-                                              
                                                         tapped = podcast.title
-                                                    
                                                     router.homePath.append(podcast)
                                                     dismiss()
                                                 }
@@ -106,30 +103,47 @@ struct PodcastSelectionSheet: View {
                                                         
                                                     }
                                                 }
-                                                .padding(.leading, 20)
-                                                VStack(alignment:.leading) {
-                                                    Text(podcast.title)
-                                                        .font(.caption)
-                                                        .fontWeight(.semibold)
-                                                    
-                                                    Text(podcast.publisher ?? "")
-                                                        .font(.caption)
-                                                        .opacity(0.8)
-                                                        
-                                                }
-                                                .frame(width: 230, alignment: .leading)
-                                              
-                                                    
+
+                          
                                                 
+                                                HStack(alignment:.top) {
+                                                    VStack(alignment:.leading) {
+                                                        Text(podcast.title)
+                                                            .font(.caption)
+                                                            .fontWeight(.semibold)
+                                                            .lineLimit(1)
+                                                        
+                                                        Text(podcast.publisher ?? "")
+                                                            .font(.caption)
+                                                            .opacity(0.8)
+                                                            .lineLimit(1)
+                                                        
+                                                        HStack(spacing: 5) {
+                                                            Text("Offers:")
+                                                                .font(.caption2)
+                                                            Text(String (podcast.sponsors?.count ?? 0))
+                                                                .font(.caption2.bold())
+                                                        }
+                                                        .padding(.vertical, 5)
+                                                        .padding(.horizontal, 8)
+                                                        .background(.ultraThinMaterial)
+                                                        .cornerRadius(10)
+                                                            
+                                                    }
+                                                    .frame(width: 200, alignment: .leading)
+                                                    .padding(.horizontal, 5)
+                   
+                                                }
+                                    
                                                 Image(systemName: "chevron.right")
                                                     .opacity(0.5)
-                                                    .padding(.trailing, 20)
-                                            
+                                                
                                             }
+                                            
                                        
                                         }
                                         .ignoresSafeArea()
-                                        .listRowBackground(Color.sponsorTheme)
+                                        .listRowBackground(Color.sponsorTheme.opacity(0.65))
                                         .animation(.easeIn, value: tapped)
                                      
                                     }
@@ -163,6 +177,7 @@ struct PodcastSelectionSheet: View {
                 Spacer()
             }
         }
+        .environment(\.colorScheme, .dark)
         .padding()
         .onAppear {
             for podcastTitle in creator.podcasts {

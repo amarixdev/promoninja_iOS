@@ -84,7 +84,7 @@ struct PodcastDetailSheet: View {
             .padding(.top, 45)
             VStack {
                 //header
-                HStack(spacing: 15) {
+                HStack(alignment:.top, spacing: 15) {
                     if let imageUrl = podcast?.imageUrl {
                             LazyImage(url: URL (string: imageUrl)!, transaction: Transaction(animation: .bouncy)) { phase in
                                 if let image = phase.image {
@@ -196,6 +196,8 @@ struct PodcastDetailSheet: View {
                 
             }
         }
+        .environment(\.colorScheme, .dark)
+
         .task {
             //Check is offer is favorited
             guard let sponsor = matchingOffer?.sponsor else { return }
@@ -203,7 +205,7 @@ struct PodcastDetailSheet: View {
                     
             let fetchDescriptor = FetchDescriptor<SavedOffer>(predicate: #Predicate { offer in
                 
-                return  offer.sponsor == sponsor && offer.podcast.title  == podcastTitle
+                return  offer.sponsor.name == sponsor && offer.podcast.title  == podcastTitle
 
             })
             
@@ -247,10 +249,8 @@ struct PodcastDetailSheet: View {
         
         
           
-        
     }
  
-    
     
     func handleFavorite (podcastTitle: String, sponsorName: String) throws {
 
@@ -262,7 +262,7 @@ struct PodcastDetailSheet: View {
             
             do {
                 try modelContext.delete(model: SavedOffer.self, where: #Predicate { offer in
-                    offer.sponsor == sponsorName && offer.podcast.title == podcastTitle
+                    offer.sponsor.name == sponsorName && offer.podcast.title == podcastTitle
                 })
                 
             } catch {
@@ -273,8 +273,11 @@ struct PodcastDetailSheet: View {
             isFavorited = true
             sensory.toggle()
             
-            let favoritedOffer = SavedOffer(podcast: .init(title: podcast?.title ?? "", image: podcast?.imageUrl ?? "", publisher: podcast?.publisher ?? ""), sponsor: matchingOffer?.sponsor ?? "", offer: sponsor?.offer ?? "", category: sponsor?.sponsorCategory?[0]?.name ?? "")
+//            let favoritedOffer = SavedOffer(podcast: .init(title: podcast?.title ?? "", image: podcast?.imageUrl ?? "", publisher: podcast?.publisher ?? ""), sponsor: matchingOffer?.sponsor ?? "", offer: sponsor?.offer ?? "", category: sponsor?.sponsorCategory?[0]?.name ?? "")
                     
+            let favoritedOffer = SavedOffer(podcast: .init(title: podcast?.title ?? "", image: podcast?.imageUrl ?? "", publisher: podcast?.publisher ?? ""), sponsor: .init(name:  matchingOffer?.sponsor ?? "", category:sponsor?.sponsorCategory?[0]?.name ?? "", image: sponsor?.imageUrl ?? "" ), offer: sponsor?.offer ?? "")
+            
+            
             modelContext.insert(favoritedOffer)
         }
         

@@ -23,7 +23,7 @@ class SearchViewModel: ObservableObject {
     
     @Published var filteredPodcasts = [GetPodcastsQuery.Data.GetPodcast?]()
     @Published var filteredSponsors = [GetSponsorsQuery.Data.GetSponsor?]()
-    @Published var currentCategory:Category = .Podcast {
+    @Published var currentCategory:Category = .Sponsor {
         didSet {
             if currentCategory == .Sponsor {
                 sponsor_filterSearch(searchText: self.searchText)

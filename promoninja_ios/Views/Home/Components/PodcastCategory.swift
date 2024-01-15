@@ -96,6 +96,8 @@ struct PodcastCategory: View {
                                                     .scaledToFill()
                                                     .frame(width: 80, height: 80)
                                                     .cornerRadius(10)
+                                            } else {
+                                                Placeholder(frameSize: 80, imgSize: 45, icon: .podcast)
                                             }
                                         }
                                         VStack(alignment:.leading) {
@@ -118,7 +120,6 @@ struct PodcastCategory: View {
                                             .padding(.horizontal, 8)
                                             .background(.ultraThinMaterial)
                                             .cornerRadius(10)
-    //                                        .shadow( radius: 3, x: 2, y: 5)
                                         }
                                         Spacer()
                                     
@@ -140,12 +141,10 @@ struct PodcastCategory: View {
             
             .padding(.top, 20)
              
-         
-           
         }
         .searchable(text:$searchText)
         .navigationTitle(category.name?.capitalized ?? "")
-        .navigationBarTitleDisplayMode(.large)
+        .toolbarStyle(inline: false)
         .toolbar {
             Menu {
                 Button {
@@ -188,6 +187,7 @@ struct PodcastCategory: View {
                 
             }
         }
+     
     }
 }
 

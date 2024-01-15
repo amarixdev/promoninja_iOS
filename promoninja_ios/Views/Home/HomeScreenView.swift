@@ -28,7 +28,6 @@ struct HomeScreen: View {
     @State private var showSelection = false
     @StateObject var router = Router.router
 
-    
     var categories: [GetPodcastCategoriesQuery.Data.GetPodcastCategory?] {
         viewModel.categoryData?.filter {$0?.name != "news & politics"} ?? []
     }
@@ -49,19 +48,14 @@ struct HomeScreen: View {
     var body: some View {
         ZStack {
             GradientView()
+            if !dataLoaded {
+                LoadingAnimation(homeScreen: true)
+            }
+          
             
             ScrollViewReader { reader in
                 ScrollView {
-
-                        if !dataLoaded {
-                            Image(.logo)
-                                .resizable()
-                                .frame(width: 100, height: 100)
-                                .scaledToFit()
-                            LoadingAnimation(homeScreen: true)
-                            
-                        } else
-                          {
+                       if dataLoaded  {
              
                                 VStack {
                                     HStack(alignment:.top) {
@@ -89,6 +83,25 @@ struct HomeScreen: View {
                             
                                 .padding(.vertical)
                                     
+                                    VStack(alignment:.center, spacing: 20) {
+                                        Text("All logos, icons & trademarks are property of their respective owners.")
+                                            .multilineTextAlignment(.center)
+                                        
+                                        Text("All company, product and service names used on this platform are for identification purposes only. Use of these names, trademarks and brands does not imply endorsement.")
+                                            .multilineTextAlignment(.center)
+                                        
+                                        HStack {
+                                            Text("Powered by Spotify")
+                                        }
+                                        .padding(.top, 10)
+                                        
+                                    }
+                                    .padding(30)
+                                    .font(.footnote)
+                                    .foregroundStyle(.secondary)
+                                    .opacity(0.8)
+                                  
+                                    
                                 }
                                 .background {
                                     GeometryReader { geo in
@@ -114,19 +127,9 @@ struct HomeScreen: View {
                                     }
                                     
                                 }
-                                
-                                
-                            
-                                  
                                                         
                           }
-                        
-                        
-                        
-                    
-                
-                      
-                        
+
                     
                 }
                 .onChange(of: shouldScrollToTop) {
@@ -137,6 +140,7 @@ struct HomeScreen: View {
                         shouldScrollToTop = false
                     }
                                }
+                .scrollBounceBehavior(.basedOnSize)
                 
                 
 
@@ -151,8 +155,8 @@ struct HomeScreen: View {
                     ZStack {
                         Circle()
                             .frame(width: 35, height: 35)
-                            .foregroundStyle(displayNavTitle ? .appTheme.opacity(0.5) : .appTheme)
-                        Image(systemName: "questionmark")
+                            .foregroundStyle(displayNavTitle ? .appTheme.opacity(0.5) : !dataLoaded ? .clear :  .appTheme)
+                        Image(systemName: dataLoaded ? "questionmark" : "")
                             .imageScale(displayNavTitle ? .small : .small)
                     }
                   

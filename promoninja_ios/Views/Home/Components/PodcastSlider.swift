@@ -25,8 +25,8 @@ struct PodcastSlider: View {
     var categories: [GetPodcastCategoriesQuery.Data.GetPodcastCategory?]
     private static let topId = "topIdHere"
     @State private var shouldScrollToTop = false
-    
     @Binding var podcasts: [GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast?]
+    
     @State private var categoryTapped = false
     @GestureState private var podcastTapped = false
     

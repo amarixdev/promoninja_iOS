@@ -45,6 +45,8 @@ struct ContentView: View {
     @State var shouldScrollToTop_discover = false
     @State var shouldScrollToTop_user = false
    
+    @State private var isSplashScreenViewPresented = true
+
     
     var body: some View {
         if !networkManager.isConnected {
@@ -62,10 +64,15 @@ struct ContentView: View {
                         .cornerRadius(10)
                 }
             }
+            .preferredColorScheme(.dark)
          
             
             
-        } else
+        } else if isSplashScreenViewPresented {
+            SplashScreenView(isPresented: $isSplashScreenViewPresented)
+                .preferredColorScheme(.dark)
+        }
+        else
         
         {
             TabView(selection: $selectedTab.name.onUpdate { oldValue, newValue in
@@ -108,7 +115,6 @@ struct ContentView: View {
                    
                 }
                 
-                        
             }) {
                 Group {
                     
@@ -135,7 +141,7 @@ struct ContentView: View {
                         }
                         .tabItem {
                             Image(systemName: "circle.grid.2x2")
-                         
+
                         }
                         .tag(Navigation.discover)
                         .onAppear {
@@ -154,8 +160,10 @@ struct ContentView: View {
                         selectedTab.name = .user
                     }
                     }
+                .toolbarBackground(.black, for: .tabBar)
                 }
                     .environmentObject(selectedTab)
+                    .preferredColorScheme(.dark)
                     .tint(.white)
         }
         }
@@ -166,5 +174,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .preferredColorScheme(.dark)
+//        .preferredColorScheme(.dark)
 }

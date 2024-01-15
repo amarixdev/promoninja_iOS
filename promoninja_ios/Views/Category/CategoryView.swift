@@ -40,7 +40,7 @@ struct CategoryView: View {
                             HStack{
                                 ForEach(viewModel.categoryData ?? [], id: \.self) { category in
                                     if let name = category?.name {
-                                        Button(name.capitalized ) {
+                                        Button(name == "Outdoors" ? "Misc" : name) {
                                             selectedCategoryTitle = name
                                             categoryTapped = true
                                             setTimeout(0.2) {
@@ -120,13 +120,14 @@ struct CategoryView: View {
                                                     .multilineTextAlignment(.leading)
                                                     .foregroundStyle(.white)
                                                     .fontWeight(.semibold)
-                                                Text(sponsor.summary?.truncated(60) ?? "")
+                                                Text(sponsor.summary ?? "")
                                                     .font(.caption)
                                                     .multilineTextAlignment(.leading)
+                                                    .lineLimit(2)
                                                     .foregroundStyle(.white)
                                                     .opacity(0.8)
+                                             
                                                    
-                                                
                                             }
                                                 Spacer()
                                                     Image(systemName: "chevron.right")
@@ -143,8 +144,7 @@ struct CategoryView: View {
                 }
             }
             
-          
-            .padding(.top, 50)
+            .padding(.top, 40)
         }
         .onAppear() {
             buttonID = selectedCategoryTitle

@@ -10,23 +10,29 @@ import SwiftData
 
 
 
-@Model class SavedOffer {
-    struct Podcast: Codable  {
+@Model class SavedOffer: Hashable {
+    struct Podcast: Codable, Hashable  {
         var title: String?
         var image: String?
         var publisher: String?
     }
     
-    var podcast: Podcast
-    var sponsor: String?
-    var offer: String?
-    var category: String?
     
-    init(podcast: Podcast, sponsor: String?, offer: String?, category: String?) {
+    struct Sponsor: Codable, Hashable {
+        var name: String?
+        var category: String?
+        var image: String?
+    }
+    
+    var podcast: Podcast
+    var sponsor: Sponsor
+    var offer: String?
+    
+    init(podcast: Podcast, sponsor: Sponsor, offer: String? = nil) {
         self.podcast = podcast
         self.sponsor = sponsor
         self.offer = offer
-        self.category = category
     }
+  
 }
 

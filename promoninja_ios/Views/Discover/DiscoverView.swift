@@ -22,15 +22,20 @@ struct DiscoverView: View {
 
     var body: some View {
             if viewModel.podcasts.isEmpty && viewModel.sponsors.isEmpty {
-                GradientView()
+                ZStack {
+                    GradientView()
+                    LoadingAnimation(homeScreen: false)
+                }
+             
             } else {
                 
                 SearchingView(currentCategory: $viewModel.currentCategory, shouldScrollToTop: $shouldScrollToTop, filteredSponsors: $viewModel.filteredSponsors, filteredPodcasts: $viewModel.filteredPodcasts, selectedCategoryTitle: $selectedCategoryTitle)
                     .searchable(text: $viewModel.searchText, prompt: viewModel.currentCategory == .Podcast ? "Find a podcast - \"Bad Friends\"" : "Find a sponsor - \"Tushy\"")
                     
                     .searchScopes($viewModel.currentCategory) {
-                        Text("Podcast").tag(Category.Podcast)
                         Text("Sponsor").tag(Category.Sponsor)
+                        Text("Podcast").tag(Category.Podcast)
+
                         
                     }
 
@@ -102,10 +107,9 @@ struct DiscoverView: View {
 
 
 struct SearchingView: View {
-    let searchCategories: [ Category] = [.Podcast, .Sponsor]
+    let searchCategories: [ Category] = [.Sponsor, .Podcast]
     @Environment(\.isSearching) var isSearching
     @StateObject var viewModel = SearchViewModel()
-
     @StateObject var categoryVM = SponsorCategoriesViewModel()
     
     @Binding var currentCategory: Category
@@ -123,9 +127,11 @@ struct SearchingView: View {
 
     var body: some View {
         if categories.isEmpty {
+            ZStack {
+                GradientView()
+            }
             
-            GradientView()
-            
+         
         } else
         
         {
@@ -160,12 +166,14 @@ struct SearchingView: View {
                                                 }
                                                 
                                                 VStack(alignment:.leading) {
-                                                    Text(podcast?.title.truncated(30) ?? "")
+                                                    Text(podcast?.title ?? "")
                                                         .font(.subheadline)
                                                         .fontWeight(.medium)
-                                                    Text(podcast?.publisher?.truncated(30) ?? "")
+                                                        .lineLimit(1)
+                                                    Text(podcast?.publisher ?? "")
                                                         .font(.subheadline)
                                                         .opacity(0.8)
+                                                        .lineLimit(1)
                                                 }
                                                 Spacer()
                                        
@@ -204,12 +212,14 @@ struct SearchingView: View {
                                                 }
                                                 
                                                 VStack(alignment:.leading) {
-                                                    Text(sponsor?.name?.truncated(30) ?? "")
+                                                    Text(sponsor?.name ?? "")
                                                         .font(.subheadline)
                                                         .fontWeight(.medium)
-                                                    Text(sponsor?.url?.truncated(30) ?? "")
+                                                        .lineLimit(1)
+                                                    Text(sponsor?.url ?? "")
                                                         .font(.subheadline)
                                                         .opacity(0.8)
+                                                        .lineLimit(1)
                                                 }
                                                 Spacer()
                                        

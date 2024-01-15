@@ -77,25 +77,39 @@ struct PodcastListView: View {
                                             
                                             
                                         }
+                                        .onTapGesture {
+                                            selectedPodcast = podcast
+                                
+                                            
+                                            if let backgroundColor = podcast?.backgroundColor {
+                                                podcastTheme = Color(rgbString: backgroundColor)
+                                            }
+                                            
+                                            displaySheet = true
+                                           
+                                        }
+                                        
                                         VStack(alignment:.leading) {
                                             if let title = podcast?.title {
-                                                Text(title.truncated(25) )
+                                                Text(title)
                                                     .font(.caption)
-                                                
                                                     .foregroundStyle(.white)
+                                                    .lineLimit(1)
                                             }
                                             if let publisher = podcast?.publisher {
-                                                Text(publisher.truncated(25))
+                                                Text(publisher)
                                                     .font(.caption)
-                                                
                                                     .foregroundStyle(.gray)
+                                                    .lineLimit(1)
                                             }
                                         }
+                                        .padding(.trailing, 20)
                                         Spacer()
                            
                                         
                                         
                                     }
+                                    
                                     
                                
                                    
@@ -113,6 +127,7 @@ struct PodcastListView: View {
                                              .presentationBackground {
                                                  Color.clear
                                              }
+                                             .environment(\.colorScheme, .dark)
                                              
     
                                     }
