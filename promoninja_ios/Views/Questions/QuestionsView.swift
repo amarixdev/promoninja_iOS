@@ -60,7 +60,7 @@ struct QuestionsView: View {
                             
                             questionBlock(question: "How do I know the offers are up to date?", answer: "Offers are updated weekly. If you encounter an expired offer, feel free to report it.")
                             
-                            questionBlock(question: "What if, for example, Audible offers 30% off for one podcast, and 60% for another? ", answer: "We focus on showcasing deals that are consistent across all podcasts. Fortunately, the majority of affiliate deals we showcase adhere to this standard.")
+                            questionBlock(question: "What if, for example, a company offers 30% off for one podcast, and 60% for another? ", answer: "We focus on showcasing deals that are consistent across all podcasts. Fortunately, the majority of affiliate deals we showcase adhere to this standard.")
                             
                             questionBlock(question: "How can I get my podcast featured on the platform?", answer: "Podcasts must have at least one sponsor to be featured. If you would like to have your show featured, contact us @Promoninja1.gmail.com")
                         }

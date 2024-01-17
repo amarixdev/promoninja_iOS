@@ -164,7 +164,7 @@ struct SponsorDetailSheet: View {
                             .padding(.leading, 5)
                         HStack {
                             
-                            Link(destination: URL(string: "https://"+affiliateLink)!, label: {
+                            Link(destination: URL(string: "https://www."+affiliateLink)!, label: {
                                 Text(affiliateLink)
                                     .font(.subheadline)
                                     .opacity(0.8)

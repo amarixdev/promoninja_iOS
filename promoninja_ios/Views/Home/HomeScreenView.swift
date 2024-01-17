@@ -166,8 +166,8 @@ struct HomeScreen: View {
             .navigationTitle(displayNavTitle ? "Home" : "")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: GetPodcastCategoriesQuery.Data.GetPodcastCategory?.self ) { category in
-                if let category = category {
-                    PodcastCategory(category: category)
+                if let name = category?.name {
+                    PodcastCategory(categoryName: name)
                 }
             }
             .navigationDestination(for: GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast.self) { podcast in

@@ -112,7 +112,7 @@ struct Discover: View {
                                         
                                                 VStack {
                                                     HStack {
-                                                        Text("Developer's Picks ")
+                                                        Text("Popular ")
                                                             .fontWeight(.bold)
                                                             .font(.subheadline)
                                                             .foregroundStyle(.white)

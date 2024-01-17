@@ -13,7 +13,7 @@ type Query {
   getTopPicks(input: TopPicksInput!): [Podcast]
   getTrendingOffers(input: TrendingOffersInput!): [Sponsor]
   fetchCategory(input: PodcastInput!): String
-  getPodcastCategories: [Category]
+  getPodcastCategories(input: iOSInput): [Category]
   fetchSponsors(input: PodcastInput!): [Sponsor]
   fetchSpotifyPodcast(input: SpotifyAPI!): [Items]
   fetchCategoryPodcasts(input: PodcastInput!): [Podcast]
@@ -160,4 +160,10 @@ input CountInput {
 type SponsorCategory {
   name: String!
   sponsor: [Sponsor]
+}
+
+
+input iOSInput {
+    isTrendingPage: Boolean
+    isPodcastCategoryPage: Boolean
 }

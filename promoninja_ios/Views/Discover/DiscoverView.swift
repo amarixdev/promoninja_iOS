@@ -30,11 +30,11 @@ struct DiscoverView: View {
             } else {
                 
                 SearchingView(currentCategory: $viewModel.currentCategory, shouldScrollToTop: $shouldScrollToTop, filteredSponsors: $viewModel.filteredSponsors, filteredPodcasts: $viewModel.filteredPodcasts, selectedCategoryTitle: $selectedCategoryTitle)
-                    .searchable(text: $viewModel.searchText, prompt: viewModel.currentCategory == .Podcast ? "Find a podcast - \"Bad Friends\"" : "Find a sponsor - \"Tushy\"")
+                    .searchable(text: $viewModel.searchText, prompt: "Find a podcast or sponsor")
                     
                     .searchScopes($viewModel.currentCategory) {
-                        Text("Sponsor").tag(Category.Sponsor)
                         Text("Podcast").tag(Category.Podcast)
+                        Text("Sponsor").tag(Category.Sponsor)
 
                         
                     }

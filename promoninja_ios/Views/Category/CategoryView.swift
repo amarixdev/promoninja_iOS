@@ -28,6 +28,12 @@ struct CategoryView: View {
     @State private var buttonID = String()
     
     
+    var sortedSponsors: [GetSponsorCategoriesQuery.Data.GetSponsorCategory.Sponsor?]? {
+        currentCategory?.sponsor?.sorted(by: { a, b in
+            a?.name ?? "" < b?.name ?? ""
+        })
+    }
+    
     
     var body: some View {
         ZStack {
@@ -92,7 +98,7 @@ struct CategoryView: View {
                     
                     VStack(alignment: .leading, spacing: 10)
                      {
-                         if let sponsors = currentCategory?.sponsor {
+                         if let sponsors = sortedSponsors {
                             ForEach(sponsors, id:\.self) { sponsor in
                                 if let sponsor = sponsor {
                                     
@@ -153,7 +159,7 @@ struct CategoryView: View {
             }
         }
       
-        .navigationTitle(currentCategory?.name ?? "")
+        .navigationTitle(currentCategory?.name == "Outdoors" ? "Misc" : currentCategory?.name  ?? "")
         .toolbarStyle(inline: true)
     }
 }

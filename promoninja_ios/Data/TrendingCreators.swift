@@ -51,7 +51,8 @@ let trendingCreators: [String: [String: (ImageResource, [String], String)]] = [
     
     "technology": [
         "Lex Fridman": (.lex, ["Lex Fridman Podcast"], technologySummary["Lex Fridman"]!),
-        "Scott Galloway": (.galloway, ["Pivot"], technologySummary["Scott Galloway"]!)
+        "Scott Galloway": (.galloway, ["Pivot"], technologySummary["Scott Galloway"]!),
+        "Marques Brownlee": (.mkbhd, ["Waveform: The MKBHD Podcast"], technologySummary["Marques Brownlee"]!)
     ],
     
     

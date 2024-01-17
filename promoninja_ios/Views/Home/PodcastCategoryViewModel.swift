@@ -25,8 +25,9 @@ class PodcastCategoryViewModel:ObservableObject {
         getPodcastCategoryData()
     }
     
+    
     func getPodcastCategoryData () {
-        Network.shared.apollo.fetch(query: GetPodcastCategoriesQuery()) { result in
+        Network.shared.apollo.fetch(query: GetPodcastCategoriesQuery(input: GraphQLNullable (IOSInput(isTrendingPage: true)) )) { result in
             guard let data = try? result.get().data else { return }
             if let categoryData = data.getPodcastCategories {
                 DispatchQueue.main.async {
@@ -37,11 +38,18 @@ class PodcastCategoryViewModel:ObservableObject {
         }
     }
     
+  
+    
+    
+    
+    
     func getCategoryPodcasts (for categoryName: String)  {
         let category = self.categoryData?.first(where: { category in
               category?.name == categoryName
           })
         DispatchQueue.main.async {
+            
+            //optimize
             self.podcasts = category??.podcast ?? []
             self.podcastCategory = category
         }

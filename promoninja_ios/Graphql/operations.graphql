@@ -149,21 +149,19 @@ query GetSponsorCategory ($input: SponsorCategoryInput!) {
         }
       }
 
-     query GetPodcastCategories {
-        getPodcastCategories {
+     query GetPodcastCategories ($input: iOSInput) {
+        getPodcastCategories(input: $input) {
           name
-          podcastId
           podcast {
               imageUrl
               title
               publisher
               sponsors {
                 name
-                    }
+                }
                 category {
                 name
               }
-                
             }
         }
       }
@@ -185,3 +183,4 @@ query LiveSearchPodcast($input: String!) {
     imageUrl
   }
 }
+

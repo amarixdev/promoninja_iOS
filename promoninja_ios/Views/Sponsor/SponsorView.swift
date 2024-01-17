@@ -60,16 +60,6 @@ struct SponsorView: View {
                                                 .scaledToFill()
                                                  .frame(width: 180, height: 180)
                                                  .cornerRadius(10)
-                                                 .shine(shine)
-                                                 .onTapGesture {
-                                                     if !disableTap {
-                                                         shine.toggle()
-                                                     }
-                                                    disableTap = true
-                                                     setTimeout(1.6) {
-                                                         disableTap = false
-                                                     }
-                                                 }
                                         } else {
                                             Placeholder(frameSize: 180, imgSize: 55, icon: .sponsor)
                                         }

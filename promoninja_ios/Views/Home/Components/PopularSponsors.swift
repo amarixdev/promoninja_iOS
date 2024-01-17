@@ -51,7 +51,7 @@ struct PopularSponsors: View {
                           
                           ForEach(sponsorVM.trendingSponsors[index], id:\.self) { sponsor in
                               if let sponsor = sponsor {
-                                  
+                      
                                   NavigationLink(value: sponsor) {
                                       VStack(alignment: .leading) {
                                           LazyImage(url: URL(string: sponsor.imageUrl ?? "")!, transaction: Transaction(animation: .bouncy)) { phase in
@@ -73,9 +73,7 @@ struct PopularSponsors: View {
                                               
                                           }
                                           
-                                          
                                           Text(sponsor.name?.truncated(16) ?? "")
-                                              
                                                   .font(.caption)
                                                   .opacity(0.8)
                                               .foregroundStyle(.white)

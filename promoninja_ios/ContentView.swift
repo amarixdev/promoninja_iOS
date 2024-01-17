@@ -140,7 +140,7 @@ struct ContentView: View {
                         DiscoverView(shouldScrollToTop: $shouldScrollToTop_discover)
                         }
                         .tabItem {
-                            Image(systemName: "circle.grid.2x2")
+                            Image(systemName: "magnifyingglass")
 
                         }
                         .tag(Navigation.discover)

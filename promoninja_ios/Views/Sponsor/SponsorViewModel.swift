@@ -57,13 +57,17 @@ class SponsorViewModel:ObservableObject {
             
             for sponsorName in sponsorGroup.sponsorNames {
                 dispatchGroup.enter()
-
+                
+                //isTrendingPage Bool selects for name & imageURL
                 Network.shared.apollo.fetch(query: GetSponsorQuery(input: SponsorInput(name: sponsorName, isTrendingPage: true))) { result in
                     defer {
                         dispatchGroup.leave()
                     }
 
-                    guard let data = try? result.get().data else { return }
+                    guard let data = try? result.get().data else {
+                        print("Failed")
+                        return
+                    }
                     if let sponsorData = data.getSponsor {
                         if currentGroup.title != previousGroup.title {
                             groupData.append(sponsorData)
@@ -80,6 +84,7 @@ class SponsorViewModel:ObservableObject {
                 
                 // Perform any actions that depend on the result, e.g., update UI
                 self.trendingSponsors = result
+                
             }
         }
     }

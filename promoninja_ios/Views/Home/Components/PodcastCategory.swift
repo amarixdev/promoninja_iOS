@@ -10,11 +10,26 @@ import PromoninjaSchema
 import NukeUI
 
 struct PodcastCategory: View {
-    let category: GetPodcastCategoriesQuery.Data.GetPodcastCategory
+    let categoryName: String
+    @State private var category: GetPodcastCategoriesQuery.Data.GetPodcastCategory?
+    
+    var podcasts: [GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast?]? {
+        var podcasts = category?.podcast
+        
+        if sortByOffer || sortByAZ {
+            podcasts = sortedPodcasts
+        }
+        if !searchText.isEmpty {
+            
+            podcasts = filteredPodcasts
+        }
+        
+        return podcasts
+            
+    }
     
     var sortedPodcasts: [GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast?]? {
-        var podcasts = category.podcast
-        
+    var podcasts = category?.podcast
         if sortByOffer {
             if reverseSort {
                 podcasts?.sort(by: { a, b in
@@ -45,11 +60,11 @@ struct PodcastCategory: View {
      
        
         
-        return podcasts ?? category.podcast
+        return podcasts ?? category?.podcast
     }
     
     var filteredPodcasts:[GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast?]? {
-        let podcasts = category.podcast?.filter { podcast in
+        let podcasts = category?.podcast?.filter { podcast in
             guard let title = podcast?.title else { return false}
             return ((title.localizedCaseInsensitiveContains(searchText)) == true )
         }
@@ -57,20 +72,7 @@ struct PodcastCategory: View {
         return podcasts
     }
     
-    var podcasts: [GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast?]? {
-        var podcasts = category.podcast
-        
-        if sortByOffer || sortByAZ {
-            podcasts = sortedPodcasts
-        }
-        if !searchText.isEmpty {
-            
-            podcasts = filteredPodcasts
-        }
-        
-        return podcasts
-            
-    }
+
     
     @State private var sortByOffer = false
     @State private var sortByAZ = true
@@ -79,71 +81,96 @@ struct PodcastCategory: View {
     @State private var reverseSort = false
     
     var body: some View {
+
         ZStack {
         GradientView()
-            VStack {
-                ScrollView {
-                    
-                    ForEach(podcasts ?? [] , id:\.self) { podcast in
-                        if let podcast = podcast {
-                         
-                            NavigationLink(value: podcast){
-                                HStack(spacing: 15) {
-                                        LazyImage(url: URL(string: podcast.imageUrl ?? "")) { phase in
-                                            if let image = phase.image {
-                                                image
-                                                    .resizable()
-                                                    .scaledToFill()
-                                                    .frame(width: 80, height: 80)
-                                                    .cornerRadius(10)
-                                            } else {
-                                                Placeholder(frameSize: 80, imgSize: 45, icon: .podcast)
+            if ((podcasts?.isEmpty) == true) {
+                LoadingAnimation(homeScreen: false)
+            }
+            else
+            {
+                VStack {
+                    ScrollView {
+                        
+                        ForEach(podcasts ?? [] , id:\.self) { podcast in
+                            if let podcast = podcast {
+                             
+                                NavigationLink(value: podcast){
+                                    HStack(spacing: 15) {
+                                            LazyImage(url: URL(string: podcast.imageUrl ?? "")) { phase in
+                                                if let image = phase.image {
+                                                    image
+                                                        .resizable()
+                                                        .scaledToFill()
+                                                        .frame(width: 80, height: 80)
+                                                        .cornerRadius(10)
+                                                } else {
+                                                    Placeholder(frameSize: 80, imgSize: 45, icon: .podcast)
+                                                }
                                             }
-                                        }
-                                        VStack(alignment:.leading) {
-                                            Text(podcast.title )
-                                                .font(.subheadline)
-                                                .multilineTextAlignment(.leading)
-                                            
-                                            Text(podcast.publisher ?? "")
-                                                .multilineTextAlignment(.leading)
-                                                .font(.caption)
-                                                .opacity(0.8)
-                                            
-                                            HStack(spacing: 5) {
-                                                Text("Offers:")
+                                            VStack(alignment:.leading) {
+                                                Text(podcast.title )
+                                                    .font(.subheadline)
+                                                    .lineLimit(1)
+                                                
+                                                Text(podcast.publisher ?? "")
                                                     .font(.caption)
-                                                Text(String (podcast.sponsors?.count ?? 0))
-                                                    .font(.caption.bold())
+                                                    .opacity(0.8)
+                                                    .lineLimit(1)
+                                                
+                                                HStack(spacing: 5) {
+                                                    Text("Offers:")
+                                                        .font(.caption)
+                                                    Text(String (podcast.sponsors?.count ?? 0))
+                                                        .font(.caption.bold())
+                                                }
+                                                .padding(.vertical, 5)
+                                                .padding(.horizontal, 8)
+                                                .background(.ultraThinMaterial)
+                                                .cornerRadius(10)
                                             }
-                                            .padding(.vertical, 5)
-                                            .padding(.horizontal, 8)
-                                            .background(.ultraThinMaterial)
-                                            .cornerRadius(10)
+                                            Spacer()
+                                        
+                                        Image(systemName: "chevron.right")
+                                            .imageScale(.large)
+                                            .opacity(0.4)
                                         }
-                                        Spacer()
-                                    
-                                    Image(systemName: "chevron.right")
-                                        .imageScale(.large)
-                                        .opacity(0.4)
-                                    }
+                                }
+                                .padding()
+                                
+                                Divider()
+                                
+                              
                             }
-                            .padding()
-                            
-                            Divider()
-                            
-                          
+                        
                         }
+                    }
+                }
+                .padding(.top, 20)
+            }
+            
+         
+             
+        }
+        .task {
+            Network.shared.apollo.fetch(query: GetPodcastCategoriesQuery(input: GraphQLNullable (IOSInput(isPodcastCategoryPage: true)) )) { result in
+                guard let data = try? result.get().data else { return }
                     
+                if let categoryData = data.getPodcastCategories {
+                    
+                    let currentCategory = categoryData.filter { category in
+                       category?.name ?? "" == categoryName
+                    }[0]
+                    
+                    DispatchQueue.main.async {
+                        self.category = currentCategory
+                        
                     }
                 }
             }
-            
-            .padding(.top, 20)
-             
         }
         .searchable(text:$searchText)
-        .navigationTitle(category.name?.capitalized ?? "")
+        .navigationTitle(categoryName.capitalized)
         .toolbarStyle(inline: false)
         .toolbar {
             Menu {

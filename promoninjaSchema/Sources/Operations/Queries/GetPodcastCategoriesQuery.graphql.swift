@@ -7,10 +7,16 @@ public class GetPodcastCategoriesQuery: GraphQLQuery {
   public static let operationName: String = "GetPodcastCategories"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query GetPodcastCategories { getPodcastCategories { __typename name podcastId podcast { __typename imageUrl title publisher sponsors { __typename name } category { __typename name } } } }"#
+      #"query GetPodcastCategories($input: iOSInput) { getPodcastCategories(input: $input) { __typename name podcast { __typename imageUrl title publisher sponsors { __typename name } category { __typename name } } } }"#
     ))
 
-  public init() {}
+  public var input: GraphQLNullable<IOSInput>
+
+  public init(input: GraphQLNullable<IOSInput>) {
+    self.input = input
+  }
+
+  public var __variables: Variables? { ["input": input] }
 
   public struct Data: PromoninjaSchema.SelectionSet {
     public let __data: DataDict
@@ -18,7 +24,7 @@ public class GetPodcastCategoriesQuery: GraphQLQuery {
 
     public static var __parentType: ApolloAPI.ParentType { PromoninjaSchema.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
-      .field("getPodcastCategories", [GetPodcastCategory?]?.self),
+      .field("getPodcastCategories", [GetPodcastCategory?]?.self, arguments: ["input": .variable("input")]),
     ] }
 
     public var getPodcastCategories: [GetPodcastCategory?]? { __data["getPodcastCategories"] }
@@ -34,12 +40,10 @@ public class GetPodcastCategoriesQuery: GraphQLQuery {
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("name", String?.self),
-        .field("podcastId", [PromoninjaSchema.ID?]?.self),
         .field("podcast", [Podcast?]?.self),
       ] }
 
       public var name: String? { __data["name"] }
-      public var podcastId: [PromoninjaSchema.ID?]? { __data["podcastId"] }
       public var podcast: [Podcast?]? { __data["podcast"] }
 
       /// GetPodcastCategory.Podcast

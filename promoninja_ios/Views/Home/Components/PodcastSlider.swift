@@ -27,6 +27,12 @@ struct PodcastSlider: View {
     @State private var shouldScrollToTop = false
     @Binding var podcasts: [GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast?]
     
+    var sortedPodcast:[GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast?] {
+        podcasts.sorted { a, b in
+            a?.sponsors?.count ?? 0 > b?.sponsors?.count ?? 0
+        }
+    }
+    
     @State private var categoryTapped = false
     @GestureState private var podcastTapped = false
     
@@ -98,9 +104,9 @@ struct PodcastSlider: View {
           
                       
                         LazyHStack(alignment:.center, spacing: 15) {
-                            ForEach(podcasts.prefix(8), id: \.self) { podcast in
+                            ForEach(sortedPodcast.prefix(8), id: \.self) { podcast in
                                 
-                                if let index = podcasts.firstIndex(of: podcast) {
+                                if let index = sortedPodcast.firstIndex(of: podcast) {
                                     VStack(alignment:.leading)  {
                                     
                                         NavigationLink(value: podcast) {
@@ -245,6 +251,7 @@ struct PodcastSlider: View {
             }
             .padding(.bottom, 10)
             NavigationLink(value: viewModel.podcastCategory) {
+               
                 HStack {
                     HStack {
                         Text("View more shows: ")
