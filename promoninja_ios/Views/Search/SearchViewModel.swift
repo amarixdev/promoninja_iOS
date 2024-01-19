@@ -67,36 +67,88 @@ class SearchViewModel: ObservableObject {
  
     
 
+//    private func sponsor_filterSearch (searchText: String) {
+//        guard !searchText.isEmpty else {
+//            filteredSponsors = []
+//            return
+//        }
+//        
+//        let fuseScore = 0.5
+//        
+//         let fuse = Fuse()
+//         let filteredResults =  sponsors.filter { sponsor in
+//             var bool = Bool()
+//             let result = fuse.search(self.searchText, in: sponsor?.name ?? "")
+//             
+//             if let score = result?.score {
+//                 bool = score < fuseScore
+//             }
+//                 return bool
+//           }
+//        
+//        let sortedResults = filteredResults.sorted { (sponsor1, sponsor2) in
+//                      
+//             let score1 = fuse.search(self.searchText, in: sponsor1?.name ?? "")?.score
+//             let score2 = fuse.search(self.searchText, in: sponsor2?.name ?? "")?.score
+//             return score1 ?? 1 < score2 ?? 1
+//         }
+//        
+//        DispatchQueue.main.async {
+//            self.filteredSponsors = Array(sortedResults.prefix(6))
+//        }
+//
+//     }
+    
+    
+    
+    
+    
     private func sponsor_filterSearch (searchText: String) {
         guard !searchText.isEmpty else {
             filteredSponsors = []
             return
         }
-        
-        let fuseScore = 0.5
-        
-         let fuse = Fuse()
-         let filteredResults =  sponsors.filter { sponsor in
-             var bool = Bool()
-             let result = fuse.search(self.searchText, in: sponsor?.name ?? "")
-             if let score = result?.score {
-                 bool = score < fuseScore
-             }
-                 return bool
-           }
-        
-        let sortedResults = filteredResults.sorted { (sponsor1, sponsor2) in
-                      
-             let score1 = fuse.search(self.searchText, in: sponsor1?.name ?? "")?.score
-             let score2 = fuse.search(self.searchText, in: sponsor2?.name ?? "")?.score
-             return score1 ?? 1 < score2 ?? 1
-         }
-        
-        DispatchQueue.main.async {
-            self.filteredSponsors = Array(sortedResults.prefix(6))
-        }
+       
+        let fuseScore = 0.50
+        let fuseScoreB = 0.75
 
-     }
+            
+        let fuse = Fuse()
+        var filteredResults =  sponsors.filter { sponsor in
+            let nameScore = fuse.search(self.searchText, in: sponsor?.name ?? "")
+            let summaryScore = fuse.search(self.searchText, in: sponsor?.summary ?? "")
+            var isNameMatch = Bool()
+            var isSummaryMatch = Bool()
+            
+            
+            if let nameScore = nameScore?.score {
+                isNameMatch = nameScore < fuseScore
+              
+            }
+            
+            
+            if let summaryScore = summaryScore?.score {
+                isSummaryMatch = summaryScore < fuseScoreB
+        
+            }
+       
+                return isNameMatch || isSummaryMatch
+          }
+       
+       filteredResults.sort { sponsor1, sponsor2 in
+           
+           let score1 = fuse.search(self.searchText, in: sponsor1?.name ?? "")?.score
+           let score2 = fuse.search(self.searchText, in: sponsor2?.name ?? "")?.score
+
+           return  score1 ?? 1 < score2 ?? 1
+           
+       }
+        DispatchQueue.main.async {
+            self.filteredSponsors = Array(filteredResults.prefix(6))
+        }
+       
+    }
+
     
     
     
@@ -107,7 +159,7 @@ class SearchViewModel: ObservableObject {
             return
         }
        
-        let fuseScore = 0.5
+        let fuseScore = 0.50
         
         //filter logic
             
@@ -120,10 +172,12 @@ class SearchViewModel: ObservableObject {
             
             if let titleScore = titleScore?.score {
                 isTitleMatch = titleScore < fuseScore
+               
             }
             
             if let publisherScore = publisherScore?.score {
                 isPublisherMatch = publisherScore < fuseScore
+                print("publisher match")
             }
        
                 return isTitleMatch || isPublisherMatch
@@ -166,3 +220,5 @@ class SearchViewModel: ObservableObject {
            }
        }
 }
+
+

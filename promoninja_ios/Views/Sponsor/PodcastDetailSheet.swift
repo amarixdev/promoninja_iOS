@@ -121,7 +121,7 @@ struct PodcastDetailSheet: View {
                     }
              
                     VStack(alignment:.leading) {
-                        Text(podcast?.title ?? "")
+                        Text(podcast?.title.replacingOccurrences(of: "Fuck", with: "F*ck") ?? "")
                             .font(.title3.bold())
                         Text(podcast?.publisher ?? "")
                             .font(.subheadline)

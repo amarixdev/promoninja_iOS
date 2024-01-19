@@ -12,6 +12,7 @@ import NukeUI
 struct PodcastCategory: View {
     let categoryName: String
     @State private var category: GetPodcastCategoriesQuery.Data.GetPodcastCategory?
+    @EnvironmentObject var global: GlobalState
     
     var podcasts: [GetPodcastCategoriesQuery.Data.GetPodcastCategory.Podcast?]? {
         var podcasts = category?.podcast
@@ -57,7 +58,6 @@ struct PodcastCategory: View {
             
         }
         
-     
        
         
         return podcasts ?? category?.podcast
@@ -71,21 +71,28 @@ struct PodcastCategory: View {
         
         return podcasts
     }
-    
 
     
     @State private var sortByOffer = false
     @State private var sortByAZ = true
     @State private var searchText = ""
-    
     @State private var reverseSort = false
+    @State private var viewOpacity:Double = 0.0
+    @State private var viewTint: Color = .blue
+    
+    var dataLoading: Bool {
+        podcasts?.isEmpty == true
+    }
+    
     
     var body: some View {
-
+        
         ZStack {
+    
         GradientView()
-            if ((podcasts?.isEmpty) == true) {
+            if dataLoading && searchText.isEmpty  {
                 LoadingAnimation(homeScreen: false)
+                
             }
             else
             {
@@ -109,7 +116,7 @@ struct PodcastCategory: View {
                                                 }
                                             }
                                             VStack(alignment:.leading) {
-                                                Text(podcast.title )
+                                                Text(podcast.title.replacingOccurrences(of: "Fuck", with: "F*ck") )
                                                     .font(.subheadline)
                                                     .lineLimit(1)
                                                 
@@ -144,14 +151,30 @@ struct PodcastCategory: View {
                             }
                         
                         }
+                
                     }
                 }
                 .padding(.top, 20)
-            }
+                .opacity(global.categoryLoaded ? 1 : viewOpacity)
+                .onAppear {
+                    if !global.categoryLoaded {
+                        setTimeout(0.5) {
+                            withAnimation {
+                                viewOpacity = 1
+                            }
+                            global.categoryLoaded.toggle()
+                        }
+                    }
+                    
+                   
+                   
+                }
             
-         
-             
+   
+            }
+                         
         }
+       
         .task {
             Network.shared.apollo.fetch(query: GetPodcastCategoriesQuery(input: GraphQLNullable (IOSInput(isPodcastCategoryPage: true)) )) { result in
                 guard let data = try? result.get().data else { return }

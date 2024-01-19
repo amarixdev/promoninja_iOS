@@ -270,6 +270,10 @@ struct PodcastSlider: View {
                 .shadow(radius: 5)
             }
         }
+        .task {
+            //Get Trending Podcasts: Fetch Top: 12 Podcasts; rotate 8
+            
+        }
       
             
         

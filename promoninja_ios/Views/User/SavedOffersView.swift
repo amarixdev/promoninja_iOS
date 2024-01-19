@@ -136,7 +136,7 @@ struct SavedOffersView: View {
                                                             image
                                                                 .resizable()
                                                                 .frame(width: 40, height: 40)
-                                                                .cornerRadius(10)
+                                                                .cornerRadius(5)
                                                                 .shadow(color:.black, radius: 5, x: 3, y: 5)
                                                         } else {
                                                             Placeholder(frameSize: 50, imgSize: 35, icon: .podcast)
@@ -148,7 +148,7 @@ struct SavedOffersView: View {
                                              
                                                 
                                                 VStack(alignment:.leading) {
-                                                    Text(offer.podcast.title ?? "")
+                                                    Text(offer.podcast.title?.replacingOccurrences(of: "Fuck", with: "F*ck") ?? "")
                                                         .font(.caption)
                                                         .fontWeight(.semibold)
                                                         .lineLimit(1)

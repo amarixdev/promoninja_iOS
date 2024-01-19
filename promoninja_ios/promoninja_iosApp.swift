@@ -16,6 +16,7 @@ struct promoninja_iosApp: App {
             ContentView()
                 .modelContainer(for: [SavedOffer.self, FavoritePodcast.self])
                 .environment(\.colorScheme, .dark)
+                .environmentObject(GlobalState())
         }
     }
 }

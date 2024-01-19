@@ -12,7 +12,7 @@ import PromoninjaSchema
 struct HomeScreen: View {
     private static let topId = "topIdHere"
     @Binding var shouldScrollToTop: Bool
-    @StateObject var viewModel = PodcastCategoryViewModel()
+    @StateObject var podcastVM = PodcastCategoryViewModel()
     @StateObject var sponsorVM = SponsorViewModel(name: "", homePage: true)
     @EnvironmentObject var selectedTab: CurrentTab
     
@@ -22,19 +22,19 @@ struct HomeScreen: View {
     @State private var selectedCreator = Creator(fullName: "", image: .logo, podcasts: [], summary: "")
     
     var creators: [Creator] {
-        getCreators(category: viewModel.currentCategory ?? "")
+        getCreators(category: podcastVM.currentCategory ?? "")
     }
     @State private var creatorData: GetPodcastQuery.Data.GetPodcast?
     @State private var showSelection = false
     @StateObject var router = Router.router
 
     var categories: [GetPodcastCategoriesQuery.Data.GetPodcastCategory?] {
-        viewModel.categoryData?.filter {$0?.name != "news & politics"} ?? []
+        podcastVM.categoryData?.filter {$0?.name != "news & politics"} ?? []
     }
         
     
     var dataLoaded: Bool {
-        if ( !viewModel.podcasts.isEmpty && !sponsorVM.trendingSponsors[0].isEmpty ) {
+        if ( !podcastVM.podcasts.isEmpty && !sponsorVM.trendingSponsors[0].isEmpty ) {
             return true
         } else {
             return false
@@ -66,12 +66,12 @@ struct HomeScreen: View {
                                     .padding(.leading, 25)
                                     .id(Self.topId)
                                                                     
-                                    PodcastSlider(viewModel: viewModel, categories: categories, podcasts: $viewModel.podcasts)
+                                    PodcastSlider(viewModel: podcastVM, categories: categories, podcasts: $podcastVM.podcasts)
                                         .padding(.top, 20)
                                         
                                        
                                     
-                                    PopularCreators(currentCategory: $viewModel.currentCategory)
+                                    PopularCreators(currentCategory: $podcastVM.currentCategory)
                                         .padding(.horizontal)
                                     
                                     VStack {

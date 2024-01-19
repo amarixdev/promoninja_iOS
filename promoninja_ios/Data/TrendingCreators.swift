@@ -18,9 +18,12 @@ let trendingCreators: [String: [String: (ImageResource, [String], String)]] = [
         "Andrew Schulz": (.schulz, ["Andrew Schulz's Flagrant with Akaash Singh", "The Brilliant Idiots"], comedySummary["Andrew Schulz"]! ),
 //        "Duncan Trussel": (.duncan, ["Duncan Trussell Family Hour"], comedySummary["Duncan Trussel"]!),
         "Charlamagne": (.charla, ["The Brilliant Idiots"], comedySummary["Charlamagne Da God"]! ),
-        "Tom Segura": (.tom, ["Your Mom's House with Christina P. and Tom Segura", "2 Bears, 1 Cave with Tom Segura & Bert Kreischer"], comedySummary["Tom Segura"]!),
+//        "Tom Segura": (.tom, ["Your Mom's House with Christina P. and Tom Segura", "2 Bears, 1 Cave with Tom Segura & Bert Kreischer"], comedySummary["Tom Segura"]!),
         "Andrew Santino": (.santino, ["Whiskey Ginger with Andrew Santino", "Bad Friends"], comedySummary["Andrew Santino"]!),
-        "Bobbi Althoff": (.bobbi, ["The Really Good Podcast"], comedySummary["Bobbi Althoff"]!)
+//        "Bobbi Althoff": (.bobbi, ["The Really Good Podcast"], comedySummary["Bobbi Althoff"]!),
+//        "Bunnie Xo": (.christina, ["Dumb Blonde"], comedySummary["Bunnie Xo"]!),
+        "Christina P.": (.christina, ["Where My Moms At with Christina P.", "Your Mom's House with Christina P. and Tom Segura"], comedySummary["Christina P."]!)
+
     ],
     
     "society & culture": [
@@ -38,6 +41,8 @@ let trendingCreators: [String: [String: (ImageResource, [String], String)]] = [
         "LeVar Burton": (.levar, ["LeVar Burton Reads"], educationalSummary["LeVar Burton"]!),
         "Ramit Sethi": (.ramit, ["I Will Teach You To Be Rich"], educationalSummary["Ramit Sethi"]!),
         "Guy Raz": (.guy, ["How I Built This with Guy Raz"], educationalSummary["Guy Raz"]!),
+        "Rich Roll": (.richroll, ["The Rich Roll Podcast"], educationalSummary["Rich Roll"]!),
+        "Daniele Bolelli": (.bolelli, ["History on Fire"], educationalSummary["Daniele Bolelli"]!)
     ],
     
     
@@ -52,14 +57,17 @@ let trendingCreators: [String: [String: (ImageResource, [String], String)]] = [
     "technology": [
         "Lex Fridman": (.lex, ["Lex Fridman Podcast"], technologySummary["Lex Fridman"]!),
         "Scott Galloway": (.galloway, ["Pivot"], technologySummary["Scott Galloway"]!),
-        "Marques Brownlee": (.mkbhd, ["Waveform: The MKBHD Podcast"], technologySummary["Marques Brownlee"]!)
+        "Marques Brownlee": (.mkbhd, ["Waveform: The MKBHD Podcast"], technologySummary["Marques Brownlee"]!),
+        "Cal Newport": (.cal, ["Deep Questions with Cal Newport"], technologySummary["Cal Newport"]!),
+        "John Gruber": (.gruber, ["The Talk Show With John Gruber"], technologySummary["John Gruber"]!)
     ],
     
     
     "true crime": [
         "Henry Zebrowski": (.henry, ["Last Podcast On The Left"], true_crime["Henry Zebrowski"]!),
         "Bailey Sarian": (.bailey, ["Murder, Mystery & Makeup"], true_crime["Bailey Sarian"]!),
-        "Ashley Flowers": (.ashley, ["Crime Junkie"], true_crime["Ashley Flowers"]!)
+        "Ashley Flowers": (.ashley, ["Crime Junkie"], true_crime["Ashley Flowers"]!),
+        "Stephanie Soo": (.soo, ["Rotten Mango"], true_crime["Stephanie Soo"]!)
         
     ]
     

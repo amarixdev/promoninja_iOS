@@ -37,6 +37,12 @@ struct LinkTest: View {
 
     }
     
+    var spotifyLinks: [String] {
+        podcasts.map { podcast in
+            podcast?.externalUrl ?? ""
+        }
+    }
+    
     
     
     func formatURL (_ urlString: String) -> String {
@@ -132,6 +138,16 @@ struct LinkTest: View {
                         }
                         .buttonStyle(.bordered)
                     }
+                    
+                    HStack {
+                        Text("Spotify Link Test (\(spotifyLinks.count)) ")
+                            .font(.headline)
+                        Button("Run") {
+                            isValidURL(urls: spotifyLinks)
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                    
                 }
         
                 

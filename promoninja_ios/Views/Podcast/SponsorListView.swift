@@ -72,7 +72,7 @@ struct SponsorListView: View {
 
                                         VStack(alignment:.leading) {
                                             if let name = sponsor?.name {
-                                                Text(name )
+                                                Text(name)
                                                     .font(.caption)
                                                     .foregroundStyle(.white)
                                                     .lineLimit(1)

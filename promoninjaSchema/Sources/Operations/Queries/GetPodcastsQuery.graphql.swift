@@ -7,7 +7,7 @@ public class GetPodcastsQuery: GraphQLQuery {
   public static let operationName: String = "GetPodcasts"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query GetPodcasts { getPodcasts { __typename backgroundColor category { __typename name } description imageUrl offer { __typename url sponsor promoCode } publisher sponsors { __typename name } title } }"#
+      #"query GetPodcasts { getPodcasts { __typename category { __typename name } externalUrl imageUrl offer { __typename url } publisher sponsors { __typename name } title } }"#
     ))
 
   public init() {}
@@ -33,9 +33,8 @@ public class GetPodcastsQuery: GraphQLQuery {
       public static var __parentType: ApolloAPI.ParentType { PromoninjaSchema.Objects.Podcast }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
-        .field("backgroundColor", String?.self),
         .field("category", [Category?]?.self),
-        .field("description", String?.self),
+        .field("externalUrl", String?.self),
         .field("imageUrl", String?.self),
         .field("offer", [Offer?]?.self),
         .field("publisher", String?.self),
@@ -43,9 +42,8 @@ public class GetPodcastsQuery: GraphQLQuery {
         .field("title", String.self),
       ] }
 
-      public var backgroundColor: String? { __data["backgroundColor"] }
       public var category: [Category?]? { __data["category"] }
-      public var description: String? { __data["description"] }
+      public var externalUrl: String? { __data["externalUrl"] }
       public var imageUrl: String? { __data["imageUrl"] }
       public var offer: [Offer?]? { __data["offer"] }
       public var publisher: String? { __data["publisher"] }
@@ -79,13 +77,9 @@ public class GetPodcastsQuery: GraphQLQuery {
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("url", String.self),
-          .field("sponsor", String.self),
-          .field("promoCode", String.self),
         ] }
 
         public var url: String { __data["url"] }
-        public var sponsor: String { __data["sponsor"] }
-        public var promoCode: String { __data["promoCode"] }
       }
 
       /// GetPodcast.Sponsor

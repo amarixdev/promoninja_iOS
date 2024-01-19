@@ -59,9 +59,10 @@ struct ContentView: View {
                         .shadow(color: .black, radius: 4, x: 3, y: 4)
 
                     Text("No Internet Connection")
+                        .fontWeight(.bold)
                         .padding(20)
-                        .background(.ultraThinMaterial)
-                        .cornerRadius(10)
+                    
+                    LoadingDots()
                 }
             }
             .preferredColorScheme(.dark)

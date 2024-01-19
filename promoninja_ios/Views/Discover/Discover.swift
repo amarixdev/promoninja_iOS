@@ -87,7 +87,7 @@ struct Discover: View {
         }
     }
     
-    
+    @State private var viewOpacity:Double = 0.0
     
     var body: some View {
       
@@ -280,6 +280,13 @@ struct Discover: View {
                            
                     }
                            
+                }
+                .opacity(viewOpacity)
+                .onAppear {
+                    withAnimation {
+                        viewOpacity = 1
+                    }
+                   
                 }
               
         

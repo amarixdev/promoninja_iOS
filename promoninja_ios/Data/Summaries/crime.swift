@@ -13,7 +13,9 @@ let true_crime = [
     
     "Bailey Sarian": "Bailey Brooke Sarian is a YouTuber known for her video series Murder, Mystery & Makeup and podcast Dark History. She is considered to have been the founder of the “true crime makeup” genre of YouTube videos.",
     
-    "Ashley Flowers": "Ashley Flowers is an American podcaster, writer, and non-profit organization founder. She is best known for the true crime podcast Crime Junkie. In August 2022, Flowers' debut novel, All Good People Here, became a New York Times bestseller."
+    "Ashley Flowers": "Ashley Flowers is an American podcaster, writer, and non-profit organization founder. She is best known for the true crime podcast Crime Junkie. In August 2022, Flowers' debut novel, All Good People Here, became a New York Times bestseller.",
+    
+    "Stephanie Soo" : "Stephanie Soo is a South Korean-American YouTuber and social media personality. Soo's content includes vlogs, lifestyle, and ASMR videos. She's known for her mukbang videos and has over 3.4 million subscribers on her self-titled YouTube channel."
     
 
 

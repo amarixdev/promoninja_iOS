@@ -91,7 +91,7 @@ struct PodcastListView: View {
                                         
                                         VStack(alignment:.leading) {
                                             if let title = podcast?.title {
-                                                Text(title)
+                                                Text(title.replacingOccurrences(of: "Fuck", with: "F*ck"))
                                                     .font(.caption)
                                                     .foregroundStyle(.white)
                                                     .lineLimit(1)

@@ -1,16 +1,13 @@
 
 query GetPodcasts {
     getPodcasts {
-    backgroundColor
     category {
       name
     }
-    description
+    externalUrl
     imageUrl
     offer {
       url
-      sponsor
-      promoCode
     }
     publisher
     sponsors {

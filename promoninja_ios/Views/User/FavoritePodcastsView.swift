@@ -64,7 +64,7 @@ struct FavoritePodcastsView: View {
                                         }
                                         
                                         VStack(alignment:.leading) {
-                                            Text(podcast.title ?? "")
+                                            Text(podcast.title?.replacingOccurrences(of: "Fuck", with: "F*ck") ?? "")
                                                 .font(.subheadline)
                                                 .fontWeight(.semibold)
                                                 .lineLimit(1)

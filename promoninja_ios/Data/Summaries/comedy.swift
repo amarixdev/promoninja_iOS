@@ -24,7 +24,11 @@ let comedySummary: [String: String] = [
     
     "Andrew Santino" : "Andrew James Santino is an American stand-up comedian, actor, and podcaster known for television series and films such as Sin City Saints, The Disaster Artist, Mixology, I'm Dying Up Here, Beef, and Dave.",
     
-    "Bobbi Althoff": "Bobbi is renowned for her comedic videos and has utilized her platforms to share various aspects of her life, including her engagement, pregnancy, encounters with celebrities, and advancements in her career. With her high-profile interviews on \"The Really Good Podcast,\" Bobbi Althoff continues to make waves online and captivate audiences with her entertaining and engaging content."
+    "Bobbi Althoff": "Bobbi is renowned for her comedic videos and has utilized her platforms to share various aspects of her life, including her engagement, pregnancy, encounters with celebrities, and advancements in her career. With her high-profile interviews on \"The Really Good Podcast,\" Bobbi Althoff continues to make waves online and captivate audiences with her entertaining and engaging content.",
+    
+    "Bunnie Xo": "Bunnie Xo aka Bunnie DeFord has been paving her way through the entertainment industry for years. She's the owner of Dumb Blonde Productions, podcast host, model, and a YouTube sensation. ",
+    
+    "Christina P.": "Christina Pazsitzky, known by her stage name Christina P, is a Canadian-born American stand-up comedian, podcaster, writer, host and TV personality. Pazsitzky co-hosts the Your Mom's House podcast with her husband, comedian Tom Segura, and also hosts the Where My Moms At? podcast."
 ]
 
 
